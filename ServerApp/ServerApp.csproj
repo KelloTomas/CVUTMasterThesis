@@ -44,9 +44,30 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Screen.cs" />
+    <Compile Include="SubApps\Inform\IInformacniQt.cs" />
+    <Compile Include="SubApps\Inform\InformSubApp.cs" />
+    <Compile Include="SubApps\Inform\Layouts\CardScannedLayout.cs" />
+    <Compile Include="SubApps\Inform\Layouts\ScanCardLayout.cs" />
+    <Compile Include="SubApps\Inform\States\InformState.cs" />
+    <Compile Include="SubApps\Shared\Data\ModifyLayoutItem.cs" />
+    <Compile Include="SubApps\Shared\Layouts\ILayout.cs" />
+    <Compile Include="SubApps\Shared\Layouts\LayoutBase.cs" />
+    <Compile Include="SubApps\Shared\Layouts\LayoutTimeBase.cs" />
+    <Compile Include="SubApps\Shared\States\StateBase.cs" />
+    <Compile Include="SubApps\Shared\States\StateBaseWithTimers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="SubApps\Inform\QtStyleSheet.style" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SubApps\Inform\Layouts\CardScannedLayout.ui" />
+    <Content Include="SubApps\Inform\Layouts\ScanCardLayout.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SubApps\Order\Layouts\" />
+    <Folder Include="SubApps\Order\States\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ServerApp.SubApps.Inform
 {
-	public interface IInformSubApp /*: ISubApp*/
+	public interface IInformSubApp : ISubApp
 	{ 
 	
 	}

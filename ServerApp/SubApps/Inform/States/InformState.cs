@@ -6,7 +6,7 @@ using ServerApp.SubApps.Shared.States;
 
 namespace ServerApp.SubApps.Inform.States
 {
-	public class InformState : StateBaseWithTimers
+	public class InformState : StateBase
 	{
 
 		#region private fields...	
@@ -17,6 +17,5 @@ namespace ServerApp.SubApps.Inform.States
 		{
 		}
 		#endregion
-
 	}
 }

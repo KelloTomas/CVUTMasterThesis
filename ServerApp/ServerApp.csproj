@@ -108,8 +108,25 @@
     <Compile Include="Order.cs">
       <DependentUpon>CVUTdb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\ButtonClickAction.cs" />
+    <Compile Include="Data\CardReadAction.cs" />
+    <Compile Include="Data\IAction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server.cs" />
+    <Compile Include="SubApps\Inform\IInformSubApp.cs" />
+    <Compile Include="SubApps\Inform\InformSubApp.cs" />
+    <Compile Include="SubApps\Shared\States\IStateBase.cs" />
+    <Compile Include="SubApps\SubApp.cs" />
+    <Compile Include="SubApps\ISubApp.cs" />
+    <Compile Include="SubApps\Inform\Layouts\CardScannedLayout.cs" />
+    <Compile Include="SubApps\Inform\Layouts\ScanCardLayout.cs" />
+    <Compile Include="SubApps\Inform\States\InformState.cs" />
+    <Compile Include="SubApps\Shared\Data\ModifyLayoutItem.cs" />
+    <Compile Include="SubApps\Shared\Layouts\ILayout.cs" />
+    <Compile Include="SubApps\Shared\Layouts\LayoutBase.cs" />
+    <Compile Include="SubApps\Shared\Layouts\LayoutTimeBase.cs" />
+    <Compile Include="SubApps\Shared\States\StateBase.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -160,6 +177,15 @@
       <DependentUpon>CVUTdb.edmx</DependentUpon>
       <LastGenOutput>CVUTdb.cs</LastGenOutput>
     </Content>
+    <None Include="SubApps\Inform\QtStyleSheet.style" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SubApps\Inform\Layouts\CardScannedLayout.ui" />
+    <Content Include="SubApps\Inform\Layouts\ScanCardLayout.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SubApps\Order\Layouts\" />
+    <Folder Include="SubApps\Order\States\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

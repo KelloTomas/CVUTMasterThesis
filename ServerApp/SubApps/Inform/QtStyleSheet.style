@@ -1,0 +1,12 @@
+﻿/* Informacny */
+
+QLabel.clientTextTitleStyle { @TitleTextStyle; }
+QLabel.clientAccountBalanceStyle { @TitleAccountBalTextStyle; }
+QLabel.clientTextContentStyle { @ContentFullScreenTextStyle; }
+
+QLabel.servedMealsListTitleStyle { @TitleTextStyle; }
+QLabel.servedMealsListPageStyle { @TitlePageTextStyle; }
+
+QLabel.servedMealsListCanteenStyle { font:bold 32px; }
+QLabel.servedMealsListMealKindStyle { font:bold 40px; }
+QLabel.servedMealsListMealAltStyle { font: 25px; }

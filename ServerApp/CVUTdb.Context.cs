@@ -27,8 +27,6 @@ namespace ServerApp
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Automat> Automats { get; set; }
-        public virtual DbSet<AutomatType> AutomatTypes { get; set; }
         public virtual DbSet<Card> Cards { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Desert> Deserts { get; set; }
@@ -37,6 +35,8 @@ namespace ServerApp
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Soup> Soups { get; set; }
+        public virtual DbSet<Application> Applications { get; set; }
+        public virtual DbSet<ApplicationType> ApplicationTypes { get; set; }
     
         public virtual int CreateOrder(Nullable<int> clientId, Nullable<System.DateTime> forDate, Nullable<int> menuId)
         {

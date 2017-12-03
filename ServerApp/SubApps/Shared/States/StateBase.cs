@@ -1,6 +1,7 @@
 ﻿using System.Timers;
 using System.Collections.Generic;
 using System.Globalization;
+using ServerApp.Data;
 
 namespace ServerApp.SubApps.Shared.States
 {
@@ -22,8 +23,23 @@ namespace ServerApp.SubApps.Shared.States
 		{
 		}
 
-		public virtual void ProcessCardReadAction()
+        public virtual IStateBase ProcessButtonClickAction(ButtonClickAction buttonClick)
+        {
+            return null;
+        }
+
+        public virtual void ProcessCardReadAction()
 		{
 		}
-	}
+
+        public virtual IStateBase ProcessCardReadAction(CardReadAction c)
+        {
+            return null;
+        }
+
+        public virtual IStateBase ProcessTimerElapsed()
+        {
+            return null;
+        }
+    }
 }

@@ -4,25 +4,25 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ec5a3ea55ba645f1aa2b047c647d2e3d" Name="Diagram1">
-        <EntityTypeShape EntityType="CVUTdbModel.Automat" Width="1.5" PointX="8" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="CVUTdbModel.AutomatType" Width="1.5" PointX="5.75" PointY="5.125" IsExpanded="true" />
+      <Diagram DiagramId="ec5a3ea55ba645f1aa2b047c647d2e3d" Name="Diagram1" ZoomLevel="55">
         <EntityTypeShape EntityType="CVUTdbModel.Card" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
         <EntityTypeShape EntityType="CVUTdbModel.Client" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="CVUTdbModel.Desert" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CVUTdbModel.Device" Width="1.5" PointX="10.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CVUTdbModel.Device" Width="1.5" PointX="7.375" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="CVUTdbModel.Meal" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="CVUTdbModel.Menu" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="CVUTdbModel.Order" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="CVUTdbModel.Soup" Width="1.5" PointX="0.75" PointY="7.375" IsExpanded="true" />
-        <AssociationConnector Association="CVUTdbModel.FK_Automats_AutomatTypes" ManuallyRouted="false" />
-        <AssociationConnector Association="CVUTdbModel.FK_Devices_Automats" ManuallyRouted="false" />
         <AssociationConnector Association="CVUTdbModel.IdClient" ManuallyRouted="false" />
         <AssociationConnector Association="CVUTdbModel.FK_ORDERS_CLIENTS" ManuallyRouted="false" />
         <AssociationConnector Association="CVUTdbModel.IdDesert" ManuallyRouted="false" />
         <AssociationConnector Association="CVUTdbModel.IdMeal" ManuallyRouted="false" />
         <AssociationConnector Association="CVUTdbModel.FK_ORDERS_MENU" ManuallyRouted="false" />
         <AssociationConnector Association="CVUTdbModel.IdSoup" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CVUTdbModel.Application" Width="1.5" PointX="7.375" PointY="3" />
+        <EntityTypeShape EntityType="CVUTdbModel.ApplicationType" Width="1.5" PointX="7.375" PointY="1.125" />
+        <AssociationConnector Association="CVUTdbModel.FK_Automats_AutomatTypes1" />
+        <AssociationConnector Association="CVUTdbModel.FK_Devices_Automats1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

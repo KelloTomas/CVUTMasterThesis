@@ -4,20 +4,20 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CVUTdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Automats">
+    <Schema Namespace="CVUTdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Applications">
           <Key>
-            <PropertyRef Name="IdAutomat" />
+            <PropertyRef Name="IdApplication" />
           </Key>
-          <Property Name="IdAutomat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdAutomatType" Type="int" Nullable="false" />
+          <Property Name="IdApplication" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdApplicationType" Type="int" Nullable="false" />
           <Property Name="IsRunning" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="AutomatTypes">
+        <EntityType Name="ApplicationType">
           <Key>
-            <PropertyRef Name="IdAutomatType" />
+            <PropertyRef Name="IdApplicationType" />
           </Key>
-          <Property Name="IdAutomatType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdApplicationType" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nchar" MaxLength="10" Nullable="false" />
         </EntityType>
         <EntityType Name="Cards">
@@ -92,23 +92,23 @@
           <Property Name="Description" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Automats_AutomatTypes">
-          <End Role="AutomatTypes" Type="Self.AutomatTypes" Multiplicity="1" />
-          <End Role="Automats" Type="Self.Automats" Multiplicity="*" />
+          <End Role="ApplicationType" Type="Self.ApplicationType" Multiplicity="1" />
+          <End Role="Applications" Type="Self.Applications" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="AutomatTypes">
-              <PropertyRef Name="IdAutomatType" />
+            <Principal Role="ApplicationType">
+              <PropertyRef Name="IdApplicationType" />
             </Principal>
-            <Dependent Role="Automats">
-              <PropertyRef Name="IdAutomatType" />
+            <Dependent Role="Applications">
+              <PropertyRef Name="IdApplicationType" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Devices_Automats">
-          <End Role="Automats" Type="Self.Automats" Multiplicity="1" />
+          <End Role="Applications" Type="Self.Applications" Multiplicity="1" />
           <End Role="Devices" Type="Self.Devices" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Automats">
-              <PropertyRef Name="IdAutomat" />
+            <Principal Role="Applications">
+              <PropertyRef Name="IdApplication" />
             </Principal>
             <Dependent Role="Devices">
               <PropertyRef Name="IdAutomat" />
@@ -198,8 +198,8 @@
           <Parameter Name="OrderId" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="CVUTdbModelStoreContainer">
-          <EntitySet Name="Automats" EntityType="Self.Automats" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AutomatTypes" EntityType="Self.AutomatTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Applications" EntityType="Self.Applications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ApplicationType" EntityType="Self.ApplicationType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cards" EntityType="Self.Cards" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Deserts" EntityType="Self.Deserts" Schema="dbo" store:Type="Tables" />
@@ -209,11 +209,11 @@
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Soups" EntityType="Self.Soups" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Automats_AutomatTypes" Association="Self.FK_Automats_AutomatTypes">
-            <End Role="AutomatTypes" EntitySet="AutomatTypes" />
-            <End Role="Automats" EntitySet="Automats" />
+            <End Role="ApplicationType" EntitySet="ApplicationType" />
+            <End Role="Applications" EntitySet="Applications" />
           </AssociationSet>
           <AssociationSet Name="FK_Devices_Automats" Association="Self.FK_Devices_Automats">
-            <End Role="Automats" EntitySet="Automats" />
+            <End Role="Applications" EntitySet="Applications" />
             <End Role="Devices" EntitySet="Devices" />
           </AssociationSet>
           <AssociationSet Name="FK_ORDERS_CLIENTS" Association="Self.FK_ORDERS_CLIENTS">
@@ -241,29 +241,10 @@
             <End Role="Menu" EntitySet="Menu" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CVUTdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Automat">
-          <Key>
-            <PropertyRef Name="IdAutomat" />
-          </Key>
-          <Property Name="IdAutomat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdAutomatType" Type="Int32" Nullable="false" />
-          <Property Name="IsRunning" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AutomatType" Relationship="Self.FK_Automats_AutomatTypes" FromRole="Automats" ToRole="AutomatTypes" />
-          <NavigationProperty Name="Devices" Relationship="Self.FK_Devices_Automats" FromRole="Automats" ToRole="Devices" />
-        </EntityType>
-        <EntityType Name="AutomatType">
-          <Key>
-            <PropertyRef Name="IdAutomatType" />
-          </Key>
-          <Property Name="IdAutomatType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Automats" Relationship="Self.FK_Automats_AutomatTypes" FromRole="AutomatTypes" ToRole="Automats" />
-        </EntityType>
         <EntityType Name="Card">
           <Key>
             <PropertyRef Name="IdCard" />
@@ -301,7 +282,7 @@
           <Property Name="IdAutomat" Type="Int32" Nullable="false" />
           <Property Name="IP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Port" Type="Int32" />
-          <NavigationProperty Name="Automat" Relationship="Self.FK_Devices_Automats" FromRole="Devices" ToRole="Automats" />
+          <NavigationProperty Name="Application" Relationship="CVUTdbModel.FK_Devices_Automats1" FromRole="Device" ToRole="Application" />
         </EntityType>
         <EntityType Name="Meal">
           <Key>
@@ -348,30 +329,6 @@
           <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Menus" Relationship="Self.IdSoup" FromRole="Soups" ToRole="Menu" />
         </EntityType>
-        <Association Name="FK_Automats_AutomatTypes">
-          <End Role="AutomatTypes" Type="Self.AutomatType" Multiplicity="1" />
-          <End Role="Automats" Type="Self.Automat" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AutomatTypes">
-              <PropertyRef Name="IdAutomatType" />
-            </Principal>
-            <Dependent Role="Automats">
-              <PropertyRef Name="IdAutomatType" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Devices_Automats">
-          <End Role="Automats" Type="Self.Automat" Multiplicity="1" />
-          <End Role="Devices" Type="Self.Device" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Automats">
-              <PropertyRef Name="IdAutomat" />
-            </Principal>
-            <Dependent Role="Devices">
-              <PropertyRef Name="IdAutomat" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="IdClient">
           <End Role="Clients" Type="Self.Client" Multiplicity="1" />
           <End Role="Cards" Type="Self.Card" Multiplicity="*" />
@@ -447,8 +404,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="CVUTdbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Automats" EntityType="Self.Automat" />
-          <EntitySet Name="AutomatTypes" EntityType="Self.AutomatType" />
           <EntitySet Name="Cards" EntityType="Self.Card" />
           <EntitySet Name="Clients" EntityType="Self.Client" />
           <EntitySet Name="Deserts" EntityType="Self.Desert" />
@@ -457,14 +412,6 @@
           <EntitySet Name="Menus" EntityType="Self.Menu" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="Soups" EntityType="Self.Soup" />
-          <AssociationSet Name="FK_Automats_AutomatTypes" Association="Self.FK_Automats_AutomatTypes">
-            <End Role="AutomatTypes" EntitySet="AutomatTypes" />
-            <End Role="Automats" EntitySet="Automats" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Devices_Automats" Association="Self.FK_Devices_Automats">
-            <End Role="Automats" EntitySet="Automats" />
-            <End Role="Devices" EntitySet="Devices" />
-          </AssociationSet>
           <AssociationSet Name="IdClient" Association="Self.IdClient">
             <End Role="Clients" EntitySet="Clients" />
             <End Role="Cards" EntitySet="Cards" />
@@ -495,32 +442,67 @@
             <Parameter Name="MenuId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="ServeOrder">
-            <Parameter Name="OrderId" Mode="In" Type="Int32" />
+          <Parameter Name="OrderId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Applications" EntityType="CVUTdbModel.Application" />
+          <EntitySet Name="ApplicationTypes" EntityType="CVUTdbModel.ApplicationType" />
+          <AssociationSet Name="FK_Automats_AutomatTypes1" Association="CVUTdbModel.FK_Automats_AutomatTypes1">
+            <End Role="ApplicationType" EntitySet="ApplicationTypes" />
+            <End Role="Application" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Devices_Automats1" Association="CVUTdbModel.FK_Devices_Automats1">
+            <End Role="Application" EntitySet="Applications" />
+            <End Role="Device" EntitySet="Devices" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Application">
+          <Key>
+            <PropertyRef Name="IdApplication" />
+          </Key>
+          <Property Name="IdApplication" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdApplicationType" Type="Int32" Nullable="false" />
+          <Property Name="IsRunning" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ApplicationType" Relationship="CVUTdbModel.FK_Automats_AutomatTypes1" FromRole="Application" ToRole="ApplicationType" />
+          <NavigationProperty Name="Devices" Relationship="CVUTdbModel.FK_Devices_Automats1" FromRole="Application" ToRole="Device" />
+        </EntityType>
+        <EntityType Name="ApplicationType">
+          <Key>
+            <PropertyRef Name="IdApplicationType" />
+          </Key>
+          <Property Name="IdApplicationType" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Applications" Relationship="CVUTdbModel.FK_Automats_AutomatTypes1" FromRole="ApplicationType" ToRole="Application" />
+        </EntityType>
+        <Association Name="FK_Automats_AutomatTypes1">
+          <End Type="CVUTdbModel.ApplicationType" Role="ApplicationType" Multiplicity="1" />
+          <End Type="CVUTdbModel.Application" Role="Application" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationType">
+              <PropertyRef Name="IdApplicationType" />
+            </Principal>
+            <Dependent Role="Application">
+              <PropertyRef Name="IdApplicationType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Devices_Automats1">
+          <End Type="CVUTdbModel.Application" Role="Application" Multiplicity="1" />
+          <End Type="CVUTdbModel.Device" Role="Device" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Application">
+              <PropertyRef Name="IdApplication" />
+            </Principal>
+            <Dependent Role="Device">
+              <PropertyRef Name="IdAutomat" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CVUTdbModelStoreContainer" CdmEntityContainer="CVUTdbEntities">
-          <EntitySetMapping Name="Automats">
-            <EntityTypeMapping TypeName="CVUTdbModel.Automat">
-              <MappingFragment StoreEntitySet="Automats">
-                <ScalarProperty Name="IdAutomat" ColumnName="IdAutomat" />
-                <ScalarProperty Name="IdAutomatType" ColumnName="IdAutomatType" />
-                <ScalarProperty Name="IsRunning" ColumnName="IsRunning" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AutomatTypes">
-            <EntityTypeMapping TypeName="CVUTdbModel.AutomatType">
-              <MappingFragment StoreEntitySet="AutomatTypes">
-                <ScalarProperty Name="IdAutomatType" ColumnName="IdAutomatType" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Cards">
             <EntityTypeMapping TypeName="CVUTdbModel.Card">
               <MappingFragment StoreEntitySet="Cards">
@@ -601,6 +583,23 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="CreateOrder" FunctionName="CVUTdbModel.Store.CreateOrder" />
           <FunctionImportMapping FunctionImportName="ServeOrder" FunctionName="CVUTdbModel.Store.ServeOrder" />
+          <EntitySetMapping Name="Applications">
+            <EntityTypeMapping TypeName="CVUTdbModel.Application">
+              <MappingFragment StoreEntitySet="Applications">
+                <ScalarProperty Name="IsRunning" ColumnName="IsRunning" />
+                <ScalarProperty Name="IdApplicationType" ColumnName="IdApplicationType" />
+                <ScalarProperty Name="IdApplication" ColumnName="IdApplication" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ApplicationTypes">
+            <EntityTypeMapping TypeName="CVUTdbModel.ApplicationType">
+              <MappingFragment StoreEntitySet="ApplicationType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IdApplicationType" ColumnName="IdApplicationType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

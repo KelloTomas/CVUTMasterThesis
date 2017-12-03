@@ -19,6 +19,6 @@ namespace ServerApp
         public string IP { get; set; }
         public Nullable<int> Port { get; set; }
     
-        public virtual Automat Automat { get; set; }
+        public virtual Application Application { get; set; }
     }
 }

@@ -12,18 +12,18 @@ namespace ServerApp
     using System;
     using System.Collections.Generic;
     
-    public partial class AutomatType
+    public partial class ApplicationType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public AutomatType()
+        public ApplicationType()
         {
-            this.Automats = new HashSet<Automat>();
+            this.Applications = new HashSet<Application>();
         }
     
-        public int IdAutomatType { get; set; }
+        public int IdApplicationType { get; set; }
         public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Automat> Automats { get; set; }
+        public virtual ICollection<Application> Applications { get; set; }
     }
 }

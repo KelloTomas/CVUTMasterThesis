@@ -12,19 +12,19 @@ namespace ServerApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Automat
+    public partial class Application
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Automat()
+        public Application()
         {
             this.Devices = new HashSet<Device>();
         }
     
-        public int IdAutomat { get; set; }
-        public int IdAutomatType { get; set; }
+        public int IdApplication { get; set; }
+        public int IdApplicationType { get; set; }
         public bool IsRunning { get; set; }
     
-        public virtual AutomatType AutomatType { get; set; }
+        public virtual ApplicationType ApplicationType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Device> Devices { get; set; }
     }

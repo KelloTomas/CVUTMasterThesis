@@ -66,10 +66,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Automat.cs">
+    <Compile Include="Application.cs">
       <DependentUpon>CVUTdb.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutomatType.cs">
+    <Compile Include="ApplicationType.cs">
       <DependentUpon>CVUTdb.tt</DependentUpon>
     </Compile>
     <Compile Include="Card.cs">
@@ -116,6 +116,12 @@
     <Compile Include="Server.cs" />
     <Compile Include="SubApps\Inform\IInformSubApp.cs" />
     <Compile Include="SubApps\Inform\InformSubApp.cs" />
+    <Compile Include="SubApps\Inform\Rasllo.cs" />
+    <Compile Include="SubApps\Order\IOrderSubApp.cs" />
+    <Compile Include="SubApps\Order\OrderSubApp.cs" />
+    <Compile Include="SubApps\Serve\IServeSubApp.cs" />
+    <Compile Include="SubApps\Serve\ServeSubApp.cs" />
+    <Compile Include="SubApps\Shared\States\DefaultState.cs" />
     <Compile Include="SubApps\Shared\States\IStateBase.cs" />
     <Compile Include="SubApps\SubApp.cs" />
     <Compile Include="SubApps\ISubApp.cs" />
@@ -186,6 +192,8 @@
   <ItemGroup>
     <Folder Include="SubApps\Order\Layouts\" />
     <Folder Include="SubApps\Order\States\" />
+    <Folder Include="SubApps\Serve\Layouts\" />
+    <Folder Include="SubApps\Serve\States\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using ServerApp.SubApps.Shared.States;
+using ServerApp.Devices;
 
 namespace ServerApp.SubApps.Serve
 {
@@ -12,14 +13,12 @@ namespace ServerApp.SubApps.Serve
 		public ServeSubApp(List<Device> devices) : base()
 		{
 		}
+		
 
-        public override IStateBase Start()
+		public override IStateBase GetInitState()
         {
             return new DefaultState(200);
         }
-
-        public override void SubscribeToActions(Action<IAction> processAction)
-        {
-        }
+		
     }
 }

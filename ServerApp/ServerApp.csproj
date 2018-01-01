@@ -93,12 +93,39 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CVUTdb.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Data\Message.cs" />
     <Compile Include="Desert.cs">
       <DependentUpon>CVUTdb.tt</DependentUpon>
     </Compile>
     <Compile Include="Device.cs">
       <DependentUpon>CVUTdb.tt</DependentUpon>
     </Compile>
+    <Compile Include="Data\IMessage.cs" />
+    <Compile Include="Devices\Actions\ShowLayoutQtAction.cs" />
+    <Compile Include="Devices\Packets\BasePacket.cs" />
+    <Compile Include="Devices\Packets\BeepPacket.cs" />
+    <Compile Include="Devices\Actions\ButtonClickQtEvenAction.cs" />
+    <Compile Include="Devices\Actions\CardReadQtEventAction.cs" />
+    <Compile Include="Devices\ConnectionStatusEnum.cs" />
+    <Compile Include="Devices\Actions\IBeepAction.cs" />
+    <Compile Include="Devices\Actions\IInitAction.cs" />
+    <Compile Include="Devices\Actions\IModalWindowShowAction.cs" />
+    <Compile Include="Devices\Actions\InitAction.cs" />
+    <Compile Include="Devices\Packets\InitPacket.cs" />
+    <Compile Include="Devices\Actions\IShowLayoutAction.cs" />
+    <Compile Include="Devices\Actions\IShowMessageBoxAction.cs" />
+    <Compile Include="Devices\Actions\IStoreLayoutAction.cs" />
+    <Compile Include="Devices\Actions\ModalWindowCloseAction.cs" />
+    <Compile Include="Devices\Packets\ModalWindowClosePacket.cs" />
+    <Compile Include="Devices\Actions\ModalWindowShowAction.cs" />
+    <Compile Include="Devices\Packets\ModalWindowShowPacket.cs" />
+    <Compile Include="Devices\QtPacketParser.cs" />
+    <Compile Include="Devices\Packets\ShowLayoutPacket.cs" />
+    <Compile Include="Devices\Packets\ShowMessageBoxPacket.cs" />
+    <Compile Include="Devices\Actions\ShowMessageBoxQtAction.cs" />
+    <Compile Include="Devices\Actions\StoreLayoutAction.cs" />
+    <Compile Include="Devices\Packets\StoreLayoutPacket.cs" />
+    <Compile Include="Devices\TCPIPCommunicator.cs" />
     <Compile Include="Meal.cs">
       <DependentUpon>CVUTdb.tt</DependentUpon>
     </Compile>
@@ -110,13 +137,13 @@
     </Compile>
     <Compile Include="Data\ButtonClickAction.cs" />
     <Compile Include="Data\CardReadAction.cs" />
-    <Compile Include="Data\IAction.cs" />
+    <Compile Include="Devices\Actions\IAction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="SubApps\Inform\IInformSubApp.cs" />
     <Compile Include="SubApps\Inform\InformSubApp.cs" />
-    <Compile Include="SubApps\Inform\Rasllo.cs" />
+    <Compile Include="Devices\Rallo.cs" />
     <Compile Include="SubApps\Order\IOrderSubApp.cs" />
     <Compile Include="SubApps\Order\OrderSubApp.cs" />
     <Compile Include="SubApps\Serve\IServeSubApp.cs" />

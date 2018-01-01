@@ -1,4 +1,5 @@
 ﻿using ServerApp.Data;
+using ServerApp.Devices;
 using ServerApp.SubApps;
 using ServerApp.SubApps.Inform;
 using ServerApp.SubApps.Order;
@@ -24,6 +25,7 @@ namespace ServerApp
                 {
                     if (subApp.IsRunning)
                     {
+						Console.WriteLine($"Starting: {subApp.ApplicationType.Name}");
                         switch (subApp.ApplicationType.Name.TrimEnd(' '))
                         {
                             case "Inform":
@@ -43,18 +45,19 @@ namespace ServerApp
                         }
                     }
                 }
+			Console.WriteLine("All apps started");
         }
         private void RunSubApp(object o)
         {
             ISubApp subApp = o as ISubApp;
-            currState = subApp.Start();
-            subApp.SubscribeToActions(ProcessAction);
+            currState = subApp.GetInitState();
+            subApp.Init(ProcessAction);
             while (true)
             {
                 IStateBase newState = currState.ProcessTimerElapsed();
                 CheckNewState(newState);
-                Thread.Sleep(1000);
                 Console.WriteLine($"Running: {subApp.GetType()}");
+				Thread.Sleep(currState.TimeOut);
             }
         }
         private void ProcessAction(IAction action)

@@ -9,5 +9,6 @@ namespace ServerApp.SubApps.Shared.States
 		IStateBase ProcessCardReadAction(CardReadAction c);
 		IStateBase ProcessButtonClickAction(ButtonClickAction buttonClick);
 		void Exit();
+		int TimeOut {get;}
 	}
 }

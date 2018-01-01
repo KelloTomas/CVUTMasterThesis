@@ -7,9 +7,13 @@ namespace ServerApp.SubApps.Shared.States
 {
     public abstract class StateBase : IStateBase
     {
-        public StateBase(double timerPeriod)
+		int _timerPeriod;
+        public StateBase(int timerPeriod)
         {
+			_timerPeriod = timerPeriod;
         }
+
+		public int TimeOut => _timerPeriod;
 
 		public virtual void Enter()
 		{
@@ -19,18 +23,10 @@ namespace ServerApp.SubApps.Shared.States
 		{
 		}
 
-		public virtual void ProcessButtonClickAction()
-		{
-		}
-
         public virtual IStateBase ProcessButtonClickAction(ButtonClickAction buttonClick)
         {
             return null;
         }
-
-        public virtual void ProcessCardReadAction()
-		{
-		}
 
         public virtual IStateBase ProcessCardReadAction(CardReadAction c)
         {

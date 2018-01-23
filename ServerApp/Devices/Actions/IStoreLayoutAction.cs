@@ -1,6 +1,6 @@
-﻿namespace ServerApp.Devices
+﻿namespace ServerApp.Devices.Actions
 {
-	internal interface IStoreLayoutAction : IAction
+	public interface IStoreLayoutAction : IAction
 	{
 		string Id { get; }
 

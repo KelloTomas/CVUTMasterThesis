@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace ServerApp.Devices
+namespace ServerApp.Devices.Packets
 {
 	public class BasePacket
 	{
 		private string BaseTag;
 
-		public BasePacket(string baseTag = "RSI")
+		public BasePacket(string baseTag = "RLI")
 		{
 			BaseTag = baseTag;
 			Encoding = Encoding.GetEncoding("UTF-8");

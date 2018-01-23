@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_10" stretch="1,6">
    <property name="spacing">
-    <number>5</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -36,6 +36,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background:LightYellow</string>
      </property>
      <property name="class" stdset="0">
       <string>lightPanelStyle</string>
@@ -64,11 +67,18 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>25</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="text">
          <string>ClientName</string>
-        </property>
-        <property name="class" stdset="0">
-         <string>clientTextTitleStyle</string>
         </property>
        </widget>
       </item>
@@ -79,6 +89,11 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>25</pointsize>
+         </font>
         </property>
         <property name="text">
          <string>AccountBalance</string>
@@ -123,6 +138,11 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="font">
+            <font>
+             <pointsize>15</pointsize>
+            </font>
+           </property>
            <property name="text">
             <string>DateValue</string>
            </property>
@@ -141,6 +161,11 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>15</pointsize>
+            </font>
            </property>
            <property name="text">
             <string>TimeValue</string>
@@ -166,6 +191,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background:lightBlue</string>
      </property>
      <property name="class" stdset="0">
       <string>darkPanelStyle</string>
@@ -338,7 +366,7 @@
            <property name="class" stdset="0">
             <string>tableCell</string>
            </property>
-           <layout class="QGridLayout" name="row_2" columnstretch="1,2">           
+           <layout class="QGridLayout" name="row_2" columnstretch="1,2">
             <item row="0" column="1">
              <widget class="QLabel" name="ClientMealKind_2">
               <property name="sizePolicy">

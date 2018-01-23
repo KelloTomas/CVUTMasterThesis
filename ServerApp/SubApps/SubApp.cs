@@ -1,6 +1,8 @@
 ﻿using System;
-using ServerApp.Data;
+using System.Collections.Generic;
+using System.Linq;
 using ServerApp.Devices;
+using ServerApp.Devices.Actions;
 using ServerApp.SubApps.Shared.States;
 
 namespace ServerApp.SubApps
@@ -13,21 +15,17 @@ namespace ServerApp.SubApps
 
 		public bool Terminated { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-		public IStateBase ActualState => throw new NotImplementedException();
+		public IStateBase ActualState { get; set; }
 
 		public IStateBase IdleState => throw new NotImplementedException();
 
-		public void ProcessAction(IAction action)
-		{
-			throw new NotImplementedException();
-		}
 
 		public virtual IStateBase GetInitState()
         {
             throw new NotImplementedException();
         }
 
-		public virtual void Init(Action<IAction> processAction)
+		public virtual void Init()
 		{
 			throw new NotImplementedException();
 		}
@@ -35,6 +33,45 @@ namespace ServerApp.SubApps
 		IStateBase ISubApp.GetInitState()
 		{
 			throw new NotImplementedException();
+		}
+
+		public virtual IEnumerable<IStoreLayoutAction> GetStoreLayoutActions()
+		{
+			return Enumerable.Empty<IStoreLayoutAction>();
+		}
+
+		public void ProcessAction(IAction action)
+		{
+			bool forceCallStateMethod = false;
+			IStateBase newState = ActualState.ProcessAction(action, ref forceCallStateMethod);
+			if(!CheckNewState(newState))
+				if (forceCallStateMethod)
+					ActualState.ProcessTimerElapsed();
+		}
+
+		public IEnumerable<IAction> InitActions
+		{
+			get
+			{
+
+				// pote az cele obrazovky, ktere jiz mohou vyuzivat ulozene fragmenty
+				foreach (IStoreLayoutAction storeLayoutAction in GetStoreLayoutActions())
+				{
+					yield return storeLayoutAction;
+				}
+			}
+		}
+
+		public bool CheckNewState(IStateBase newState)
+		{
+			if (newState != ActualState)
+			{
+				ActualState?.Exit();
+				newState.Enter();
+				ActualState = newState;
+				return true;
+			}
+			return false;
 		}
 	}
 }

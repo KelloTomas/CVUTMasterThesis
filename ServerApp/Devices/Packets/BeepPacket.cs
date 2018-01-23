@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using ServerApp.Devices.Actions;
+using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace ServerApp.Devices
+namespace ServerApp.Devices.Packets
 {
 	internal class BeepPacket : BasePacket
 	{

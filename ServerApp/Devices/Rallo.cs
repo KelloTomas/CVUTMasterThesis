@@ -1,10 +1,9 @@
-﻿using ServerApp.Data;
+﻿using ServerApp.Devices.Actions;
+using ServerApp.Devices.Packets;
 using ServerApp.SubApps;
 using System;
 using System.Collections.Generic;
-using System.Net.Sockets;
-using System.Text;
-using System.Text.RegularExpressions;
+using System.Linq;
 using System.Threading;
 
 namespace ServerApp.Devices
@@ -23,8 +22,9 @@ namespace ServerApp.Devices
 		#endregion
 
 		#region constructors...		
-		public Rallo()
+		public Rallo(ISubApp subApp)
 		{
+			this.subApp = subApp;
 			_packetParser = new QtPacketParser();
 		}
 		#endregion
@@ -167,7 +167,7 @@ namespace ServerApp.Devices
 		{
 			while (true)
 			{
-				int start = msg.IndexOf("<RSO>");
+				int start = msg.IndexOf("<RLO>");
 				if (start == -1)
 				{
 					return;
@@ -176,7 +176,7 @@ namespace ServerApp.Devices
 				{
 					msg = msg.Remove(0, start);
 				}
-				int end = msg.IndexOf("</RSO>");
+				int end = msg.IndexOf("</RLO>");
 				if (end == -1)
 				{
 					return;
@@ -227,29 +227,10 @@ namespace ServerApp.Devices
 
 		#region private methods...
 
-		public IEnumerable<IAction> InitActions
-		{
-			get
-			{
-				// nejprve vymazu vsechny layuty v terminalu
-				yield return new InitAction();
-
-				// pote az cele obrazovky, ktere jiz mohou vyuzivat ulozene fragmenty
-				foreach (IStoreLayoutAction storeLayoutAction in GetStoreLayoutActions())
-				{
-					yield return storeLayoutAction;
-				}
-			}
-		}
-
-		private IEnumerable<IStoreLayoutAction> GetStoreLayoutActions()
-		{
-			yield return new StoreLayoutAction("ToDo", "ToDo");
-		}
 
 		private bool InitTerminal()
 		{
-			foreach (IAction initAction in InitActions)
+			foreach (IAction initAction in subApp.InitActions)
 			{
 				// send data
 				if (!_tcpipCommunicator.Send(GetPacket(initAction).GetData()))

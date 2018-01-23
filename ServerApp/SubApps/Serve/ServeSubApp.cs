@@ -1,10 +1,8 @@
-﻿using ServerApp.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using ServerApp.SubApps.Shared.States;
-using ServerApp.Devices;
 
 namespace ServerApp.SubApps.Serve
 {

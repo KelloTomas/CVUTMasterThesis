@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace ServerApp.Devices
+namespace ServerApp.Devices.Packets
 {
 	internal class ModalWindowClosePacket : BasePacket
 	{

@@ -1,6 +1,7 @@
-﻿using System.Xml.Linq;
+﻿using ServerApp.Devices.Actions;
+using System.Xml.Linq;
 
-namespace ServerApp.Devices
+namespace ServerApp.Devices.Packets
 {
 	internal class StoreLayoutPacket : BasePacket
 	{

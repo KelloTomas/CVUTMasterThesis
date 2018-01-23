@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Linq;
 
-namespace ServerApp.Devices
+namespace ServerApp.Devices.Packets
 {
 	internal class InitPacket : BasePacket
 	{

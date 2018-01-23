@@ -1,5 +1,5 @@
-﻿using ServerApp.Data;
-using ServerApp.Devices;
+﻿using ServerApp.Devices;
+using ServerApp.Devices.Actions;
 using ServerApp.SubApps;
 using ServerApp.SubApps.Inform;
 using ServerApp.SubApps.Order;
@@ -49,40 +49,15 @@ namespace ServerApp
         }
         private void RunSubApp(object o)
         {
-            ISubApp subApp = o as ISubApp;
+            SubApp subApp = o as SubApp;
             currState = subApp.GetInitState();
-            subApp.Init(ProcessAction);
+            subApp.Init();
             while (true)
             {
                 IStateBase newState = currState.ProcessTimerElapsed();
-                CheckNewState(newState);
-                Console.WriteLine($"Running: {subApp.GetType()}");
+				subApp.CheckNewState(newState);
+                Console.WriteLine($"TimeElapsed: {subApp.GetType()}");
 				Thread.Sleep(currState.TimeOut);
-            }
-        }
-        private void ProcessAction(IAction action)
-        {
-            IStateBase newState;
-            switch (action)
-            {
-                case ButtonClickAction b:
-                    newState = currState.ProcessButtonClickAction(b);
-                    break;
-                case CardReadAction c:
-                    newState = currState.ProcessCardReadAction(c);
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            CheckNewState(newState);
-        }
-        private void CheckNewState(IStateBase newState)
-        {
-            if (newState != null)
-            {
-                currState.Exit();
-                newState.Enter();
-                currState = newState;
             }
         }
     }

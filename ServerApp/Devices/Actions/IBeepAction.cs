@@ -1,4 +1,4 @@
-﻿namespace ServerApp.Devices
+﻿namespace ServerApp.Devices.Actions
 {
 	internal interface IBeepAction
 	{

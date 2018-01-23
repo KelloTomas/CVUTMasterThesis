@@ -1,6 +1,4 @@
-﻿using ServerApp.Data;
-
-namespace ServerApp.Devices
+﻿namespace ServerApp.Devices.Actions
 {
 	internal class InitAction : IInitAction
 	{

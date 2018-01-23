@@ -9,8 +9,9 @@ namespace ServerApp.SubApps.Shared.Layouts
     public class LayoutBase : ILayout
     {
         public LayoutBase()
-        {
-        }
+		{
+			Name = "ly" + GetType().Name;
+		}
 
         public string GetLayout()
         {

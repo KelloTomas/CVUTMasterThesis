@@ -1,6 +1,6 @@
 ﻿using ServerApp.SubApps.Shared.Data;
 
-namespace ServerApp.Devices
+namespace ServerApp.Devices.Actions
 {
 	internal interface IShowLayoutAction : IAction
 	{

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Globalization;
-using ServerApp.Data;
+using ServerApp.Devices.Actions;
 
 namespace ServerApp.Devices
 {
@@ -13,7 +13,7 @@ namespace ServerApp.Devices
 		{
 			using (XmlReader xmlReader = XmlReader.Create(new StringReader(message)))
 			{
-				if (xmlReader.ReadToFollowing("RSO"))
+				if (xmlReader.ReadToFollowing("RLO"))
 				{
 					while (xmlReader.Read())
 					{
@@ -23,12 +23,12 @@ namespace ServerApp.Devices
 							if (xmlReader.Name == "ButtonClick")
 							{
 								string id = xmlReader.GetAttribute("Id");
-								yield return new ButtonClickQtEvenAction(id, timeStamp);
+								yield return new ButtonClickAction(id, timeStamp);
 							}
 							else if (xmlReader.Name == "CardRead")
 							{
 								string number = xmlReader.GetAttribute("Number");
-								yield return new CardReadQtEventAction(number, timeStamp);
+								yield return new CardReadAction(number, timeStamp);
 							}
 							else if (xmlReader.Name == "Error")
 							{

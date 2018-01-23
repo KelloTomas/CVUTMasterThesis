@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,6">
    <property name="spacing">
-    <number>5</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -37,10 +37,13 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background:LightYellow</string>
+     </property>
      <property name="class" stdset="0">
       <string>lightPanelStyle</string>
      </property>
-     <layout class="QHBoxLayout" name="titleLayout" stretch="4,2,1">
+     <layout class="QHBoxLayout" name="titleLayout" stretch="6,1">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -64,30 +67,18 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>25</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
          <string>TitleValue</string>
         </property>
         <property name="class" stdset="0">
          <string>clientTextTitleStyle</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="AccountBalance">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>AccountBalance</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-        <property name="class" stdset="0">
-         <string>clientAccountBalanceStyle</string>
         </property>
        </widget>
       </item>
@@ -123,6 +114,11 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="font">
+            <font>
+             <pointsize>15</pointsize>
+            </font>
+           </property>
            <property name="text">
             <string>DateValue</string>
            </property>
@@ -141,6 +137,11 @@
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>15</pointsize>
+            </font>
            </property>
            <property name="text">
             <string>TimeValue</string>
@@ -167,6 +168,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background:lightBlue</string>
+     </property>
      <property name="class" stdset="0">
       <string>darkPanelStyle</string>
      </property>
@@ -179,8 +183,13 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>80</pointsize>
+         </font>
+        </property>
         <property name="text">
-         <string>ContentValue</string>
+         <string>Prilozte kartu</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -190,6 +199,19 @@
         </property>
         <property name="class" stdset="0">
          <string>clientTextContentStyle</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>PushButton</string>
         </property>
        </widget>
       </item>

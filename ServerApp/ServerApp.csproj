@@ -93,19 +93,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CVUTdb.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Data\Message.cs" />
+    <Compile Include="Devices\Actions\Message.cs" />
     <Compile Include="Desert.cs">
       <DependentUpon>CVUTdb.tt</DependentUpon>
     </Compile>
     <Compile Include="Device.cs">
       <DependentUpon>CVUTdb.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\IMessage.cs" />
+    <Compile Include="Devices\Actions\IMessage.cs" />
     <Compile Include="Devices\Actions\ShowLayoutQtAction.cs" />
     <Compile Include="Devices\Packets\BasePacket.cs" />
     <Compile Include="Devices\Packets\BeepPacket.cs" />
-    <Compile Include="Devices\Actions\ButtonClickQtEvenAction.cs" />
-    <Compile Include="Devices\Actions\CardReadQtEventAction.cs" />
     <Compile Include="Devices\ConnectionStatusEnum.cs" />
     <Compile Include="Devices\Actions\IBeepAction.cs" />
     <Compile Include="Devices\Actions\IInitAction.cs" />
@@ -135,8 +133,8 @@
     <Compile Include="Order.cs">
       <DependentUpon>CVUTdb.tt</DependentUpon>
     </Compile>
-    <Compile Include="Data\ButtonClickAction.cs" />
-    <Compile Include="Data\CardReadAction.cs" />
+    <Compile Include="Devices\Actions\ButtonClickAction.cs" />
+    <Compile Include="Devices\Actions\CardReadAction.cs" />
     <Compile Include="Devices\Actions\IAction.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -213,10 +211,11 @@
     <None Include="SubApps\Inform\QtStyleSheet.style" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SubApps\Inform\Layouts\CardScannedLayout.ui" />
-    <Content Include="SubApps\Inform\Layouts\ScanCardLayout.ui" />
+    <EmbeddedResource Include="SubApps\Inform\Layouts\CardScannedLayout.ui" />
+    <EmbeddedResource Include="SubApps\Inform\Layouts\ScanCardLayout.ui" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Data\" />
     <Folder Include="SubApps\Order\Layouts\" />
     <Folder Include="SubApps\Order\States\" />
     <Folder Include="SubApps\Serve\Layouts\" />

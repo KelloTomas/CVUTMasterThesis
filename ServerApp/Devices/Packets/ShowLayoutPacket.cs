@@ -1,8 +1,9 @@
-﻿using ServerApp.SubApps.Shared.Data;
+﻿using ServerApp.Devices.Actions;
+using ServerApp.SubApps.Shared.Data;
 using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace ServerApp.Devices
+namespace ServerApp.Devices.Packets
 {
 	internal class ShowLayoutPacket : BasePacket
 	{

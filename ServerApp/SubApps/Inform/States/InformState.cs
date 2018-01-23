@@ -3,9 +3,10 @@ using System;
 using System.Linq;
 using System.Timers;
 using ServerApp.SubApps.Shared.States;
-using ServerApp.Data;
 using ServerApp.Devices;
 using ServerApp.SubApps.Shared.Data;
+using ServerApp.SubApps.Shared.Layouts;
+using ServerApp.Devices.Actions;
 
 namespace ServerApp.SubApps.Inform.States
 {
@@ -14,12 +15,14 @@ namespace ServerApp.SubApps.Inform.States
 
 		#region private fields...
 		InformSubApp app;
+		LayoutBase layout;
 		#endregion
 
 		#region constructors...
 		public InformState(InformSubApp subApp, int timeout) : base(timeout)
 		{
 			app = subApp;
+			layout = app.ScanCardLayout;
 		}
 		#endregion
 		public override IStateBase ProcessTimerElapsed()
@@ -27,11 +30,18 @@ namespace ServerApp.SubApps.Inform.States
 			Console.WriteLine("ToDo processs time elapsed");
 			List<IAction> action = new List<IAction>
 				{
-					new ShowLayoutAction("TestToDo", SetDateTimeToNow().ToArray())
+					new ShowLayoutAction(layout.Name, SetDateTimeToNow().ToArray())
 				};
-			app.rallo.SendMessage(new Message(action.ToArray()));
+			app.Rallo.SendMessage(new Message(action.ToArray()));
+			layout = app.ScanCardLayout;
 			return this;
 		}
+		public override IStateBase ProcessButtonClickAction(ButtonClickAction button, ref bool forceCallStateMethod)
+		{
+			layout = app.CardScannedLayout;
+			return base.ProcessButtonClickAction(button, ref forceCallStateMethod);
+		}
+
 		public IEnumerable<ModifyLayoutItem> SetDateTimeToNow()
 		{
 			return SetDateTimeTo(DateTime.Now);

@@ -1,8 +1,4 @@
-﻿using ServerApp.Data;
-using ServerApp.Devices;
-using System.Collections.Generic;
-
-namespace ServerApp.Data
+﻿namespace ServerApp.Devices.Actions
 {
 	/// <summary>
 	/// Rozhraní pro zprávu.

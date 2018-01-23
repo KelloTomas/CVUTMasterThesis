@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ServerApp.Devices
+namespace ServerApp.Devices.Actions
 {
 	internal class StoreLayoutAction : IStoreLayoutAction
 	{

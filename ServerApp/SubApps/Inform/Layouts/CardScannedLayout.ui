@@ -13,9 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_10" stretch="1,6">
+  <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,6">
    <property name="spacing">
-    <number>0</number>
+    <number>5</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -38,7 +38,7 @@
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">background:LightYellow</string>
+      <string notr="true">background:Gray</string>
      </property>
      <property name="class" stdset="0">
       <string>lightPanelStyle</string>
@@ -75,7 +75,7 @@
          </font>
         </property>
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">color:white</string>
         </property>
         <property name="text">
          <string>ClientName</string>
@@ -95,14 +95,14 @@
           <pointsize>25</pointsize>
          </font>
         </property>
+        <property name="styleSheet">
+         <string notr="true">color:white</string>
+        </property>
         <property name="text">
          <string>AccountBalance</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-        <property name="class" stdset="0">
-         <string>clientAccountBalanceStyle</string>
         </property>
        </widget>
       </item>
@@ -143,14 +143,14 @@
              <pointsize>15</pointsize>
             </font>
            </property>
+           <property name="styleSheet">
+            <string notr="true">color:white</string>
+           </property>
            <property name="text">
             <string>DateValue</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
-           </property>
-           <property name="class" stdset="0">
-            <string>dateStyle</string>
            </property>
           </widget>
          </item>
@@ -167,14 +167,14 @@
              <pointsize>15</pointsize>
             </font>
            </property>
+           <property name="styleSheet">
+            <string notr="true">color:white</string>
+           </property>
            <property name="text">
             <string>TimeValue</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
-           </property>
-           <property name="class" stdset="0">
-            <string>timeStyle</string>
            </property>
           </widget>
          </item>
@@ -193,14 +193,14 @@
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">background:lightBlue</string>
+      <string notr="true">background:gray</string>
      </property>
      <property name="class" stdset="0">
       <string>darkPanelStyle</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0">
       <property name="spacing">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="leftMargin">
        <number>13</number>
@@ -215,7 +215,10 @@
        <number>13</number>
       </property>
       <item>
-       <widget class="QWidget" name="_tableLayout" native="true">
+       <widget class="QWidget" name="_tableLayout_0" native="true">
+        <property name="styleSheet">
+         <string notr="true">background:brown</string>
+        </property>
         <property name="class" stdset="0">
          <string>tableBgStyle</string>
         </property>
@@ -240,52 +243,25 @@
            <property name="class" stdset="0">
             <string>tableCell</string>
            </property>
-           <layout class="QGridLayout" name="row_0" columnstretch="1,2">
-            <item row="0" column="1">
-             <widget class="QLabel" name="ClientMealKind_0">
+           <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,1,4,4,4">
+            <item>
+             <widget class="QLabel" name="Date_0">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text">
-               <string>MeakKind</string>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
               </property>
-              <property name="class" stdset="0">
-               <string>servedMealsListMealKindStyle</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0" colspan="2">
-             <widget class="QLabel" name="ClientMealAlt_0">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
               </property>
               <property name="text">
-               <string>MealAltCode</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="class" stdset="0">
-               <string>servedMealsListMealAltStyle</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="CanteenName_0">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>CanteenName</string>
+               <string>+Date+</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -295,104 +271,149 @@
               </property>
              </widget>
             </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QWidget" name="_row_1" native="true">
-           <property name="class" stdset="0">
-            <string>tableCell</string>
-           </property>
-           <layout class="QGridLayout" name="row_1" columnstretch="1,2">
-            <item row="0" column="1">
-             <widget class="QLabel" name="ClientMealKind_1">
+            <item>
+             <widget class="QLabel" name="IdMenu_0">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
               <property name="text">
-               <string>MeakKind</string>
+               <string>+ID+</string>
               </property>
               <property name="class" stdset="0">
                <string>servedMealsListMealKindStyle</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="CanteenName_1">
+            <item>
+             <widget class="QLabel" name="Soup_0">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
               <property name="text">
-               <string>CanteenName</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="class" stdset="0">
-               <string>servedMealsListCanteenStyle</string>
+               <string>+Polievka+</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="0" colspan="2">
-             <widget class="QLabel" name="ClientMealAlt_1">
+            <item>
+             <widget class="QLabel" name="Meal_0">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
               <property name="text">
-               <string>MealAltCode</string>
+               <string>+Jedlo+</string>
               </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Desert_0">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
-              <property name="class" stdset="0">
-               <string>servedMealsListMealAltStyle</string>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Dezert+</string>
               </property>
              </widget>
             </item>
            </layout>
           </widget>
          </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="_tableLayout_2" native="true">
+        <property name="styleSheet">
+         <string notr="true">background:brown</string>
+        </property>
+        <property name="class" stdset="0">
+         <string>tableBgStyle</string>
+        </property>
+        <layout class="QVBoxLayout" name="tableLayout_4">
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <property name="leftMargin">
+          <number>2</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>2</number>
+         </property>
+         <property name="bottomMargin">
+          <number>2</number>
+         </property>
          <item>
           <widget class="QWidget" name="_row_2" native="true">
            <property name="class" stdset="0">
             <string>tableCell</string>
            </property>
-           <layout class="QGridLayout" name="row_2" columnstretch="1,2">
-            <item row="0" column="1">
-             <widget class="QLabel" name="ClientMealKind_2">
+           <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="3,1,4,4,4">
+            <item>
+             <widget class="QLabel" name="Date_2">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text">
-               <string>MeakKind</string>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
               </property>
-              <property name="class" stdset="0">
-               <string>servedMealsListMealKindStyle</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="CanteenName_2">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
               </property>
               <property name="text">
-               <string>CanteenName</string>
+               <string>+Date+</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -402,60 +423,149 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="0" colspan="2">
-             <widget class="QLabel" name="ClientMealAlt_2">
+            <item>
+             <widget class="QLabel" name="IdMenu_2">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text">
-               <string>MealAltCode</string>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
               </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+ID+</string>
               </property>
               <property name="class" stdset="0">
-               <string>servedMealsListMealAltStyle</string>
+               <string>servedMealsListMealKindStyle</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Soup_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Polievka+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Meal_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Jedlo+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Desert_2">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Dezert+</string>
               </property>
              </widget>
             </item>
            </layout>
           </widget>
          </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="_tableLayout_1" native="true">
+        <property name="styleSheet">
+         <string notr="true">background:brown</string>
+        </property>
+        <property name="class" stdset="0">
+         <string>tableBgStyle</string>
+        </property>
+        <layout class="QVBoxLayout" name="tableLayout_2">
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <property name="leftMargin">
+          <number>2</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>2</number>
+         </property>
+         <property name="bottomMargin">
+          <number>2</number>
+         </property>
          <item>
-          <widget class="QWidget" name="_row_3" native="true">
+          <widget class="QWidget" name="_row_1" native="true">
            <property name="class" stdset="0">
             <string>tableCell</string>
            </property>
-           <layout class="QGridLayout" name="row_3" columnstretch="1,2">
-            <item row="0" column="1">
-             <widget class="QLabel" name="ClientMealKind_3">
+           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="3,1,4,4,4">
+            <item>
+             <widget class="QLabel" name="Date_1">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <property name="text">
-               <string>MeakKind</string>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
               </property>
-              <property name="class" stdset="0">
-               <string>servedMealsListMealKindStyle</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="CanteenName_3">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
               </property>
               <property name="text">
-               <string>CanteenName</string>
+               <string>+Date+</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -465,22 +575,548 @@
               </property>
              </widget>
             </item>
-            <item row="1" column="0" colspan="2">
-             <widget class="QLabel" name="ClientMealAlt_3">
+            <item>
+             <widget class="QLabel" name="IdMenu_1">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
               <property name="text">
-               <string>MealAltCode</string>
+               <string>+ID+</string>
+              </property>
+              <property name="class" stdset="0">
+               <string>servedMealsListMealKindStyle</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Soup_1">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Polievka+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Meal_1">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Jedlo+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Desert_1">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Dezert+</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="_tableLayout_3" native="true">
+        <property name="styleSheet">
+         <string notr="true">background:brown</string>
+        </property>
+        <property name="class" stdset="0">
+         <string>tableBgStyle</string>
+        </property>
+        <layout class="QVBoxLayout" name="tableLayout_3">
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <property name="leftMargin">
+          <number>2</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>2</number>
+         </property>
+         <property name="bottomMargin">
+          <number>2</number>
+         </property>
+         <item>
+          <widget class="QWidget" name="_row_3" native="true">
+           <property name="class" stdset="0">
+            <string>tableCell</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="3,1,4,4,4">
+            <item>
+             <widget class="QLabel" name="Date_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Date+</string>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
               <property name="class" stdset="0">
-               <string>servedMealsListMealAltStyle</string>
+               <string>servedMealsListCanteenStyle</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="IdMenu_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+ID+</string>
+              </property>
+              <property name="class" stdset="0">
+               <string>servedMealsListMealKindStyle</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Soup_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Polievka+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Meal_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Jedlo+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Desert_3">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Dezert+</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="_tableLayout_4" native="true">
+        <property name="styleSheet">
+         <string notr="true">background:brown</string>
+        </property>
+        <property name="class" stdset="0">
+         <string>tableBgStyle</string>
+        </property>
+        <layout class="QVBoxLayout" name="tableLayout_5">
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <property name="leftMargin">
+          <number>2</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>2</number>
+         </property>
+         <property name="bottomMargin">
+          <number>2</number>
+         </property>
+         <item>
+          <widget class="QWidget" name="_row_4" native="true">
+           <property name="class" stdset="0">
+            <string>tableCell</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="3,1,4,4,4">
+            <item>
+             <widget class="QLabel" name="Date_4">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Date+</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="class" stdset="0">
+               <string>servedMealsListCanteenStyle</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="IdMenu_4">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+ID+</string>
+              </property>
+              <property name="class" stdset="0">
+               <string>servedMealsListMealKindStyle</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Soup_4">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Polievka+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Meal_4">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Jedlo+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Desert_4">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Dezert+</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="_tableLayout_5" native="true">
+        <property name="styleSheet">
+         <string notr="true">background:brown</string>
+        </property>
+        <property name="class" stdset="0">
+         <string>tableBgStyle</string>
+        </property>
+        <layout class="QVBoxLayout" name="tableLayout_6">
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <property name="leftMargin">
+          <number>2</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
+         <property name="rightMargin">
+          <number>2</number>
+         </property>
+         <property name="bottomMargin">
+          <number>2</number>
+         </property>
+         <item>
+          <widget class="QWidget" name="_row_5" native="true">
+           <property name="class" stdset="0">
+            <string>tableCell</string>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="3,1,4,4,4">
+            <item>
+             <widget class="QLabel" name="Date_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Date+</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="class" stdset="0">
+               <string>servedMealsListCanteenStyle</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="IdMenu_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+                <weight>75</weight>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+ID+</string>
+              </property>
+              <property name="class" stdset="0">
+               <string>servedMealsListMealKindStyle</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Soup_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Polievka+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Meal_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Jedlo+</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="Desert_5">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>15</pointsize>
+               </font>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">color:white</string>
+              </property>
+              <property name="text">
+               <string>+Dezert+</string>
               </property>
              </widget>
             </item>

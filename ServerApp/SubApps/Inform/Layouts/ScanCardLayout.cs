@@ -15,40 +15,11 @@ namespace ServerApp.SubApps.Inform.Layouts
         }
 		#endregion
 
-		#region public class...
-		public static class Layouts
-		{
-			public static class Title
-			{
-				public static string Name = "titleLayout";
-				public static string ShowAccountBalance(bool show)
-				{
-					return show ? "4,2,1" : "6,0,1";
-				}
-			}
-		}
-		public static class Labels
-		{
-			public static string TitleValue = "TitleValue";
-			public static string ContentValue = "ContentValue";
-			public static string AccountBalance = "AccountBalance";
-		}
-		#endregion
-
 		#region public methods...
-		public IEnumerable<ModifyLayoutItem> SetTexts(string pageTitle, decimal? accountBalance, string message)
+		public IEnumerable<ModifyLayoutItem> SetTexts(string pageTitle, string message)
 		{
-			yield return new ModifyLayoutItem(Labels.TitleValue, "text", pageTitle);
-			if (accountBalance == null)
-			{
-				yield return new ModifyLayoutItem(Layouts.Title.Name, "stretch", Layouts.Title.ShowAccountBalance(false));
-			}
-			else
-			{
-				yield return new ModifyLayoutItem(Layouts.Title.Name, "stretch", Layouts.Title.ShowAccountBalance(true));
-				yield return new ModifyLayoutItem(Labels.AccountBalance, "text", "85");
-			}
-			yield return new ModifyLayoutItem(Labels.ContentValue, "text", message);
+			yield return new ModifyLayoutItem("TitleValue", "text", pageTitle);
+			yield return new ModifyLayoutItem("ContentValue", "text", message);
 		}
 		#endregion
 	}

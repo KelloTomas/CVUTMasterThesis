@@ -8,7 +8,6 @@ namespace ServerApp.SubApps
 	public interface ISubApp
 	{
 		IStateBase GetInitState();
-        void Init();
 		void ProcessAction(IAction action);
 
 		/// <summary>

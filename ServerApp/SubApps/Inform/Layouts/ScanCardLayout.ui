@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>830</width>
-    <height>524</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,6">
    <property name="spacing">
-    <number>0</number>
+    <number>5</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -38,7 +38,7 @@
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">background:LightYellow</string>
+      <string notr="true">background:Gray</string>
      </property>
      <property name="class" stdset="0">
       <string>lightPanelStyle</string>
@@ -73,6 +73,9 @@
           <weight>75</weight>
           <bold>true</bold>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:white</string>
         </property>
         <property name="text">
          <string>TitleValue</string>
@@ -119,6 +122,9 @@
              <pointsize>15</pointsize>
             </font>
            </property>
+           <property name="styleSheet">
+            <string notr="true">color:white</string>
+           </property>
            <property name="text">
             <string>DateValue</string>
            </property>
@@ -142,6 +148,9 @@
             <font>
              <pointsize>15</pointsize>
             </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:white</string>
            </property>
            <property name="text">
             <string>TimeValue</string>
@@ -169,7 +178,7 @@
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">background:lightBlue</string>
+      <string notr="true">background:Gray</string>
      </property>
      <property name="class" stdset="0">
       <string>darkPanelStyle</string>
@@ -188,8 +197,11 @@
           <pointsize>80</pointsize>
          </font>
         </property>
+        <property name="styleSheet">
+         <string notr="true">color:white</string>
+        </property>
         <property name="text">
-         <string>Prilozte kartu</string>
+         <string>XXXXXXXXXXXXX</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -199,19 +211,6 @@
         </property>
         <property name="class" stdset="0">
          <string>clientTextContentStyle</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButton">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>PushButton</string>
         </property>
        </widget>
       </item>

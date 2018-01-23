@@ -1,6 +1,7 @@
 ﻿using ServerApp.Devices.Actions;
 using ServerApp.Devices.Packets;
 using ServerApp.SubApps;
+using ServerApp.SubApps.Shared.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -243,37 +244,24 @@ namespace ServerApp.Devices
 
 		public BasePacket GetPacket(IAction action)
 		{
-			if (action is IInitAction)
+			switch (action)
 			{
-				return new InitPacket();
-			}
-			else if (action is IStoreLayoutAction)
-			{
-				return new StoreLayoutPacket((IStoreLayoutAction)action);
-			}
-			else if (action is IShowLayoutAction)
-			{
-				return new ShowLayoutPacket((IShowLayoutAction)action);
-			}
-			else if (action is IBeepAction)
-			{
-				return new BeepPacket((IBeepAction)action);
-			}
-			else if (action is ShowMessageBoxAction)
-			{
-				return new ShowMessageBoxPacket((IShowMessageBoxAction)action);
-			}
-			else if (action is ModalWindowShowAction)
-			{
-				return new ModalWindowShowPacket((IModalWindowShowAction)action);
-			}
-			else if (action is ModalWindowCloseAction)
-			{
-				return new ModalWindowClosePacket();
-			}
-			else
-			{
-				throw new ArgumentOutOfRangeException("type", action.GetType(), "Neznamy typ akce");
+				case IInitAction a:
+					return new InitPacket();
+				case IStoreLayoutAction a:
+					return new StoreLayoutPacket(a);
+				case IShowLayoutAction a:
+					return new ShowLayoutPacket(a);
+				case IBeepAction a:
+					return new BeepPacket(a);
+				case IShowMessageBoxAction a:
+					return new ShowMessageBoxPacket(a);
+				case IModalWindowShowAction a:
+					return new ModalWindowShowPacket(a);
+				case IModalWindowCloseAction a:
+					return new ModalWindowClosePacket();
+				default:
+					throw new ArgumentOutOfRangeException("type", action.GetType(), "Neznamy typ akce");
 			}
 		}
 		#endregion

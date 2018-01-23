@@ -7,6 +7,7 @@ using ServerApp.Devices;
 using ServerApp.SubApps.Shared.Data;
 using ServerApp.SubApps.Shared.Layouts;
 using ServerApp.Devices.Actions;
+using ServerApp.SubApps.Inform.Layouts;
 
 namespace ServerApp.SubApps.Inform.States
 {
@@ -16,10 +17,12 @@ namespace ServerApp.SubApps.Inform.States
 		#region private fields...
 		InformSubApp app;
 		LayoutBase layout;
+		Client client;
+		private string clientMsg = null;
 		#endregion
 
 		#region constructors...
-		public InformState(InformSubApp subApp, int timeout) : base(timeout)
+		public InformState(InformSubApp subApp) : base(10000)
 		{
 			app = subApp;
 			layout = app.ScanCardLayout;
@@ -27,19 +30,57 @@ namespace ServerApp.SubApps.Inform.States
 		#endregion
 		public override IStateBase ProcessTimerElapsed()
 		{
-			Console.WriteLine("ToDo processs time elapsed");
-			List<IAction> action = new List<IAction>
-				{
-					new ShowLayoutAction(layout.Name, SetDateTimeToNow().ToArray())
-				};
+			List<IAction> action;
+			switch (layout)
+			{
+				case ScanCardLayout scanCard:
+					action = new List<IAction>
+					{
+						new ShowLayoutAction(scanCard.Name,
+						SetDateTimeToNow()
+						.Concat
+							(scanCard.SetTexts(" ", clientMsg??"Prilozte kartu"))
+						.ToArray())
+					};
+					break;
+				case CardScannedLayout cardScanned:
+					action = new List<IAction>
+					{
+						new ShowLayoutAction(cardScanned.Name,
+						SetDateTimeToNow()
+						.Concat
+							(cardScanned.SetMeals(client))
+						.ToArray()),
+					};
+					break;
+				default:
+					action = new List<IAction>();
+					break;
+			}
 			app.Rallo.SendMessage(new Message(action.ToArray()));
 			layout = app.ScanCardLayout;
+			clientMsg = null;
 			return this;
 		}
 		public override IStateBase ProcessButtonClickAction(ButtonClickAction button, ref bool forceCallStateMethod)
 		{
 			layout = app.CardScannedLayout;
-			return base.ProcessButtonClickAction(button, ref forceCallStateMethod);
+			return this;
+		}
+
+		public override IStateBase ProcessCardReadAction(CardReadAction card, ref bool forceCallStateMethod)
+		{
+			client = app.db.Cards.Where(c => c.CardNumber == card.CardNumber).FirstOrDefault()?.Client;
+			if (client == null)
+			{
+				clientMsg = "Neznama karta";
+			}
+			else
+			{
+				layout = app.CardScannedLayout;
+			}
+			forceCallStateMethod = true;
+			return this;
 		}
 
 		public IEnumerable<ModifyLayoutItem> SetDateTimeToNow()

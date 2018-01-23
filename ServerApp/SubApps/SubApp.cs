@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using ServerApp.Devices;
 using ServerApp.Devices.Actions;
 using ServerApp.SubApps.Shared.States;
@@ -9,8 +10,28 @@ namespace ServerApp.SubApps
 {
 	public class SubApp : ISubApp
 	{
+		public CVUTdbEntities db = new CVUTdbEntities();
+		private Timer t;
+
 		public SubApp()
 		{
+		}
+
+		public void Start()
+		{
+			ActualState = GetInitState();
+			t = new Timer();
+			t.Elapsed += timerElapsed;
+			t.AutoReset = true;
+			t.Interval = ActualState.TimeOut;
+			t.Start();
+			CheckNewState(ActualState.ProcessTimerElapsed());
+		}
+
+		private void timerElapsed(object sender, ElapsedEventArgs e)
+		{
+			Console.WriteLine($"TimeElapsed: {GetType()}");
+			CheckNewState(ActualState.ProcessTimerElapsed());
 		}
 
 		public bool Terminated { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -21,11 +42,6 @@ namespace ServerApp.SubApps
 
 
 		public virtual IStateBase GetInitState()
-        {
-            throw new NotImplementedException();
-        }
-
-		public virtual void Init()
 		{
 			throw new NotImplementedException();
 		}
@@ -44,9 +60,13 @@ namespace ServerApp.SubApps
 		{
 			bool forceCallStateMethod = false;
 			IStateBase newState = ActualState.ProcessAction(action, ref forceCallStateMethod);
-			if(!CheckNewState(newState))
+			if (!CheckNewState(newState))
 				if (forceCallStateMethod)
+				{
 					ActualState.ProcessTimerElapsed();
+					t.Stop();
+					t.Start();
+				}
 		}
 
 		public IEnumerable<IAction> InitActions

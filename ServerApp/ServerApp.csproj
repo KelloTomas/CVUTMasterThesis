@@ -93,6 +93,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CVUTdb.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Data\DbData.cs" />
+    <Compile Include="Devices\Actions\IModalWindowCloseAction.cs" />
     <Compile Include="Devices\Actions\Message.cs" />
     <Compile Include="Desert.cs">
       <DependentUpon>CVUTdb.tt</DependentUpon>
@@ -215,7 +217,6 @@
     <EmbeddedResource Include="SubApps\Inform\Layouts\ScanCardLayout.ui" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
     <Folder Include="SubApps\Order\Layouts\" />
     <Folder Include="SubApps\Order\States\" />
     <Folder Include="SubApps\Serve\Layouts\" />

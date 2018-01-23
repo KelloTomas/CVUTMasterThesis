@@ -26,12 +26,9 @@ namespace ServerApp.SubApps.Inform
 
 		public CardScannedLayout CardScannedLayout { get; } = new CardScannedLayout();
 		public ScanCardLayout ScanCardLayout { get; } = new ScanCardLayout();
-		public override void Init()
-		{
-		}
 		public override IStateBase GetInitState()
         {
-            return new InformState(this, 10000);
+            return new InformState(this);
         }
 		public override IEnumerable<IStoreLayoutAction> GetStoreLayoutActions()
 		{

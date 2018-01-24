@@ -46,6 +46,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -93,7 +96,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CVUTdb.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Data\DbData.cs" />
     <Compile Include="Devices\Actions\IModalWindowCloseAction.cs" />
     <Compile Include="Devices\Actions\Message.cs" />
     <Compile Include="Desert.cs">
@@ -175,6 +177,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CVUTdb.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="CVUTdb.edmx.diagram">
       <DependentUpon>CVUTdb.edmx</DependentUpon>
     </None>
@@ -217,6 +222,7 @@
     <EmbeddedResource Include="SubApps\Inform\Layouts\ScanCardLayout.ui" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Data\" />
     <Folder Include="SubApps\Order\Layouts\" />
     <Folder Include="SubApps\Order\States\" />
     <Folder Include="SubApps\Serve\Layouts\" />

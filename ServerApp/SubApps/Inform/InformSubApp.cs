@@ -20,8 +20,8 @@ namespace ServerApp.SubApps.Inform
             if (devices.Count != 1)
                 throw new ArgumentOutOfRangeException();
             Rallo = new Rallo(this);
-			//rallo.Connect(devices[0].IP, devices[0].Port ?? 15000);
-			Rallo.Connect("127.0.0.1", 15000);
+			Rallo.Connect(devices[0].IP, devices[0].Port ?? 15000);
+			//Rallo.Connect("127.0.0.1", 15000);
 		}
 
 		public CardScannedLayout CardScannedLayout { get; } = new CardScannedLayout();

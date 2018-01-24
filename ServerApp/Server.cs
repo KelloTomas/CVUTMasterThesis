@@ -7,6 +7,7 @@ using ServerApp.SubApps.Serve;
 using ServerApp.SubApps.Shared.States;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -25,6 +26,7 @@ namespace ServerApp
 					if (subApp.IsRunning)
 					{
 						Console.WriteLine($"Starting: {subApp.ApplicationType.Name}");
+						StartVirtualDevices(subApp.Devices);
 						switch (subApp.ApplicationType.Name.TrimEnd(' '))
 						{
 							case "Inform":
@@ -47,7 +49,17 @@ namespace ServerApp
 			}
 			Console.WriteLine("All apps started");
         }
-        private void RunSubApp(object o)
+
+		private void StartVirtualDevices(ICollection<Device> devices)
+		{
+			foreach (Device device in devices)
+			{
+				if (device.IP == "127.0.0.1")
+					Process.Start(@"D:\git\build-Rallo-Desktop_Qt_5_9_3_MinGW_32bit-Release\release\RalloApp.exe", $"-e -p {device.Port}");
+			}
+		}
+
+		private void RunSubApp(object o)
         {
 			SubApp subApp = o as SubApp;
 			subApp.Start();

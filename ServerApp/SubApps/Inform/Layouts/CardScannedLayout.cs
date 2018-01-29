@@ -16,41 +16,29 @@ namespace ServerApp.SubApps.Inform.Layouts
 		}
 		#endregion
 
-		public IEnumerable<ModifyLayoutItem> SetMeals(Client client)
+		public IEnumerable<ModifyLayoutItem> SetMeals(Data.Client client)
 		{
 			yield return new ModifyLayoutItem("ClientName", "text", $"{client.FirstName} {client.LastName}");
 			yield return new ModifyLayoutItem("AccountBalance", "text", $"{client.Balance} Kc");
-			int i = 0;
-			foreach (ServerApp.Order o in client.Orders)
+			for (int i = 0; i <= 6; i++)
 			{
-				if (o.Vydane)
-					continue;
-				if (i == 6)
-					break;
-				yield return new ModifyLayoutItem($"Date_{i}", "text", o.ForDate.ToString("dd.mm.yyyy"));
-				yield return new ModifyLayoutItem($"IdMenu_{i}", "text", o.IdMenu.ToString());
-				if (o.Menu.Soup == null)
-					yield return new ModifyLayoutItem($"Soup_{i}", "text", "--");
+				if (i < client.Orders.Count)
+				{
+					yield return new ModifyLayoutItem($"Date_{i}", "text", client.Orders[i].ForDate.ToString("dd.MM.yyyy"));
+					yield return new ModifyLayoutItem($"IdMenu_{i}", "text", client.Orders[i].IdMenu.ToString());
+					yield return new ModifyLayoutItem($"Soup_{i}", "text", client.Orders[i].SoupName);
+					yield return new ModifyLayoutItem($"Meal_{i}", "text", client.Orders[i].MealName);
+					yield return new ModifyLayoutItem($"Desert_{i}", "text", client.Orders[i].DesertName);
+				}
 				else
-					yield return new ModifyLayoutItem($"Soup_{i}", "text", o.Menu.Soup.Name);
-				if (o.Menu.Meal == null)
-					yield return new ModifyLayoutItem($"Meal_{i}", "text", "--");
-				else
-					yield return new ModifyLayoutItem($"Meal_{i}", "text", o.Menu.Meal.Name);
-				if (o.Menu.Desert == null)
-					yield return new ModifyLayoutItem($"Desert_{i}", "text", "--");
-				else
-					yield return new ModifyLayoutItem($"Desert_{i}", "text", o.Menu.Desert.Name);
-				i++;
-			}
-			while (i < 6)
-			{
-				yield return new ModifyLayoutItem($"Date_{i}", "text", " ");
-				yield return new ModifyLayoutItem($"IdMenu_{i}", "text", "----");
-				yield return new ModifyLayoutItem($"Soup_{i}", "text", " ");
-				yield return new ModifyLayoutItem($"Meal_{i}", "text", " ");
-				yield return new ModifyLayoutItem($"Desert_{i}", "text", " ");
-				i++;
+				{
+					yield return new ModifyLayoutItem($"Date_{i}", "text", " ");
+					yield return new ModifyLayoutItem($"IdMenu_{i}", "text", "----");
+					yield return new ModifyLayoutItem($"Soup_{i}", "text", " ");
+					yield return new ModifyLayoutItem($"Meal_{i}", "text", " ");
+					yield return new ModifyLayoutItem($"Desert_{i}", "text", " ");
+				}
+
 			}
 		}
 	}

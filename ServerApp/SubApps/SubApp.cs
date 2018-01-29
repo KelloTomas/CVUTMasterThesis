@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
+using ServerApp.Data;
 using ServerApp.Devices;
 using ServerApp.Devices.Actions;
 using ServerApp.SubApps.Shared.States;
@@ -10,11 +11,12 @@ namespace ServerApp.SubApps
 {
 	public class SubApp : ISubApp
 	{
-		public CVUTdbEntities db = new CVUTdbEntities();
+		public DatabaseLayer databaseLayer;
 		private Timer t;
 
-		public SubApp()
+		public SubApp(DatabaseLayer databaseLayer)
 		{
+			this.databaseLayer = databaseLayer;
 		}
 
 		public void Start()
@@ -25,6 +27,7 @@ namespace ServerApp.SubApps
 			t.AutoReset = true;
 			t.Interval = ActualState.TimeOut;
 			t.Start();
+			ActualState.Enter();
 			CheckNewState(ActualState.ProcessTimerElapsed());
 		}
 

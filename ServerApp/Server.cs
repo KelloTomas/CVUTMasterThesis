@@ -1,4 +1,5 @@
-﻿using ServerApp.Devices;
+﻿using ServerApp.Data;
+using ServerApp.Devices;
 using ServerApp.Devices.Actions;
 using ServerApp.SubApps;
 using ServerApp.SubApps.Inform;
@@ -17,34 +18,37 @@ namespace ServerApp
 {
     class Server
     {
+		DatabaseLayer dbLayer = new DatabaseLayer();
         public void Start()
         {
-			using (var db = new CVUTdbEntities())
-			{
-				foreach (var subApp in db.Applications)
+				foreach (MyApplication subApp in dbLayer.GetSubApps())
 				{
 					if (subApp.IsRunning)
 					{
-						Console.WriteLine($"Starting: {subApp.ApplicationType.Name}");
+						Console.WriteLine($"Starting: {subApp.Name}");
 						StartVirtualDevices(subApp.Devices);
-						switch (subApp.ApplicationType.Name.TrimEnd(' '))
+						switch (subApp.Name.TrimEnd(' '))
 						{
 							case "Inform":
 								Thread t1 = new Thread(new ParameterizedThreadStart(RunSubApp));
-								t1.Start(new InformSubApp(subApp.Devices.ToList()));
+								t1.Start(new InformSubApp(subApp.Devices.ToList(), dbLayer));
 								break;
 							case "Order":
 								Thread t2 = new Thread(new ParameterizedThreadStart(RunSubApp));
-								t2.Start(new OrderSubApp(subApp.Devices.ToList()));
+								t2.Start(new OrderSubApp(subApp.Devices.ToList(), dbLayer));
 								break;
 							case "Serve":
 								Thread t3 = new Thread(new ParameterizedThreadStart(RunSubApp));
-								t3.Start(new ServeSubApp(subApp.Devices.ToList()));
+								t3.Start(new ServeSubApp(subApp.Devices.ToList(), dbLayer));
 								break;
 							default:
 								throw new ArgumentOutOfRangeException();
 						}
 					}
+				else
+				{
+
+					Console.WriteLine($"OFF: {subApp.Name}");
 				}
 			}
 			Console.WriteLine("All apps started");
@@ -55,7 +59,7 @@ namespace ServerApp
 			foreach (Device device in devices)
 			{
 				if (device.IP == "127.0.0.1")
-					Process.Start(@"D:\git\build-Rallo-Desktop_Qt_5_9_3_MinGW_32bit-Release\release\RalloApp.exe", $"-e -p {device.Port}");
+					Process.Start(@"D:\git\build-Rallo-Desktop_Qt_5_10_0_MinGW_32bit-Release\release\RalloApp.exe", $"-e -p {device.Port}");
 			}
 		}
 

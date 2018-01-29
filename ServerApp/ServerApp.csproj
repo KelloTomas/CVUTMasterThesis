@@ -69,41 +69,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application.cs">
-      <DependentUpon>CVUTdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ApplicationType.cs">
-      <DependentUpon>CVUTdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Card.cs">
-      <DependentUpon>CVUTdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Client.cs">
-      <DependentUpon>CVUTdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CVUTdb.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CVUTdb.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CVUTdb.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CVUTdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CVUTdb.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CVUTdb.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Data\Client.cs" />
+    <Compile Include="Data\DatabaseLayer.cs" />
+    <Compile Include="Data\Device.cs" />
+    <Compile Include="Data\Menu.cs" />
+    <Compile Include="Data\MyApplication.cs" />
+    <Compile Include="Data\Order.cs" />
     <Compile Include="Devices\Actions\IModalWindowCloseAction.cs" />
     <Compile Include="Devices\Actions\Message.cs" />
-    <Compile Include="Desert.cs">
-      <DependentUpon>CVUTdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Device.cs">
-      <DependentUpon>CVUTdb.tt</DependentUpon>
-    </Compile>
     <Compile Include="Devices\Actions\IMessage.cs" />
     <Compile Include="Devices\Actions\ShowLayoutQtAction.cs" />
     <Compile Include="Devices\Packets\BasePacket.cs" />
@@ -128,15 +101,6 @@
     <Compile Include="Devices\Actions\StoreLayoutAction.cs" />
     <Compile Include="Devices\Packets\StoreLayoutPacket.cs" />
     <Compile Include="Devices\TCPIPCommunicator.cs" />
-    <Compile Include="Meal.cs">
-      <DependentUpon>CVUTdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Menu.cs">
-      <DependentUpon>CVUTdb.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Order.cs">
-      <DependentUpon>CVUTdb.tt</DependentUpon>
-    </Compile>
     <Compile Include="Devices\Actions\ButtonClickAction.cs" />
     <Compile Include="Devices\Actions\CardReadAction.cs" />
     <Compile Include="Devices\Actions\IAction.cs" />
@@ -147,7 +111,10 @@
     <Compile Include="SubApps\Inform\InformSubApp.cs" />
     <Compile Include="Devices\Rallo.cs" />
     <Compile Include="SubApps\Order\IOrderSubApp.cs" />
+    <Compile Include="SubApps\Order\Layouts\MessageLayout.cs" />
+    <Compile Include="SubApps\Order\Layouts\OrdersLayout.cs" />
     <Compile Include="SubApps\Order\OrderSubApp.cs" />
+    <Compile Include="SubApps\Order\States\OrderState.cs" />
     <Compile Include="SubApps\Serve\IServeSubApp.cs" />
     <Compile Include="SubApps\Serve\ServeSubApp.cs" />
     <Compile Include="SubApps\Shared\States\DefaultState.cs" />
@@ -167,21 +134,11 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Soup.cs">
-      <DependentUpon>CVUTdb.tt</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="CVUTdb.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>CVUTdb.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <None Include="app.manifest">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="CVUTdb.edmx.diagram">
-      <DependentUpon>CVUTdb.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -205,16 +162,8 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CVUTdb.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CVUTdb.edmx</DependentUpon>
-      <LastGenOutput>CVUTdb.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="CVUTdb.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>CVUTdb.edmx</DependentUpon>
-      <LastGenOutput>CVUTdb.cs</LastGenOutput>
-    </Content>
+    <EmbeddedResource Include="SubApps\Order\Layouts\MessageLayout.ui" />
+    <EmbeddedResource Include="SubApps\Order\Layouts\OrdersLayout.ui" />
     <None Include="SubApps\Inform\QtStyleSheet.style" />
   </ItemGroup>
   <ItemGroup>
@@ -222,9 +171,6 @@
     <EmbeddedResource Include="SubApps\Inform\Layouts\ScanCardLayout.ui" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="SubApps\Order\Layouts\" />
-    <Folder Include="SubApps\Order\States\" />
     <Folder Include="SubApps\Serve\Layouts\" />
     <Folder Include="SubApps\Serve\States\" />
   </ItemGroup>

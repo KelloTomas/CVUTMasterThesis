@@ -17,7 +17,7 @@ namespace ServerApp.SubApps.Inform.States
 		#region private fields...
 		InformSubApp app;
 		LayoutBase layout;
-		Client client;
+		Data.Client client;
 		private string clientMsg = null;
 		#endregion
 
@@ -70,7 +70,7 @@ namespace ServerApp.SubApps.Inform.States
 
 		public override IStateBase ProcessCardReadAction(CardReadAction card, ref bool forceCallStateMethod)
 		{
-			client = app.db.Cards.Where(c => c.CardNumber == card.CardNumber).FirstOrDefault()?.Client;
+			client = app.databaseLayer.GetOrders(card.CardNumber);
 			if (client == null)
 			{
 				clientMsg = "Neznama karta";

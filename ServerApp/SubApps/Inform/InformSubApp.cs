@@ -8,6 +8,7 @@ using ServerApp.Devices;
 using System.Linq;
 using ServerApp.SubApps.Inform.Layouts;
 using ServerApp.Devices.Actions;
+using ServerApp.Data;
 
 namespace ServerApp.SubApps.Inform
 {
@@ -15,13 +16,12 @@ namespace ServerApp.SubApps.Inform
 	{
         public Rallo Rallo {get; private set;}
 
-		public InformSubApp(List<Device> devices) : base()
+		public InformSubApp(List<Device> devices, DatabaseLayer dbLayer) : base(dbLayer)
 		{
             if (devices.Count != 1)
                 throw new ArgumentOutOfRangeException();
             Rallo = new Rallo(this);
-			Rallo.Connect(devices[0].IP, devices[0].Port ?? 15000);
-			//Rallo.Connect("127.0.0.1", 15000);
+			Rallo.Connect(devices[0].IP, devices[0].Port);
 		}
 
 		public CardScannedLayout CardScannedLayout { get; } = new CardScannedLayout();

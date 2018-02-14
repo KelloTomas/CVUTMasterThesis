@@ -1,0 +1,33 @@
+﻿<Window x:Class="AdminApp.SubAppWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdminApp"
+        mc:Ignorable="d"
+        Title="SubAppWindow" MinHeight="320" Height="300" Width="300">
+    <Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition MinHeight="80" Height="80"/>
+			<RowDefinition MinHeight="30" Height="30"/>
+			<RowDefinition MinHeight="30" Height="30"/>
+			<RowDefinition MinHeight="30" Height="30"/>
+			<RowDefinition MinHeight="80"/>
+			<RowDefinition MinHeight="30" Height="30"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+		<Label Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" FontWeight="ExtraBold" Grid.Row="0" Content="Id:" x:Name="AppTypeName"/>
+		<Label Grid.Column="0" Grid.Row="1" Content="Id:"/>
+		<TextBox Grid.Column="1" Grid.Row="1" x:Name="AppId" IsReadOnly="True"/>
+		<Label Grid.Column="0" Grid.Row="2" Content="Is running:"/>
+		<CheckBox Grid.Row="2" Grid.Column="1" x:Name="AppIsRunning" />
+		<Label Grid.Row="3" Grid.Column="0" Content="Name"/>
+		<TextBox Grid.Row="3" Grid.Column="1"  x:Name="AppName"/>
+		<DataGrid Grid.Row="4" Grid.ColumnSpan="2" x:Name="AppDevicesDataGrid" />
+		<Button Grid.Row="5" Grid.Column="0" Content="Save" Click="SaveBtnClick"/>
+		<Button Grid.Row="5" Grid.Column="1" Content="Cancel" Click="CancelBtnClick"/>
+	</Grid>
+</Window>

@@ -69,12 +69,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Client.cs" />
-    <Compile Include="Data\DatabaseLayer.cs" />
-    <Compile Include="Data\Device.cs" />
-    <Compile Include="Data\Menu.cs" />
-    <Compile Include="Data\MyApplication.cs" />
-    <Compile Include="Data\Order.cs" />
     <Compile Include="Devices\Actions\IModalWindowCloseAction.cs" />
     <Compile Include="Devices\Actions\Message.cs" />
     <Compile Include="Devices\Actions\IMessage.cs" />
@@ -117,6 +111,8 @@
     <Compile Include="SubApps\Order\States\OrderState.cs" />
     <Compile Include="SubApps\Serve\IServeSubApp.cs" />
     <Compile Include="SubApps\Serve\ServeSubApp.cs" />
+    <Compile Include="SubApps\Serve\States\Serving.cs" />
+    <Compile Include="SubApps\Serve\States\SetServing.cs" />
     <Compile Include="SubApps\Shared\States\DefaultState.cs" />
     <Compile Include="SubApps\Shared\States\IStateBase.cs" />
     <Compile Include="SubApps\SubApp.cs" />
@@ -172,7 +168,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SubApps\Serve\Layouts\" />
-    <Folder Include="SubApps\Serve\States\" />
   </ItemGroup>
+  <Import Project="..\DataLayer\DataLayer\DataLayer.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

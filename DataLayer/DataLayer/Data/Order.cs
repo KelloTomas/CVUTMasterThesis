@@ -1,4 +1,4 @@
-﻿namespace ServerApp.Data
+﻿namespace DataLayer.Data
 {
 	public class Order : Menu
 	{

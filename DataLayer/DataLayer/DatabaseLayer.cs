@@ -5,26 +5,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using DataLayer.Data;
 
-namespace ServerApp.Data
+namespace DataLayer
 {
 	public class DatabaseLayer
 	{
 		string ConnectionString = "Data Source=DESKTOP-M5V50NA;Initial Catalog=CVUTdb;Persist Security Info=True;User ID=sa;Password=root";
-		private Menu GetOrderInt(XElement order)
+
+		#region private methods...
+		private Order GetOrderInt(XElement order)
 		{
-			Menu o = new Menu();
-			o.IdMenu = (int)order.Attribute("IdMenu");
-			o.ForDate = (DateTime)order.Attribute("ForDate");
-			o.SoupName = (string)order.Attribute("SoupName");
-			o.MealName = (string)order.Attribute("MealName");
-			o.DesertName = (string)order.Attribute("DesertName");
+			Order o = new Order
+			{
+				IdOrder = (int)order.Attribute("IdOrder"),
+				IdMenu = (int)order.Attribute("IdMenu"),
+				ForDate = (DateTime)order.Attribute("ForDate"),
+				SoupName = (string)order.Attribute("SoupName"),
+				MealName = (string)order.Attribute("MealName"),
+				DesertName = (string)order.Attribute("DesertName"),
+				Served = (bool)order.Attribute("Served")
+			};
 			return o;
 		}
 
 		private Device GetDevice(XElement deviceXML)
 		{
 			Device device = new Device();
+			device.IdDevice = (int)deviceXML.Attribute("IdDevice");
 			device.Port = (int)deviceXML.Attribute("Port");
 			device.IP = (string)deviceXML.Attribute("IP");
 			return device;
@@ -37,15 +45,58 @@ namespace ServerApp.Data
 				Id = (int)xNode.Attribute("IdClient"),
 				FirstName = (string)xNode.Attribute("FirstName"),
 				LastName = (string)xNode.Attribute("LastName"),
-				Balance = (double)xNode.Attribute("Balance"),
+				Balance = (float)xNode.Attribute("Balance"),
+				CardNumber = (string)xNode.Attribute("CardNumber"),
 				Orders = new List<Menu>()
 			};
 			return client;
 		}
+		#endregion
 
+		#region public methods...
+		public void UpdateSubApp(MyApplication app)
+		{
+			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			{
+				connection.Open();
+				using (SqlCommand command = connection.CreateCommand())
+				{
+					command.CommandText = "[dbo].UpdateSubApp";
+					command.CommandType = System.Data.CommandType.StoredProcedure;
+					command.Parameters.Add("@appId", System.Data.SqlDbType.Int).Value = app.Id;
+					command.Parameters.Add("@IsRunning", System.Data.SqlDbType.Bit).Value = app.IsRunning;
+					command.Parameters.Add("@Name", System.Data.SqlDbType.NVarChar).Value = app.AppName;
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							//xmlResult += reader.GetString(0);
+						}
+					}
+				}
+				foreach(Device d in app.Devices)
+				{
+					using (SqlCommand command = connection.CreateCommand())
+					{
+						command.CommandText = "[dbo].UpdateDevice";
+						command.CommandType = System.Data.CommandType.StoredProcedure;
+						command.Parameters.Add("@Id", System.Data.SqlDbType.Int).Value = d.IdDevice;
+						command.Parameters.Add("@Ip", System.Data.SqlDbType.NVarChar).Value = d.IP;
+						command.Parameters.Add("@Port", System.Data.SqlDbType.Int).Value = d.Port;
+						using (SqlDataReader reader = command.ExecuteReader())
+						{
+							while (reader.Read())
+							{
+								//xmlResult += reader.GetString(0);
+							}
+						}
+					}
+				}
+			}
+		}
 		public IEnumerable<MyApplication> GetSubApps()
 		{
-			// <root><App IsRunning=\"1\" Name=\"Inform    \"><Device IP=\"127.0.0.1\" Port=\"15001\"/></App><App IsRunning=\"0\" Name=\"Order     \"><Device IP=\"127.0.0.1\" Port=\"15002\"/></App><App IsRunning=\"0\" Name=\"Serve     \"><Device IP=\"127.0.0.1\" Port=\"15003\"/><Device IP=\"127.0.0.1\" Port=\"15004\"/></App></root>
+			// <root><App IsRunning=\"1\" Name=\"Inform\"><Device IP=\"127.0.0.1\" Port=\"15001\"/></App><App IsRunning=\"0\" Name=\"Order\"><Device IP=\"127.0.0.1\" Port=\"15002\"/></App><App IsRunning=\"0\" Name=\"Serve\"><Device IP=\"127.0.0.1\" Port=\"15003\"/><Device IP=\"127.0.0.1\" Port=\"15004\"/></App></root>
 			string xmlResult = "";
 			using (SqlConnection connection = new SqlConnection(ConnectionString))
 			{
@@ -77,8 +128,10 @@ namespace ServerApp.Data
 
 						MyApplication app = new MyApplication
 						{
+							Id = (int)appXml.Attribute("Id"),
 							IsRunning = (bool)appXml.Attribute("IsRunning"),
-							Name = (string)appXml.Attribute("Name"),
+							AppName = (string)appXml.Attribute("AppName"),
+							TypeName = (string)appXml.Attribute("TypeName"),
 							Devices = new List<Device>()
 						};
 						foreach (XElement deviceXML in appXml.Elements())
@@ -94,8 +147,10 @@ namespace ServerApp.Data
 			}
 		}
 
-		public IEnumerable<Menu> GetMenu()
+		public IEnumerable<Menu> GetMenu(DateTime? forDate = null)
 		{
+			if (forDate == null)
+				forDate = DateTime.Now.Date;
 			string xmlResult = "";
 			using (SqlConnection connection = new SqlConnection(ConnectionString))
 			{
@@ -104,6 +159,57 @@ namespace ServerApp.Data
 				{
 					command.CommandText = "[dbo].GetMenu";
 					command.CommandType = System.Data.CommandType.StoredProcedure;
+					command.Parameters.Add("@ForDate", System.Data.SqlDbType.Date).Value = forDate;
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							xmlResult += reader.GetString(0);
+						}
+					}
+				}
+			}
+			if (string.IsNullOrEmpty(xmlResult))
+			{
+				yield break;
+			}
+
+			XElement root = XElement.Parse(xmlResult);
+			foreach (XElement appXml in root.Elements())
+			{
+				switch (appXml.Name.LocalName)
+				{
+					case "Menu":
+
+						Menu menu = new Menu
+						{
+							ForDate = (DateTime)appXml.Attribute("ForDate"),
+							IdMenu = (int)appXml.Attribute("IdMenu"),
+							SoupName = (string)appXml.Attribute("SoupName"),
+							MealName = (string)appXml.Attribute("MealName"),
+							DesertName = (string)appXml.Attribute("DesertName")
+						};
+						yield return menu;
+						break;
+					default:
+						Console.WriteLine($"Error GetMenu: received xml Element {appXml.Name.LocalName}");
+						break;
+				}
+			}
+		}
+		public IEnumerable<Menu> GetMenu(Client forClient)
+		{
+			if(forClient == null)
+				yield break;
+			string xmlResult = "";
+			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			{
+				connection.Open();
+				using (SqlCommand command = connection.CreateCommand())
+				{
+					command.CommandText = "[dbo].[GetMenuForClient]";
+					command.CommandType = System.Data.CommandType.StoredProcedure;
+					command.Parameters.Add("@CardNumber", System.Data.SqlDbType.VarChar).Value = forClient.CardNumber;
 					using (SqlDataReader reader = command.ExecuteReader())
 					{
 						while (reader.Read())
@@ -206,6 +312,72 @@ namespace ServerApp.Data
 			}
 			return null;
 		}
+		
+		public void UpdateClient(Client client)
+		{
+			string xmlResult = "";
+			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			{
+				connection.Open();
+				using (SqlCommand command = connection.CreateCommand())
+				{
+					command.CommandText = "[dbo].UpdateClient";
+					command.CommandType = System.Data.CommandType.StoredProcedure;
+					command.Parameters.Add("@Id", System.Data.SqlDbType.Int).Value = client.Id;
+					command.Parameters.Add("@FirstName", System.Data.SqlDbType.NVarChar).Value = client.FirstName;
+					command.Parameters.Add("@LastName", System.Data.SqlDbType.NVarChar).Value = client.LastName;
+					command.Parameters.Add("@Balance", System.Data.SqlDbType.Float).Value = client.Balance;
+					command.Parameters.Add("@CardNumber", System.Data.SqlDbType.VarChar).Value = client.CardNumber;
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							xmlResult += reader.GetString(0);
+						}
+					}
+				}
+			}
+		}
+		public IEnumerable<Client> GetClients()
+		{
+			string xmlResult = "";
+			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			{
+				connection.Open();
+				using (SqlCommand command = connection.CreateCommand())
+				{
+					command.CommandText = "[dbo].GetClients";
+					command.CommandType = System.Data.CommandType.StoredProcedure;
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							xmlResult += reader.GetString(0);
+						}
+					}
+				}
+			}
+
+			if (string.IsNullOrEmpty(xmlResult))
+			{
+				yield break;
+			}
+
+			XElement root = XElement.Parse(xmlResult);
+			foreach (XElement client in root.Elements())
+			{
+				switch (client.Name.LocalName)
+				{
+					case "Client":
+						yield return GetClientInt(client);
+						break;
+					default:
+						Console.WriteLine($"Error GetClient: received xml Element {client.Name.LocalName}");
+						break;
+				}
+			}
+			yield break;
+		}
 		public Client GetOrders(string cardNumber)
 		{
 			// <root><Client IdClient=\"2\" FirstName=\"Mato      \" LastName=\"Vyskocany \" Balance=\"8.520000000000000e+002\"/><Order IdOrder=\"11\" ForDate=\"2018-01-28\" IdMenu=\"1005\" SoupName=\"Paradajková\" MealName=\"Rezen\" DesertName=\"Puding\"/><Order IdOrder=\"16\" ForDate=\"2018-01-28\" IdMenu=\"1006\" SoupName=\"Paradajková\" MealName=\"Kurca\" DesertName=\"Puding\"/><Order IdOrder=\"17\" ForDate=\"2018-01-28\" IdMenu=\"1006\" SoupName=\"Paradajková\" MealName=\"Kurca\" DesertName=\"Puding\"/><Order IdOrder=\"18\" ForDate=\"2018-01-30\" IdMenu=\"1014\" SoupName=\"Paradajková\" MealName=\"Rezen\" DesertName=\"Puding\"/></root>
@@ -227,22 +399,13 @@ namespace ServerApp.Data
 					}
 				}
 			}
-
 			if (string.IsNullOrEmpty(xmlResult))
-			{
 				return null;
-			}
-
 
 			Client client = null;
 			XElement root = XElement.Parse(xmlResult);
 			foreach (XElement ClientAndOrder in root.Elements())
 			{
-				// EvCislo = "217831" Titul = "" Jmeno = "Samuel" Prijmeni = "Abaffy" OCS = "u461675" RCS = "" IdDruh = "2" IdAlt = "1" KodAlt = "1" CasVydeje = "2017-01-27T14:35:04.223"
-				// Ve verzi 17.1 doplnena jeste velikost porce
-				// EvCislo="46140" Titul="" Jmeno="Mária" Prijmeni="Kavanová" OCS="Z10678" RCS="9056244494" VelPorce="3" IdDruh="2" IdAlt="1" KodAlt="1" CasVydeje="2017-03-08T09:36:58.653"
-				// Vo verzi 18.1 doplnene PC u stornovatelných objednávek
-				// EvCislo="46140" Titul="" Jmeno="Mária" Prijmeni="Kavanová" OCS="Z10678" RCS="9056244494" VelPorce="3" IdDruh="2" IdAlt="1" KodAlt="1" CasVydeje="2017-03-08T09:36:58.653" PC ="222901"
 				switch (ClientAndOrder.Name.LocalName)
 				{
 					case "Client":
@@ -281,5 +444,6 @@ namespace ServerApp.Data
 			}
 			return client;
 		}
+		#endregion
 	}
 }

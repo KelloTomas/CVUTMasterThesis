@@ -1,6 +1,7 @@
 ﻿using ServerApp.SubApps.Shared.Data;
 using ServerApp.SubApps.Shared.Layouts;
 using System.Collections.Generic;
+using DataLayer.Data;
 
 namespace ServerApp.SubApps.Inform.Layouts
 {
@@ -16,7 +17,7 @@ namespace ServerApp.SubApps.Inform.Layouts
 		}
 		#endregion
 
-		public IEnumerable<ModifyLayoutItem> SetMeals(Data.Client client)
+		public IEnumerable<ModifyLayoutItem> SetMeals(Client client)
 		{
 			yield return new ModifyLayoutItem("ClientName", "text", $"{client.FirstName} {client.LastName}");
 			yield return new ModifyLayoutItem("AccountBalance", "text", $"{client.Balance} Kc");

@@ -6,7 +6,8 @@ using ServerApp.SubApps.Order.Layouts;
 using ServerApp.SubApps.Order.States;
 using ServerApp.Devices.Actions;
 using System.Linq;
-using ServerApp.Data;
+using DataLayer;
+using DataLayer.Data;
 
 namespace ServerApp.SubApps.Order
 {

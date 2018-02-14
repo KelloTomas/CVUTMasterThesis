@@ -139,6 +139,7 @@ namespace ServerApp.Devices
 			}
 			catch (SocketException)
 			{
+				Console.WriteLine($"Cant connect to {Ip}, on port {Port}");
 			}
 
 			if (_client.Connected)

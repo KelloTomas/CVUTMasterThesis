@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Timers;
+using DataLayer.Data;
 using ServerApp.SubApps.Shared.States;
 using ServerApp.Devices;
 using ServerApp.SubApps.Shared.Data;
@@ -17,7 +18,7 @@ namespace ServerApp.SubApps.Inform.States
 		#region private fields...
 		InformSubApp app;
 		LayoutBase layout;
-		Data.Client client;
+		Client client;
 		private string clientMsg = null;
 		#endregion
 
@@ -78,6 +79,7 @@ namespace ServerApp.SubApps.Inform.States
 			else
 			{
 				layout = app.CardScannedLayout;
+				client.Orders = client.Orders.Where(o=> o.Served == false && o.ForDate.Date >= DateTime.Now.Date).ToList();
 			}
 			forceCallStateMethod = true;
 			return this;

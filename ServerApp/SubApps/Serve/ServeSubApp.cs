@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using ServerApp.Data;
+using DataLayer;
+using DataLayer.Data;
+using ServerApp.SubApps.Serve.States;
 using ServerApp.SubApps.Shared.States;
 
 namespace ServerApp.SubApps.Serve
@@ -14,7 +16,7 @@ namespace ServerApp.SubApps.Serve
 
 		public override IStateBase GetInitState()
         {
-            return new DefaultState(200);
+            return new SetServing(this);
         }
 		
     }

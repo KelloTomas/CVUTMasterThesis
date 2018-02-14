@@ -1,4 +1,5 @@
-﻿using ServerApp.Data;
+﻿using DataLayer;
+using DataLayer.Data;
 using ServerApp.Devices;
 using ServerApp.Devices.Actions;
 using ServerApp.SubApps;
@@ -25,9 +26,9 @@ namespace ServerApp
 				{
 					if (subApp.IsRunning)
 					{
-						Console.WriteLine($"Starting: {subApp.Name}");
+						Console.WriteLine($"Starting: {subApp.TypeName}");
 						StartVirtualDevices(subApp.Devices);
-						switch (subApp.Name.TrimEnd(' '))
+						switch (subApp.TypeName.TrimEnd(' '))
 						{
 							case "Inform":
 								Thread t1 = new Thread(new ParameterizedThreadStart(RunSubApp));
@@ -48,7 +49,7 @@ namespace ServerApp
 				else
 				{
 
-					Console.WriteLine($"OFF: {subApp.Name}");
+					Console.WriteLine($"OFF: {subApp.TypeName}");
 				}
 			}
 			Console.WriteLine("All apps started");

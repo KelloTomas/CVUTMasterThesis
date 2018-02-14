@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ServerApp.Data
+namespace DataLayer.Data
 {
 	public class Menu
 	{

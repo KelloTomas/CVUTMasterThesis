@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
-using ServerApp.Data;
+using DataLayer;
+using DataLayer.Data;
 using ServerApp.Devices;
 using ServerApp.Devices.Actions;
 using ServerApp.SubApps.Shared.States;

@@ -11,21 +11,23 @@ namespace DataLayer
 {
 	public class DatabaseLayer
 	{
-		string ConnectionString = "Data Source=DESKTOP-M5V50NA;Initial Catalog=CVUTdb;Persist Security Info=True;User ID=sa;Password=root";
+		private const string CONNECTION_STRING = "Data Source=DESKTOP-M5V50NA;Initial Catalog=CVUTdb;Persist Security Info=True;User ID=sa;Password=root";
 
 		#region private methods...
 		private Order GetOrderInt(XElement order)
 		{
+			// {<Order IdOrder="30" ForDate="2018-02-02" IdMenu="1016" SoupName="Paradajkova" MealName="Rezen" DesertName="Puding" Served="0" />}
 			Order o = new Order
 			{
 				IdOrder = (int)order.Attribute("IdOrder"),
 				IdMenu = (int)order.Attribute("IdMenu"),
 				ForDate = (DateTime)order.Attribute("ForDate"),
-				SoupName = (string)order.Attribute("SoupName"),
-				MealName = (string)order.Attribute("MealName"),
-				DesertName = (string)order.Attribute("DesertName"),
 				Served = (bool)order.Attribute("Served")
 			};
+
+			o.Items[0] = new MenuItem { /* Id = (int)order.Attribute("IdSoup"), */ Name = (string)order.Attribute("SoupName") };
+			o.Items[1] = new MenuItem { /* Id = (int)order.Attribute("Id"), */ Name = (string)order.Attribute("MealName") };
+			o.Items[2] = new MenuItem { /* Id = (int)order.Attribute("Id"), */ Name = (string)order.Attribute("DesertName") };
 			return o;
 		}
 
@@ -47,16 +49,72 @@ namespace DataLayer
 				LastName = (string)xNode.Attribute("LastName"),
 				Balance = (float)xNode.Attribute("Balance"),
 				CardNumber = (string)xNode.Attribute("CardNumber"),
-				Orders = new List<Menu>()
+				Orders = new List<Order>()
 			};
 			return client;
 		}
 		#endregion
 
 		#region public methods...
+		public IEnumerable<MenuItem> GetTable(MenuItem menuItem)
+		{
+			string xmlResult = "";
+			using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+			{
+				connection.Open();
+				using (SqlCommand command = connection.CreateCommand())
+				{
+					switch (menuItem)
+					{
+						case Soup order:
+							command.CommandText = $"SELECT IdSoup Id, Name, Description FROM [dbo].Soups";
+							break;
+						case Meal menu:
+							command.CommandText = $"SELECT IdMeal Id, Name, Description FROM [dbo].Meals";
+							break;
+						case Desert d:
+							command.CommandText = $"SELECT IdDesert Id, Name, Description FROM [dbo].Deserts";
+							break;
+						default:
+							throw new ArgumentOutOfRangeException();
+					}
+					command.CommandText += " for xml raw('Item'), root ('root')";
+					command.CommandType = System.Data.CommandType.Text;
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							xmlResult += reader.GetString(0);
+						}
+					}
+				}
+			}
+			if (string.IsNullOrEmpty(xmlResult))
+			{
+				yield break;
+			}
+
+			XElement root = XElement.Parse(xmlResult);
+			foreach (XElement appXml in root.Elements())
+			{
+				switch (appXml.Name.LocalName)
+				{
+					case "Item":
+						var a = new MenuItem();
+						a.Id = (int)appXml.Attribute("Id");
+						a.Name = (string)appXml.Attribute("Name");
+						a.Description = (string)appXml.Attribute("Description");
+						yield return a;
+						break;
+					default:
+						Console.WriteLine($"Error GetTable: received xml Element {appXml.Name.LocalName}");
+						break;
+				}
+			}
+		}
 		public void UpdateSubApp(MyApplication app)
 		{
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
 			{
 				connection.Open();
 				using (SqlCommand command = connection.CreateCommand())
@@ -74,7 +132,7 @@ namespace DataLayer
 						}
 					}
 				}
-				foreach(Device d in app.Devices)
+				foreach (Device d in app.Devices)
 				{
 					using (SqlCommand command = connection.CreateCommand())
 					{
@@ -98,7 +156,7 @@ namespace DataLayer
 		{
 			// <root><App IsRunning=\"1\" Name=\"Inform\"><Device IP=\"127.0.0.1\" Port=\"15001\"/></App><App IsRunning=\"0\" Name=\"Order\"><Device IP=\"127.0.0.1\" Port=\"15002\"/></App><App IsRunning=\"0\" Name=\"Serve\"><Device IP=\"127.0.0.1\" Port=\"15003\"/><Device IP=\"127.0.0.1\" Port=\"15004\"/></App></root>
 			string xmlResult = "";
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
 			{
 				connection.Open();
 				using (SqlCommand command = connection.CreateCommand())
@@ -152,7 +210,7 @@ namespace DataLayer
 			if (forDate == null)
 				forDate = DateTime.Now.Date;
 			string xmlResult = "";
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
 			{
 				connection.Open();
 				using (SqlCommand command = connection.CreateCommand())
@@ -180,15 +238,15 @@ namespace DataLayer
 				switch (appXml.Name.LocalName)
 				{
 					case "Menu":
-
+						//{<Menu ForDate="2018-02-02" IdMenu="1016" IdSoup="1" SoupName="Paradajkova" IdMeal="1" MealName="Rezen" IdDesert="1" DesertName="Puding" />}
 						Menu menu = new Menu
 						{
 							ForDate = (DateTime)appXml.Attribute("ForDate"),
-							IdMenu = (int)appXml.Attribute("IdMenu"),
-							SoupName = (string)appXml.Attribute("SoupName"),
-							MealName = (string)appXml.Attribute("MealName"),
-							DesertName = (string)appXml.Attribute("DesertName")
+							IdMenu = (int)appXml.Attribute("IdMenu")
 						};
+						menu.Items[0] = new MenuItem { Id = (int)appXml.Attribute("IdSoup"), Name = (string)appXml.Attribute("SoupName") };
+						menu.Items[1] = new MenuItem { Id = (int)appXml.Attribute("IdMeal"), Name = (string)appXml.Attribute("MealName") };
+						menu.Items[2] = new MenuItem { Id = (int)appXml.Attribute("IdDesert"), Name = (string)appXml.Attribute("DesertName") };
 						yield return menu;
 						break;
 					default:
@@ -199,10 +257,10 @@ namespace DataLayer
 		}
 		public IEnumerable<Menu> GetMenu(Client forClient)
 		{
-			if(forClient == null)
+			if (forClient == null)
 				yield break;
 			string xmlResult = "";
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
 			{
 				connection.Open();
 				using (SqlCommand command = connection.CreateCommand())
@@ -234,11 +292,11 @@ namespace DataLayer
 						Menu menu = new Menu
 						{
 							ForDate = (DateTime)appXml.Attribute("ForDate"),
-							IdMenu = (int)appXml.Attribute("IdMenu"),
-							SoupName = (string)appXml.Attribute("SoupName"),
-							MealName = (string)appXml.Attribute("MealName"),
-							DesertName = (string)appXml.Attribute("DesertName")
+							IdMenu = (int)appXml.Attribute("IdMenu")
 						};
+						menu.Items[0].Name = (string)appXml.Attribute("SoupName");
+						menu.Items[1].Name = (string)appXml.Attribute("MealName");
+						menu.Items[2].Name = (string)appXml.Attribute("DesertName");
 						yield return menu;
 						break;
 					default:
@@ -248,19 +306,26 @@ namespace DataLayer
 			}
 		}
 
-		public void AddOrder(int clientId, DateTime forDate, int menuId)
+		public void Add(Object o)
 		{
 			string xmlResult = "";
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
 			{
 				connection.Open();
 				using (SqlCommand command = connection.CreateCommand())
 				{
-					command.CommandText = "[dbo].AddOrder";
-					command.CommandType = System.Data.CommandType.StoredProcedure;
-					command.Parameters.Add("@ClientId", System.Data.SqlDbType.Int).Value = clientId;
-					command.Parameters.Add("@ForDate", System.Data.SqlDbType.Date).Value = forDate;
-					command.Parameters.Add("@MenuId", System.Data.SqlDbType.Int).Value = menuId;
+					switch (o)
+					{
+						case Order order:
+							command.CommandText = $"INSERT INTO[dbo].[Orders] (ForDate, IdMenu, IdClient) VALUES({order.ForDate}, {order.IdMenu}, {order.IdClient})";
+							break;
+						case Menu menu:
+							command.CommandText = $"INSERT INTO[dbo].[Menu] (ForDate, IdSoup, IdMeal, IdDesert) VALUES('{menu.ForDate.ToString("yyyy-MM-dd")}', {menu.Items[0].Id}, {menu.Items[1].Id}, {menu.Items[2].Id})";
+							break;
+						default:
+							throw new ArgumentOutOfRangeException();
+					}
+					command.CommandType = System.Data.CommandType.Text;
 					using (SqlDataReader reader = command.ExecuteReader())
 					{
 						while (reader.Read())
@@ -272,10 +337,43 @@ namespace DataLayer
 			}
 			Console.WriteLine($"AddOrder: {xmlResult}");
 		}
+
+		public void RemoveFromDatabase(object obj)
+		{
+			string xmlResult = "";
+			using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+			{
+				connection.Open();
+				using (SqlCommand command = connection.CreateCommand())
+				{
+					switch (obj)
+					{
+						case Order order:
+							command.CommandText = $"DELETE FROM [dbo].Orders WHERE IdOrder = {order.IdOrder}";
+							break;
+						case Menu menu:
+							command.CommandText = $"DELETE FROM [dbo].Menu WHERE IdMenu = {menu.IdMenu}";
+							break;
+						default:
+							throw new ArgumentOutOfRangeException();
+					}
+					command.CommandType = System.Data.CommandType.Text;
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							xmlResult += reader.GetString(0);
+						}
+					}
+				}
+			}
+			Console.WriteLine($"Removed: {xmlResult}");
+		}
+
 		public Client GetClient(string cardNumber)
 		{
 			string xmlResult = "";
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
 			{
 				connection.Open();
 				using (SqlCommand command = connection.CreateCommand())
@@ -312,11 +410,11 @@ namespace DataLayer
 			}
 			return null;
 		}
-		
+
 		public void UpdateClient(Client client)
 		{
 			string xmlResult = "";
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
 			{
 				connection.Open();
 				using (SqlCommand command = connection.CreateCommand())
@@ -341,7 +439,7 @@ namespace DataLayer
 		public IEnumerable<Client> GetClients()
 		{
 			string xmlResult = "";
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
 			{
 				connection.Open();
 				using (SqlCommand command = connection.CreateCommand())
@@ -382,7 +480,7 @@ namespace DataLayer
 		{
 			// <root><Client IdClient=\"2\" FirstName=\"Mato      \" LastName=\"Vyskocany \" Balance=\"8.520000000000000e+002\"/><Order IdOrder=\"11\" ForDate=\"2018-01-28\" IdMenu=\"1005\" SoupName=\"Paradajková\" MealName=\"Rezen\" DesertName=\"Puding\"/><Order IdOrder=\"16\" ForDate=\"2018-01-28\" IdMenu=\"1006\" SoupName=\"Paradajková\" MealName=\"Kurca\" DesertName=\"Puding\"/><Order IdOrder=\"17\" ForDate=\"2018-01-28\" IdMenu=\"1006\" SoupName=\"Paradajková\" MealName=\"Kurca\" DesertName=\"Puding\"/><Order IdOrder=\"18\" ForDate=\"2018-01-30\" IdMenu=\"1014\" SoupName=\"Paradajková\" MealName=\"Rezen\" DesertName=\"Puding\"/></root>
 			string xmlResult = "";
-			using (SqlConnection connection = new SqlConnection(ConnectionString))
+			using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
 			{
 				connection.Open();
 				using (SqlCommand command = connection.CreateCommand())

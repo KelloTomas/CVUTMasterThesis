@@ -11,9 +11,13 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Data\Client.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DatabaseLayer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Desert.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Device.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Meal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Menu.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\MenuItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\MyApplication.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Order.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Soup.cs" />
   </ItemGroup>
 </Project>

@@ -27,6 +27,6 @@
 				  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True"
 				  MouseDoubleClick="menuDataGrid_MouseDoubleClick"/>
 		<Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="Add" Click="AddBtnClick" />
-		<Button Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Content="Edit" Click="EditBtnClick" />
+		<Button Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Content="Remove" Click="RemoveBtnClick" />
 	</Grid>
 </Page>

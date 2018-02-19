@@ -16,9 +16,9 @@ namespace ServerApp.SubApps.Order.States
 	public class OrderState : StateBase
 	{
 
-        #region private fields...
-        List<Menu> menuOnScreen;
-        OrderSubApp app;
+		#region private fields...
+		List<Menu> menuOnScreen;
+		OrderSubApp app;
 		LayoutBase layout;
 		Client client;
 		DateTime dateToOrder;
@@ -26,7 +26,7 @@ namespace ServerApp.SubApps.Order.States
 		IEnumerable<Menu> menu;
 		private int pageNum;
 		private int? selected;
-        bool reset = true;
+		bool reset = true;
 		#endregion
 
 		#region constructors...
@@ -36,28 +36,28 @@ namespace ServerApp.SubApps.Order.States
 		}
 		#endregion
 		public override void Enter()
-        {
-            base.Enter();
+		{
+			base.Enter();
 			menu = app.databaseLayer.GetMenu();
 			SetInitValues();
-        }
+		}
 
-        private void SetInitValues()
-        {
-            pageNum = 0;
-            selected = null;
-            SetDateToOrder(DateTime.Now.Date);
-            layout = app.OrdersLayout;
-            clientMsg = null;
-        }
+		private void SetInitValues()
+		{
+			pageNum = 0;
+			selected = null;
+			SetDateToOrder(DateTime.Now.Date);
+			layout = app.OrdersLayout;
+			clientMsg = null;
+		}
 
-        private void SetDateToOrder(DateTime date)
-        {
-            dateToOrder = date;
-            menuOnScreen = menu.Where(m => m.ForDate == dateToOrder).ToList();
-        }
+		private void SetDateToOrder(DateTime date)
+		{
+			dateToOrder = date;
+			menuOnScreen = menu.Where(m => m.ForDate == dateToOrder).ToList();
+		}
 
-        public override IStateBase ProcessTimerElapsed()
+		public override IStateBase ProcessTimerElapsed()
 		{
 			List<IAction> action;
 			switch (layout)
@@ -89,52 +89,52 @@ namespace ServerApp.SubApps.Order.States
 					break;
 			}
 			app.Rallo.SendMessage(new Message(action.ToArray()));
-            if (reset)
-            {
-                SetInitValues();
-            }
-            else
-            {
-                reset = true;
-            }
+			if (reset)
+			{
+				SetInitValues();
+			}
+			else
+			{
+				reset = true;
+			}
 			return this;
 		}
 		public override IStateBase ProcessButtonClickAction(ButtonClickAction button, ref bool forceCallStateMethod)
 		{
-            if (button.ButtonName.Contains("menu_"))
-            {
-                selected = int.Parse(button.ButtonName.Last().ToString()) + pageNum * app.OrdersLayout.MEALS_PER_PAGE;
-            }
-            else
-            {
-                switch (button.ButtonName)
-                {
-                    case "prevDay":
+			if (button.ButtonName.Contains("menu_"))
+			{
+				selected = int.Parse(button.ButtonName.Last().ToString()) + pageNum * app.OrdersLayout.MEALS_PER_PAGE;
+			}
+			else
+			{
+				switch (button.ButtonName)
+				{
+					case "prevDay":
 						SetDateToOrder(dateToOrder.AddDays(-1));
-                        break;
-                    case "nextDay":
+						break;
+					case "nextDay":
 						SetDateToOrder(dateToOrder.AddDays(1));
 						break;
-                    case "up":
-                        pageNum--;
-                        break;
-                    case "down":
-                        pageNum++;
-                        break;
-                    default:
-			            return base.ProcessButtonClickAction(button, ref forceCallStateMethod);
-                }
-                selected = null;
-            }
-            reset = false;
-            forceCallStateMethod = true;
-            return this;
+					case "up":
+						pageNum--;
+						break;
+					case "down":
+						pageNum++;
+						break;
+					default:
+						return base.ProcessButtonClickAction(button, ref forceCallStateMethod);
+				}
+				selected = null;
+			}
+			reset = false;
+			forceCallStateMethod = true;
+			return this;
 		}
 
 		public override IStateBase ProcessCardReadAction(CardReadAction card, ref bool forceCallStateMethod)
 		{
 			client = app.databaseLayer.GetClient(card.CardNumber);
-				//app.db.Cards.Where(c => c.CardNumber == card.CardNumber).FirstOrDefault()?.Client;
+			//app.db.Cards.Where(c => c.CardNumber == card.CardNumber).FirstOrDefault()?.Client;
 			layout = app.MessageLayout;
 			if (client == null)
 			{
@@ -151,7 +151,8 @@ namespace ServerApp.SubApps.Order.States
 					app.db.Orders.Add(new ServerApp.Order() { ForDate = dateToOrder, IdClient = client.IdClient, IdMenu = menuOnScreen[selected.GetValueOrDefault()].IdMenu });
 					app.db.SaveChanges();
 					*/
-					app.databaseLayer.AddOrder(client.Id, dateToOrder, menuOnScreen[selected.GetValueOrDefault()].IdMenu);
+					var o = new DataLayer.Data.Order { IdClient = client.Id, ForDate = dateToOrder, IdMenu = menuOnScreen[selected.GetValueOrDefault()].IdMenu };
+					app.databaseLayer.Add(o);
 					//throw new NotImplementedException();
 					clientMsg = "Objednane";
 				}

@@ -48,7 +48,7 @@ namespace ServerApp.SubApps.Order.Layouts
                 }
 				else
 				{
-					yield return new ModifyLayoutItem($"menu_{i}", "text", $"{menu[index].IdMenu}: {menu[index].SoupName}, {menu[index].MealName}, {menu[index].DesertName}");
+					yield return new ModifyLayoutItem($"menu_{i}", "text", $"{menu[index].IdMenu}: {menu[index].Items[0].Name}, {menu[index].Items[1].Name}, {menu[index].Items[2].Name}");
 					    yield return new ModifyLayoutItem($"menu_{i}", "enabled", "true");
 				    if (index == selected)
 					    yield return new ModifyLayoutItem($"menu_{i}", "checked", "true");

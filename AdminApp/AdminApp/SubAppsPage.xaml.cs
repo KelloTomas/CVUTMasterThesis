@@ -27,10 +27,10 @@ namespace AdminApp
 		{
 			InitializeComponent();
 			this.db = db;
-			UpdateData();
+			LoadData();
 		}
 
-		private void UpdateData()
+		private void LoadData()
 		{
 			List<MyApplication> apps = db.GetSubApps().ToList();
 			appsDataGrid.ItemsSource = apps;
@@ -47,9 +47,9 @@ namespace AdminApp
 			MyApplication subApp = appsDataGrid.SelectedItem as MyApplication;
 			if (subApp == null)
 				return;
-			SubAppWindow appWindow = new SubAppWindow(subApp, db);
+			SubAppDetailWindow appWindow = new SubAppDetailWindow(subApp, db);
 			appWindow.ShowDialog();
-			UpdateData();
+			LoadData();
 		}
 	}
 }

@@ -1,0 +1,30 @@
+﻿<Window x:Class="AdminApp.OrderDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdminApp"
+        mc:Ignorable="d"
+        Title="OrderDetailWindow" Height="300" Width="300">
+    <Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+		<!--
+		<DatePickerTextBox VerticalAlignment="Bottom" Grid.ColumnSpan="2" FontWeight="ExtraBold" FontSize="30" HorizontalContentAlignment="Center" x:Name="date" SelectionChanged="date_SelectionChanged" />
+		-->
+		<DatePicker VerticalAlignment="Bottom" Grid.ColumnSpan="2" FontWeight="ExtraBold" FontSize="30" HorizontalContentAlignment="Center" x:Name="date" SelectedDateChanged="date_SelectedDateChanged" />
+		<DataGrid Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="4" x:Name="menuDataGrid"
+				  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True" />
+		<Button Grid.Column="0" Grid.Row="4" Content="Save" Click="SaveBtn_Click" />
+		<Button Grid.Column="1" Grid.Row="4" Content="Cancel" Click="CancelBtn_Click"/>
+	</Grid>
+</Window>

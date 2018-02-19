@@ -55,6 +55,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ClientsPage.xaml.cs" />
+    <Compile Include="OrderDetailWindow.xaml.cs">
+      <DependentUpon>OrderDetailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuDetailWindow.xaml.cs">
+      <DependentUpon>MenuDetailWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="OrdersPage.xaml.cs">
       <DependentUpon>OrdersPage.xaml</DependentUpon>
     </Compile>
@@ -64,8 +70,8 @@
     <Compile Include="SubAppsPage.xaml.cs">
       <DependentUpon>SubAppsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SubAppWindow.xaml.cs">
-      <DependentUpon>SubAppWindow.xaml</DependentUpon>
+    <Compile Include="SubAppDetailWindow.xaml.cs">
+      <DependentUpon>SubAppDetailWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -79,6 +85,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="OrderDetailWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MenuDetailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="OrdersPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -91,7 +105,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SubAppWindow.xaml">
+    <Page Include="SubAppDetailWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

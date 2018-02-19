@@ -6,8 +6,6 @@ namespace DataLayer.Data
 	{
 		public int IdMenu { get; set; }
 		public DateTime ForDate { get; set; }
-		public string SoupName { get; set; }
-		public string MealName { get; set; }
-		public string DesertName { get; set; }
+		public MenuItem[] Items {get;set;} = new MenuItem[3];
 	}
 }

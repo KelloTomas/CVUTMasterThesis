@@ -19,11 +19,11 @@ namespace AdminApp
 	/// <summary>
 	/// Interaction logic for SubAppWindow.xaml
 	/// </summary>
-	public partial class SubAppWindow : Window
+	public partial class SubAppDetailWindow : Window
 	{
 		private MyApplication app;
 		private readonly DatabaseLayer db;
-		public SubAppWindow(MyApplication app, DatabaseLayer db)
+		public SubAppDetailWindow(MyApplication app, DatabaseLayer db)
 		{
 			InitializeComponent();
 			this.app = app;

@@ -21,45 +21,48 @@ namespace AdminApp
 	/// </summary>
 	public partial class MenuPage : Page
 	{
-		private readonly DatabaseLayer db;
-		private DateTime forDate;
-		private List<DataLayer.Data.Menu> menu;
+		private readonly DatabaseLayer _db;
+		private DateTime _forDate;
+		private List<DataLayer.Data.Menu> _menu;
 		public MenuPage(DatabaseLayer db)
 		{
-			this.db = db;
+			_db = db;
 			InitializeComponent();
-			forDate = DateTime.Now.Date;
-			forDate = forDate.AddDays(-12);
+			_forDate = DateTime.Now.Date;
 			LoadData();
 		}
 
 		private void LoadData()
 		{
-			dateLabel.Content = forDate.Date;
+			dateLabel.Content = _forDate.Date;
 
-			menu = db.GetMenu(forDate.Date).ToList();
-			menuDataGrid.ItemsSource = menu;
+			_menu = _db.GetMenu(_forDate.Date).ToList();
+			menuDataGrid.ItemsSource = _menu;
 		}
 
 		private void AddBtnClick(object sender, RoutedEventArgs e)
 		{
-
+			MenuDetailWindow menuWindow = new MenuDetailWindow(_db, _forDate);
+			menuWindow.ShowDialog();
+			LoadData();
 		}
 
-		private void EditBtnClick(object sender, RoutedEventArgs e)
+		private void RemoveBtnClick(object sender, RoutedEventArgs e)
 		{
-
+			DataLayer.Data.Menu m = (DataLayer.Data.Menu)menuDataGrid.SelectedItem;
+			_db.RemoveFromDatabase(m);
+			LoadData();
 		}
 
 		private void PrevBtnClick(object sender, RoutedEventArgs e)
 		{
-			forDate = forDate.AddDays(-1);
+			_forDate = _forDate.AddDays(-1);
 			LoadData();
 		}
 
 		private void NextBtnClick(object sender, RoutedEventArgs e)
 		{
-			forDate = forDate.AddDays(1);
+			_forDate = _forDate.AddDays(1);
 			LoadData();
 		}
 

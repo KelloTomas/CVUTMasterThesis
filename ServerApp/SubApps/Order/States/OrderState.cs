@@ -8,7 +8,6 @@ using ServerApp.SubApps.Shared.Data;
 using ServerApp.SubApps.Shared.Layouts;
 using ServerApp.Devices.Actions;
 using ServerApp.SubApps.Order.Layouts;
-using System.Data.Entity;
 using DataLayer.Data;
 
 namespace ServerApp.SubApps.Order.States
@@ -17,50 +16,50 @@ namespace ServerApp.SubApps.Order.States
 	{
 
 		#region private fields...
-		List<Menu> menuOnScreen;
-		OrderSubApp app;
-		LayoutBase layout;
-		Client client;
-		DateTime dateToOrder;
-		private string clientMsg = null;
-		IEnumerable<Menu> menu;
-		private int pageNum;
-		private int? selected;
-		bool reset = true;
+		List<Menu> _menuOnScreen;
+		OrderSubApp _app;
+		LayoutBase _layout;
+		Client _client;
+		DateTime _dateToOrder;
+		private string _clientMsg = null;
+		IEnumerable<Menu> _menu;
+		private int _pageNum;
+		private int? _selected;
+		bool _reset = true;
 		#endregion
 
 		#region constructors...
 		public OrderState(OrderSubApp subApp) : base(3000)
 		{
-			app = subApp;
+			_app = subApp;
 		}
 		#endregion
 		public override void Enter()
 		{
 			base.Enter();
-			menu = app.databaseLayer.GetMenu();
+			_menu = _app.databaseLayer.GetMenu();
 			SetInitValues();
 		}
 
 		private void SetInitValues()
 		{
-			pageNum = 0;
-			selected = null;
+			_pageNum = 0;
+			_selected = null;
 			SetDateToOrder(DateTime.Now.Date);
-			layout = app.OrdersLayout;
-			clientMsg = null;
+			_layout = _app.OrdersLayout;
+			_clientMsg = null;
 		}
 
 		private void SetDateToOrder(DateTime date)
 		{
-			dateToOrder = date;
-			menuOnScreen = menu.Where(m => m.ForDate == dateToOrder).ToList();
+			_dateToOrder = date;
+			_menuOnScreen = _menu.Where(m => m.ForDate == _dateToOrder).ToList();
 		}
 
 		public override IStateBase ProcessTimerElapsed()
 		{
 			List<IAction> action;
-			switch (layout)
+			switch (_layout)
 			{
 				case OrdersLayout ordersLayout:
 					action = new List<IAction>
@@ -68,9 +67,9 @@ namespace ServerApp.SubApps.Order.States
 						new ShowLayoutAction(ordersLayout.Name,
 						SetDateTimeToNow()
 						.Concat
-							(ordersLayout.SetDate(dateToOrder, menu.Where(m => m.ForDate > dateToOrder).Any()))
+							(ordersLayout.SetDate(_dateToOrder, _menu.Where(m => m.ForDate > _dateToOrder).Any()))
 						.Concat
-							(ordersLayout.SetMeals(menuOnScreen, pageNum, selected.HasValue ? selected.GetValueOrDefault() % app.OrdersLayout.MEALS_PER_PAGE : selected))
+							(ordersLayout.SetMeals(_menuOnScreen, _pageNum, _selected.HasValue ? _selected.GetValueOrDefault() % _app.OrdersLayout.MEALS_PER_PAGE : _selected))
 						.ToArray())
 					};
 					break;
@@ -80,7 +79,7 @@ namespace ServerApp.SubApps.Order.States
 						new ShowLayoutAction(messageLayout.Name,
 						SetDateTimeToNow()
 						.Concat
-							(messageLayout.SetText(client, clientMsg))
+							(messageLayout.SetText(_client, _clientMsg))
 						.ToArray()),
 					};
 					break;
@@ -88,14 +87,14 @@ namespace ServerApp.SubApps.Order.States
 					action = new List<IAction>();
 					break;
 			}
-			app.Rallo.SendMessage(new Message(action.ToArray()));
-			if (reset)
+			_app.Rallo.SendMessage(new Message(action.ToArray()));
+			if (_reset)
 			{
 				SetInitValues();
 			}
 			else
 			{
-				reset = true;
+				_reset = true;
 			}
 			return this;
 		}
@@ -103,47 +102,47 @@ namespace ServerApp.SubApps.Order.States
 		{
 			if (button.ButtonName.Contains("menu_"))
 			{
-				selected = int.Parse(button.ButtonName.Last().ToString()) + pageNum * app.OrdersLayout.MEALS_PER_PAGE;
+				_selected = int.Parse(button.ButtonName.Last().ToString()) + _pageNum * _app.OrdersLayout.MEALS_PER_PAGE;
 			}
 			else
 			{
 				switch (button.ButtonName)
 				{
 					case "prevDay":
-						SetDateToOrder(dateToOrder.AddDays(-1));
+						SetDateToOrder(_dateToOrder.AddDays(-1));
 						break;
 					case "nextDay":
-						SetDateToOrder(dateToOrder.AddDays(1));
+						SetDateToOrder(_dateToOrder.AddDays(1));
 						break;
 					case "up":
-						pageNum--;
+						_pageNum--;
 						break;
 					case "down":
-						pageNum++;
+						_pageNum++;
 						break;
 					default:
 						return base.ProcessButtonClickAction(button, ref forceCallStateMethod);
 				}
-				selected = null;
+				_selected = null;
 			}
-			reset = false;
+			_reset = false;
 			forceCallStateMethod = true;
 			return this;
 		}
 
 		public override IStateBase ProcessCardReadAction(CardReadAction card, ref bool forceCallStateMethod)
 		{
-			client = app.databaseLayer.GetClient(card.CardNumber);
+			_client = _app.databaseLayer.GetClient(card.CardNumber);
 			//app.db.Cards.Where(c => c.CardNumber == card.CardNumber).FirstOrDefault()?.Client;
-			layout = app.MessageLayout;
-			if (client == null)
+			_layout = _app.MessageLayout;
+			if (_client == null)
 			{
-				clientMsg = "Neznama karta";
+				_clientMsg = "Neznama karta";
 			}
 			else
 			{
-				if (selected == null)
-					clientMsg = "Nevybrali ste jedlo";
+				if (_selected == null)
+					_clientMsg = "Nevybrali ste jedlo";
 				else
 				{
 					/*
@@ -151,17 +150,17 @@ namespace ServerApp.SubApps.Order.States
 					app.db.Orders.Add(new ServerApp.Order() { ForDate = dateToOrder, IdClient = client.IdClient, IdMenu = menuOnScreen[selected.GetValueOrDefault()].IdMenu });
 					app.db.SaveChanges();
 					*/
-					var o = new DataLayer.Data.Order { IdClient = client.Id, ForDate = dateToOrder, IdMenu = menuOnScreen[selected.GetValueOrDefault()].IdMenu };
-					app.databaseLayer.Add(o);
+					var o = new DataLayer.Data.Order { IdClient = _client.Id, ForDate = _dateToOrder, IdMenu = _menuOnScreen[_selected.GetValueOrDefault()].IdMenu };
+					_app.databaseLayer.Add(o);
 					//throw new NotImplementedException();
-					clientMsg = "Objednane";
+					_clientMsg = "Objednane";
 				}
 			}
 			forceCallStateMethod = true;
 			return this;
 		}
 
-		public IEnumerable<ModifyLayoutItem> SetDateTimeToNow()
+		private IEnumerable<ModifyLayoutItem> SetDateTimeToNow()
 		{
 			return SetDateTimeTo(DateTime.Now);
 		}

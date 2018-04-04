@@ -16,97 +16,73 @@ namespace ServerApp.SubApps.Serve.States
 	{
 
         #region private fields...
-        List<Menu> menuOnScreen;
-        ServeSubApp app;
-		LayoutBase layout;
-		Client client;
-		DateTime dateToOrder;
-		private string clientMsg = null;
-		IEnumerable<Menu> menu;
-		private int pageNum;
-		private int? selected;
-        bool reset = true;
+        ServeSubApp _app;
+		private int _selected;
 		#endregion
 
 		#region constructors...
 		public SetServing(ServeSubApp subApp) : base(3000)
 		{
-			app = subApp;
+			_app = subApp;
 		}
 		#endregion
-		public override void Enter()
-        {
-            base.Enter();
-			menu = app.databaseLayer.GetMenu();
-			SetInitValues();
-        }
 
-        private void SetInitValues()
-        {
-            pageNum = 0;
-            selected = null;
-            SetDateToOrder(DateTime.Now.Date);
-            clientMsg = null;
-        }
-
-        private void SetDateToOrder(DateTime date)
-        {
-            dateToOrder = date;
-            menuOnScreen = menu.Where(m => m.ForDate == dateToOrder).ToList();
-        }
-
-        public override IStateBase ProcessTimerElapsed()
+		public override IStateBase ProcessTimerElapsed()
 		{
-			/*
-			List<IAction> action;
-			switch (layout)
-			{
-				case OrdersLayout ordersLayout:
-					action = new List<IAction>
-					{
-						new ShowLayoutAction(ordersLayout.Name,
-						SetDateTimeToNow()
-						.Concat
-							(ordersLayout.SetDate(dateToOrder, menu.Where(m => m.ForDate > dateToOrder).Any()))
-						.Concat
-							(ordersLayout.SetMeals(menuOnScreen, pageNum, selected.HasValue ? selected.GetValueOrDefault() % app.OrdersLayout.MEALS_PER_PAGE : selected))
-						.ToArray())
-					};
-					break;
-				case MessageLayout messageLayout:
-					action = new List<IAction>
-					{
-						new ShowLayoutAction(messageLayout.Name,
-						SetDateTimeToNow()
-						.Concat
-							(messageLayout.SetText(client, clientMsg))
-						.ToArray()),
-					};
-					break;
-				default:
-					action = new List<IAction>();
-					break;
-			}
-			app.Rallo.SendMessage(new Message(action.ToArray()));
-            if (reset)
-            {
-                SetInitValues();
-            }
-            else
-            {
-                reset = true;
-            }
-			*/
+			_app.ClientDevice.SendMessage(new Message(
+					new List<IAction> {
+
+						new ShowLayoutAction(
+
+						_app.ClientTextLayout.Name,
+				_app.ClientTextLayout.SetDateTimeTo()
+				.Concat
+					(_app.ClientTextLayout.SetTexts("KLIENT"))
+				.Concat
+					(_app.ClientTextLayout.SetContent("Prilozte kartu"))
+				.ToArray())
+				}.ToArray()
+			));
+			_app.ServiceDevice.SendMessage(new Message(
+					new List<IAction> {
+
+						new ShowLayoutAction(
+
+						_app.ClientTextLayout.Name,
+				_app.ClientTextLayout.SetDateTimeTo()
+				.Concat
+					(_app.ClientTextLayout.SetTexts("SERVIS"))
+				.Concat
+					(_app.ClientTextLayout.SetContent("Prilozte kartu"))
+				.ToArray())
+				}.ToArray()
+			));
 			return this;
 		}
-		public IEnumerable<ModifyLayoutItem> SetDateTimeToNow()
+		public override IStateBase ProcessButtonClickAction(ButtonClickAction button, ref bool forceCallStateMethod)
 		{
-			return SetDateTimeTo(DateTime.Now);
+			if (button.ButtonName.Contains("btn_"))
+			{
+				_selected = int.Parse(button.ButtonName.Last().ToString());
+			}
+			else
+			{
+				switch (button.ButtonName)
+				{
+					case "prevDay":
+						break;
+					default:
+						return base.ProcessButtonClickAction(button, ref forceCallStateMethod);
+				}
+			}
+			forceCallStateMethod = true;
+			return this;
 		}
-		private IEnumerable<ModifyLayoutItem> SetDateTimeTo(DateTime dateTime)
+
+		public override IStateBase ProcessCardReadAction(CardReadAction card, ref bool forceCallStateMethod)
 		{
-			yield return new ModifyLayoutItem("DateValue", "text", dateTime.ToString("d"));
-			yield return new ModifyLayoutItem("TimeValue", "text", dateTime.ToString("t"));
+			forceCallStateMethod = true;
+			return this;
 		}
 	}
 }

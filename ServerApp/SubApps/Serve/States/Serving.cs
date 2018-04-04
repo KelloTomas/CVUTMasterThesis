@@ -43,57 +43,7 @@ namespace ServerApp.SubApps.Serve.States
 
         public override IStateBase ProcessTimerElapsed()
 		{
-			/*
-			List<IAction> action;
-			switch (layout)
-			{
-				case OrdersLayout ordersLayout:
-					action = new List<IAction>
-					{
-						new ShowLayoutAction(ordersLayout.Name,
-						SetDateTimeToNow()
-						.Concat
-							(ordersLayout.SetDate(dateToOrder, menu.Where(m => m.ForDate > dateToOrder).Any()))
-						.Concat
-							(ordersLayout.SetMeals(menuOnScreen, pageNum, selected.HasValue ? selected.GetValueOrDefault() % app.OrdersLayout.MEALS_PER_PAGE : selected))
-						.ToArray())
-					};
-					break;
-				case MessageLayout messageLayout:
-					action = new List<IAction>
-					{
-						new ShowLayoutAction(messageLayout.Name,
-						SetDateTimeToNow()
-						.Concat
-							(messageLayout.SetText(client, clientMsg))
-						.ToArray()),
-					};
-					break;
-				default:
-					action = new List<IAction>();
-					break;
-			}
-			app.Rallo.SendMessage(new Message(action.ToArray()));
-            if (reset)
-            {
-                SetInitValues();
-            }
-            else
-            {
-                reset = true;
-            }
-			*/
-			return this;
-		}
-		
-		public IEnumerable<ModifyLayoutItem> SetDateTimeToNow()
-		{
-			return SetDateTimeTo(DateTime.Now);
-		}
-		private IEnumerable<ModifyLayoutItem> SetDateTimeTo(DateTime dateTime)
-		{
-			yield return new ModifyLayoutItem("DateValue", "text", dateTime.ToString("d"));
-			yield return new ModifyLayoutItem("TimeValue", "text", dateTime.ToString("t"));
+			return base.ProcessTimerElapsed();
 		}
 	}
 }

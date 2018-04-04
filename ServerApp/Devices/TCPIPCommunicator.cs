@@ -239,7 +239,7 @@ namespace ServerApp.Devices
 				msg = Encoding.ASCII.GetString(readBuffer, 0, i);
 				_netStream.BeginRead(readBuffer, 0, readBuffer.Length, EndRead, readBuffer);
 			}
-			catch (System.IO.IOException)
+			catch (IOException)
 			{
 				return;
 			}

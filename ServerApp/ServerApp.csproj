@@ -110,6 +110,8 @@
     <Compile Include="SubApps\Order\OrderSubApp.cs" />
     <Compile Include="SubApps\Order\States\OrderState.cs" />
     <Compile Include="SubApps\Serve\IServeSubApp.cs" />
+    <Compile Include="SubApps\Serve\Layouts\ClientTextLayout.cs" />
+    <Compile Include="SubApps\Serve\Layouts\SetServingLayout.cs" />
     <Compile Include="SubApps\Serve\ServeSubApp.cs" />
     <Compile Include="SubApps\Serve\States\Serving.cs" />
     <Compile Include="SubApps\Serve\States\SetServing.cs" />
@@ -167,7 +169,10 @@
     <EmbeddedResource Include="SubApps\Inform\Layouts\ScanCardLayout.ui" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SubApps\Serve\Layouts\" />
+    <EmbeddedResource Include="SubApps\Serve\Layouts\SetServingLayout.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SubApps\Serve\Layouts\ClientTextLayout.ui" />
   </ItemGroup>
   <Import Project="..\DataLayer\DataLayer\DataLayer.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

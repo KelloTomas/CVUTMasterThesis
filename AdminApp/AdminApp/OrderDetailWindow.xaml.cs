@@ -32,7 +32,18 @@ namespace AdminApp
 
 		private void SaveBtn_Click(object sender, RoutedEventArgs e)
 		{
-		//	_db.Add(_menu);
+			if (menuDataGrid.SelectedIndex == -1)
+			{
+				MessageBox.Show("Select menu to order", "Warning");
+				return;
+			}
+			Order order = new Order{
+				IdClient = _forClient.Id,
+				ForDate = date.DisplayDate,
+				IdMenu = (menuDataGrid.SelectedItem as DataLayer.Data.Menu).IdMenu,
+				Served = false,
+			};
+			_db.Add(order);
 			Close();
 		}
 

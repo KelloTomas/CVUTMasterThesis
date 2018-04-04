@@ -317,10 +317,10 @@ namespace DataLayer
 					switch (o)
 					{
 						case Order order:
-							command.CommandText = $"INSERT INTO[dbo].[Orders] (ForDate, IdMenu, IdClient) VALUES({order.ForDate}, {order.IdMenu}, {order.IdClient})";
+							command.CommandText = $"INSERT INTO [dbo].[Orders] (ForDate, IdMenu, IdClient, Vydane) VALUES('{order.ForDate.ToString("yyyy-MM-dd")}', {order.IdMenu}, {order.IdClient}, 0)";
 							break;
 						case Menu menu:
-							command.CommandText = $"INSERT INTO[dbo].[Menu] (ForDate, IdSoup, IdMeal, IdDesert) VALUES('{menu.ForDate.ToString("yyyy-MM-dd")}', {menu.Items[0].Id}, {menu.Items[1].Id}, {menu.Items[2].Id})";
+							command.CommandText = $"INSERT INTO [dbo].[Menu] (ForDate, IdSoup, IdMeal, IdDesert) VALUES('{menu.ForDate.ToString("yyyy-MM-dd")}', {menu.Items[0].Id}, {menu.Items[1].Id}, {menu.Items[2].Id})";
 							break;
 						default:
 							throw new ArgumentOutOfRangeException();

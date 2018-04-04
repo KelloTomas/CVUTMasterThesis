@@ -31,4 +31,6 @@ FORMS += \
     ServerApp/SubApps/Inform/Layouts/CardScannedLayout.ui \
     ServerApp/SubApps/Inform/Layouts/ScanCardLayout.ui \
     ServerApp/SubApps/Order/Layouts/MessageLayout.ui \
-    ServerApp/SubApps/Order/Layouts/OrdersLayout.ui
+    ServerApp/SubApps/Order/Layouts/OrdersLayout.ui \
+    ServerApp/SubApps/Serve/Layouts/ClientTextLayout.ui \
+    ServerApp/SubApps/Serve/Layouts/SetServingLayout.ui

@@ -40,7 +40,7 @@ namespace ServerApp.SubApps.Inform.States
 						new ShowLayoutAction(scanCard.Name,
 						SetDateTimeToNow()
 						.Concat
-							(scanCard.SetTexts(" ", clientMsg??"Prilozte kartu"))
+							(scanCard.SetTexts("Informácie o objednávkach", clientMsg??"Prilozte kartu"))
 						.ToArray())
 					};
 					break;

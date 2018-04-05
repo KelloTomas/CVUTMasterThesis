@@ -12,20 +12,27 @@ using DataLayer.Data;
 
 namespace ServerApp.SubApps.Serve.States
 {
-	public class SetServing : StateBase
+	public class Served : StateBase
 	{
 
         #region private fields...
         ServeSubApp _app;
-		private int _selected;
+		private readonly Menu _vydane;
 		#endregion
 
 		#region constructors...
-		public SetServing(ServeSubApp subApp) : base(3000)
+		public Served(ServeSubApp subApp, Menu vydane) : base(3000)
 		{
 			_app = subApp;
+			_vydane = vydane;
 		}
 		#endregion
+		public override void Enter()
+        {
+            base.Enter();
+			ProcessTimerElapsed();
+        }
+
 
 		public override IStateBase ProcessTimerElapsed()
 		{
@@ -37,9 +44,9 @@ namespace ServerApp.SubApps.Serve.States
 						_app.ClientTextLayout.Name,
 				_app.ClientTextLayout.SetDateTimeTo()
 				.Concat
-					(_app.ClientTextLayout.SetTexts("KLIENT"))
+					(_app.ClientTextLayout.SetTexts("Vydane jedlo"))
 				.Concat
-					(_app.ClientTextLayout.SetContent("Nerilozte kartu"))
+					(_app.ClientTextLayout.SetContent(_vydane.ForDate.ToString()))
 				.ToArray())
 				}.ToArray()
 			));
@@ -51,39 +58,13 @@ namespace ServerApp.SubApps.Serve.States
 						_app.ClientTextLayout.Name,
 				_app.ClientTextLayout.SetDateTimeTo()
 				.Concat
-					(_app.ClientTextLayout.SetTexts("SERVIS"))
+					(_app.ClientTextLayout.SetTexts("Vydane jedlo"))
 				.Concat
-					(_app.ClientTextLayout.SetContent("Zahajte vydaj"))
+					(_app.ClientTextLayout.SetContent($"{_vydane.Items[0].Name} {_vydane.Items[0].Description}, {_vydane.Items[1].Name} {_vydane.Items[1].Description}, {_vydane.Items[2].Name} {_vydane.Items[2].Description}"))
 				.ToArray())
 				}.ToArray()
 			));
-			return this;
-		}
-		public override IStateBase ProcessButtonClickAction(ButtonClickAction button, ref bool forceCallStateMethod)
-		{
-			if (button.ButtonName.Contains("btn_"))
-			{
-				_selected = int.Parse(button.ButtonName.Last().ToString());
-			}
-			else
-			{
-				switch (button.ButtonName)
-				{
-					case "prevDay":
-						break;
-					default:
-						return base.ProcessButtonClickAction(button, ref forceCallStateMethod);
-				}
-			}
-			forceCallStateMethod = true;
-			return this;
-		}
-
-		public override IStateBase ProcessCardReadAction(CardReadAction card, ref bool forceCallStateMethod)
-		{
 			return new Serving(_app);
-			forceCallStateMethod = true;
-			return this;
 		}
 	}
 }

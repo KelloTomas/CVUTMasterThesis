@@ -56,6 +56,59 @@ namespace DataLayer
 		#endregion
 
 		#region public methods...
+		public Menu ServeOrder(int clientId)
+		{
+			using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+			{
+				connection.Open();
+				using (SqlCommand command = connection.CreateCommand())
+				{
+					command.CommandType = System.Data.CommandType.StoredProcedure;
+					command.CommandText = $"[dbo].ServeOrder";
+					command.Parameters.Add("@ClientId", System.Data.SqlDbType.Int).Value = clientId;
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							Menu o = new Menu()
+							{
+								IdMenu = reader.GetInt32(0),
+								ForDate = reader.GetDateTime(1),
+							};
+							if (!reader.IsDBNull(2))
+							{
+								o.Items[0] = new MenuItem()
+								{
+									Id = reader.GetInt32(2),
+									Name = reader.GetString(3),
+									Description = reader.GetString(4)
+								};
+							}
+							if (!reader.IsDBNull(5))
+							{
+								o.Items[1] = new MenuItem()
+								{
+									Id = reader.GetInt32(5),
+									Name = reader.GetString(6),
+									Description = reader.GetString(7)
+								};
+							}
+							if (!reader.IsDBNull(8))
+							{
+								o.Items[2] = new MenuItem()
+								{
+									Id = reader.GetInt32(8),
+									Name = reader.GetString(9),
+									Description = reader.GetString(10)
+								};
+							}
+							return o;
+						}
+					}
+				}
+			}
+			return null;
+		}
 		public IEnumerable<MenuItem> GetTable(MenuItem menuItem)
 		{
 			string xmlResult = "";
@@ -519,25 +572,25 @@ namespace DataLayer
 				}
 				/*
 				short mealKindId = (short)xNode.Attribute("IdDruh");            
-                MealKind mealKind = availableMealKinds.Single(m => m.WorkplaceId == workplaceId && m.Id == mealKindId);
+				MealKind mealKind = availableMealKinds.Single(m => m.WorkplaceId == workplaceId && m.Id == mealKindId);
 
-                Meal meal = new Meal(
-                    (short)xNode.Attribute("IdAlt"),
-                    string.Empty, // popis alternativy me nezajima
-                    (string)xNode.Attribute("KodAlt"),
-                    false,
-                    mealKind);
+				Meal meal = new Meal(
+					(short)xNode.Attribute("IdAlt"),
+					string.Empty, // popis alternativy me nezajima
+					(string)xNode.Attribute("KodAlt"),
+					false,
+					mealKind);
 
-                Client client = new Client((string)xNode.Attribute("Titul"), (string)xNode.Attribute("Jmeno"), (string)xNode.Attribute("Prijmeni"),
-                    (int)xNode.Attribute("EvCislo"),
-                    //null,// cislo karty v tuto chvili neznam
-                    (string)xNode.Attribute("OCS"), (string)xNode.Attribute("RCS"),
-                    0, string.Empty, string.Empty, string.Empty, (MealSize?)((short?)xNode.Attribute("VelPorce")) ?? MealSize.NotDefined, 0, 0, 0, 0, ClientIdentification,
-                    // kod karty me u poslednich vydeju nezajima, rozhodne se nebude nikde zobrazovat
-                    null, null); // zbyle udaje me nezajimaji
+				Client client = new Client((string)xNode.Attribute("Titul"), (string)xNode.Attribute("Jmeno"), (string)xNode.Attribute("Prijmeni"),
+					(int)xNode.Attribute("EvCislo"),
+					//null,// cislo karty v tuto chvili neznam
+					(string)xNode.Attribute("OCS"), (string)xNode.Attribute("RCS"),
+					0, string.Empty, string.Empty, string.Empty, (MealSize?)((short?)xNode.Attribute("VelPorce")) ?? MealSize.NotDefined, 0, 0, 0, 0, ClientIdentification,
+					// kod karty me u poslednich vydeju nezajima, rozhodne se nebude nikde zobrazovat
+					null, null); // zbyle udaje me nezajimaji
 
-                DateTime servedTime = (DateTime)xNode.Attribute("CasVydeje");
-                ServedMeal vydaneJidlo = new ServedMeal((int?)xNode.Attribute("PC"), meal, client, servedTime);
+				DateTime servedTime = (DateTime)xNode.Attribute("CasVydeje");
+				ServedMeal vydaneJidlo = new ServedMeal((int?)xNode.Attribute("PC"), meal, client, servedTime);
 				*/
 			}
 			return client;

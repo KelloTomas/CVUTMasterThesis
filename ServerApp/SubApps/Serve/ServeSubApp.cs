@@ -15,7 +15,7 @@ namespace ServerApp.SubApps.Serve
 	{
 		public Rallo ClientDevice { get; private set; }
 		public Rallo ServiceDevice { get; private set; }
-		public ServeSubApp(List<Device> devices, DatabaseLayer dbLayer) : base(dbLayer)
+		public ServeSubApp(List<Device> devices, string appName, DatabaseLayer dbLayer) : base(appName, dbLayer)
 		{
 			if (devices.Count != 2)
 				throw new ArgumentOutOfRangeException();
@@ -26,6 +26,10 @@ namespace ServerApp.SubApps.Serve
 		}
 
 		public ClientTextLayout ClientTextLayout { get; } = new ClientTextLayout();
+		public ClientServedLayout ClientServedLayout { get; } = new ClientServedLayout();
+		public SetServingLayout SetServingLayout { get; } = new SetServingLayout();
+		public ServingLayout ServingLayout { get; } = new ServingLayout();
+		public HistoryLayout HistoryLayout { get; } = new HistoryLayout();
 
 
 		public override IStateBase GetInitState()

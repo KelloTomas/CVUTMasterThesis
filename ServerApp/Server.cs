@@ -32,15 +32,15 @@ namespace ServerApp
 						{
 							case "Inform":
 								Thread t1 = new Thread(new ParameterizedThreadStart(RunSubApp));
-								t1.Start(new InformSubApp(subApp.Devices.ToList(), dbLayer));
+								t1.Start(new InformSubApp(subApp.Devices.ToList(), subApp.AppName, dbLayer));
 								break;
 							case "Order":
 								Thread t2 = new Thread(new ParameterizedThreadStart(RunSubApp));
-								t2.Start(new OrderSubApp(subApp.Devices.ToList(), dbLayer));
+								t2.Start(new OrderSubApp(subApp.Devices.ToList(), subApp.AppName, dbLayer));
 								break;
 							case "Serve":
 								Thread t3 = new Thread(new ParameterizedThreadStart(RunSubApp));
-								t3.Start(new ServeSubApp(subApp.Devices.ToList(), dbLayer));
+								t3.Start(new ServeSubApp(subApp.Devices.ToList(), subApp.AppName, dbLayer));
 								break;
 							default:
 								throw new ArgumentOutOfRangeException();

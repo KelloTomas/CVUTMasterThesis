@@ -15,16 +15,17 @@ namespace ServerApp.SubApps
 		public DatabaseLayer databaseLayer;
 		private Timer t;
 
-		public SubApp(DatabaseLayer databaseLayer)
+		public SubApp(string appName, DatabaseLayer databaseLayer)
 		{
 			this.databaseLayer = databaseLayer;
+			AppName = appName;
 		}
 
 		public void Start()
 		{
 			ActualState = GetInitState();
 			t = new Timer();
-			t.Elapsed += timerElapsed;
+			t.Elapsed += TimerElapsed;
 			t.AutoReset = true;
 			t.Interval = ActualState.TimeOut;
 			t.Start();
@@ -32,13 +33,12 @@ namespace ServerApp.SubApps
 			CheckNewState(ActualState.ProcessTimerElapsed());
 		}
 
-		private void timerElapsed(object sender, ElapsedEventArgs e)
+		private void TimerElapsed(object sender, ElapsedEventArgs e)
 		{
 			Console.WriteLine($"TimeElapsed: {GetType()}");
 			CheckNewState(ActualState.ProcessTimerElapsed());
 		}
-
-		public bool Terminated { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		public string AppName { get; private set; }
 
 		public IStateBase ActualState { get; set; }
 
@@ -77,8 +77,6 @@ namespace ServerApp.SubApps
 		{
 			get
 			{
-
-				// pote az cele obrazovky, ktere jiz mohou vyuzivat ulozene fragmenty
 				foreach (IStoreLayoutAction storeLayoutAction in GetStoreLayoutActions())
 				{
 					yield return storeLayoutAction;
@@ -90,8 +88,10 @@ namespace ServerApp.SubApps
 		{
 			if (newState != ActualState)
 			{
+				t.Stop();
 				ActualState?.Exit();
 				newState.Enter();
+				t.Start();
 				ActualState = newState;
 				return true;
 			}

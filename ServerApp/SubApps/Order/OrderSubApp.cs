@@ -14,7 +14,7 @@ namespace ServerApp.SubApps.Order
 	public class OrderSubApp : SubApp, IOrderSubApp
 	{
 		public Rallo Rallo { get; private set; }
-		public OrderSubApp(List<Device> devices, DatabaseLayer dbLayer) : base(dbLayer)
+		public OrderSubApp(List<Device> devices, string appName, DatabaseLayer dbLayer) : base(appName, dbLayer)
 		{
 			if (devices.Count != 1)
 				throw new ArgumentOutOfRangeException();

@@ -110,9 +110,13 @@
     <Compile Include="SubApps\Order\OrderSubApp.cs" />
     <Compile Include="SubApps\Order\States\OrderState.cs" />
     <Compile Include="SubApps\Serve\IServeSubApp.cs" />
+    <Compile Include="SubApps\Serve\Layouts\ClientServedLayout.cs" />
     <Compile Include="SubApps\Serve\Layouts\ClientTextLayout.cs" />
+    <Compile Include="SubApps\Serve\Layouts\HistoryLayout.cs" />
+    <Compile Include="SubApps\Serve\Layouts\ServingLayout.cs" />
     <Compile Include="SubApps\Serve\Layouts\SetServingLayout.cs" />
     <Compile Include="SubApps\Serve\ServeSubApp.cs" />
+    <Compile Include="SubApps\Serve\States\History.cs" />
     <Compile Include="SubApps\Serve\States\Served.cs" />
     <Compile Include="SubApps\Serve\States\Serving.cs" />
     <Compile Include="SubApps\Serve\States\SetServing.cs" />
@@ -174,6 +178,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="SubApps\Serve\Layouts\ClientTextLayout.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SubApps\Serve\Layouts\ClientServedLayout.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SubApps\Serve\Layouts\ServingLayout.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SubApps\Serve\Layouts\HistoryLayout.ui" />
   </ItemGroup>
   <Import Project="..\DataLayer\DataLayer\DataLayer.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

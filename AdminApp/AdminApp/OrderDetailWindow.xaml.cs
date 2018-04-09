@@ -38,7 +38,7 @@ namespace AdminApp
 				return;
 			}
 			Order order = new Order{
-				IdClient = _forClient.Id,
+				Client = _forClient.Id,
 				ForDate = date.DisplayDate,
 				IdMenu = (menuDataGrid.SelectedItem as DataLayer.Data.Menu).IdMenu,
 				Served = false,

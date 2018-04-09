@@ -22,7 +22,7 @@ namespace DataLayer
 				IdOrder = (int)order.Attribute("IdOrder"),
 				IdMenu = (int)order.Attribute("IdMenu"),
 				ForDate = (DateTime)order.Attribute("ForDate"),
-				Served = (bool)order.Attribute("Served")
+				Served = (DateTime)order.Attribute("Served")
 			};
 
 			o.Items[0] = new MenuItem { /* Id = (int)order.Attribute("IdSoup"), */ Name = (string)order.Attribute("SoupName") };
@@ -370,7 +370,7 @@ namespace DataLayer
 					switch (o)
 					{
 						case Order order:
-							command.CommandText = $"INSERT INTO [dbo].[Orders] (ForDate, IdMenu, IdClient, Vydane) VALUES('{order.ForDate.ToString("yyyy-MM-dd")}', {order.IdMenu}, {order.IdClient}, 0)";
+							command.CommandText = $"INSERT INTO [dbo].[Orders] (ForDate, IdMenu, IdClient, Vydane) VALUES('{order.ForDate.ToString("yyyy-MM-dd")}', {order.IdMenu}, {order.Client}, null)";
 							break;
 						case Menu menu:
 							command.CommandText = $"INSERT INTO [dbo].[Menu] (ForDate, IdSoup, IdMeal, IdDesert) VALUES('{menu.ForDate.ToString("yyyy-MM-dd")}', {menu.Items[0].Id}, {menu.Items[1].Id}, {menu.Items[2].Id})";
@@ -528,6 +528,55 @@ namespace DataLayer
 				}
 			}
 			yield break;
+		}
+		public IEnumerable<Order> GetServedOrders(int count)
+		{
+			using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+			{
+				connection.Open();
+				using (SqlCommand command = connection.CreateCommand())
+				{
+					command.CommandText = "[dbo].[GetServerdOrders]";
+					command.CommandType = System.Data.CommandType.StoredProcedure;
+					command.Parameters.Add("@Count", System.Data.SqlDbType.Int).Value = count;
+					using (SqlDataReader reader = command.ExecuteReader())
+					{
+						while (reader.Read())
+						{
+							Order o = new Order()
+							{
+								IdOrder = reader.GetInt32(0),
+								Served = reader.GetDateTime(1),
+								Client = new Client()
+								{
+									Id = reader.GetInt32(2),
+									LastName = reader.GetString(3),
+									FirstName = reader.GetString(4),
+								}
+							};
+							o.Items[0] = new MenuItem()
+							{
+								Id = reader.GetInt32(5),
+								Name = reader.GetString(6),
+								Description = reader.GetString(7),
+							};
+							o.Items[1] = new MenuItem()
+							{
+								Id = reader.GetInt32(8),
+								Name = reader.GetString(9),
+								Description = reader.GetString(10),
+							};
+							o.Items[2] = new MenuItem()
+							{
+								Id = reader.GetInt32(11),
+								Name = reader.GetString(12),
+								Description = reader.GetString(13),
+							};
+							yield return o;
+						}
+					}
+				}
+			}
 		}
 		public Client GetOrders(string cardNumber)
 		{

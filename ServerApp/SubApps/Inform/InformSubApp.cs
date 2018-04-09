@@ -17,7 +17,7 @@ namespace ServerApp.SubApps.Inform
 	{
         public Rallo Rallo {get; private set;}
 
-		public InformSubApp(List<Device> devices, DatabaseLayer dbLayer) : base(dbLayer)
+		public InformSubApp(List<Device> devices, string appName, DatabaseLayer dbLayer) : base(appName, dbLayer)
 		{
             if (devices.Count != 1)
                 throw new ArgumentOutOfRangeException();

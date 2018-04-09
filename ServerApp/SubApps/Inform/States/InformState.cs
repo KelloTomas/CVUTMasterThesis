@@ -79,7 +79,7 @@ namespace ServerApp.SubApps.Inform.States
 			else
 			{
 				layout = app.CardScannedLayout;
-				client.Orders = client.Orders.Where(o=> o.Served == false && o.ForDate.Date >= DateTime.Now.Date).ToList();
+				client.Orders = client.Orders.Where(o=> o.Served == null && o.ForDate.Date >= DateTime.Now.Date).ToList();
 			}
 			forceCallStateMethod = true;
 			return this;

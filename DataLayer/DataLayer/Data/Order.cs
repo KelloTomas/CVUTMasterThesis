@@ -1,9 +1,11 @@
-﻿namespace DataLayer.Data
+﻿using System;
+
+namespace DataLayer.Data
 {
 	public class Order : Menu
 	{
-		public int IdClient { get; set; }
 		public int IdOrder { get; set; }
-		public bool Served { get; set; }
+		public Client Client { get; set; }
+		public DateTime? Served { get; set; }
 	}
 }

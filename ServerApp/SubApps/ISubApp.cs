@@ -14,8 +14,6 @@ namespace ServerApp.SubApps
 		/// Akce, ktera se maji provest pri inicializaci HW
 		/// </summary>
 		IEnumerable<IAction> InitActions { get; }
-
-		bool Terminated { get; set; }
 		IStateBase ActualState { get; }
 		IStateBase IdleState { get; }
 	}

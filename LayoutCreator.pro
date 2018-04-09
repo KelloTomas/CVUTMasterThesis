@@ -33,4 +33,7 @@ FORMS += \
     ServerApp/SubApps/Order/Layouts/MessageLayout.ui \
     ServerApp/SubApps/Order/Layouts/OrdersLayout.ui \
     ServerApp/SubApps/Serve/Layouts/ClientTextLayout.ui \
-    ServerApp/SubApps/Serve/Layouts/SetServingLayout.ui
+    ServerApp/SubApps/Serve/Layouts/SetServingLayout.ui \
+    ServerApp/SubApps/Serve/Layouts/ClientServedLayout.ui \
+    ServerApp/SubApps/Serve/Layouts/ServingLayout.ui \
+    ServerApp/SubApps/Serve/Layouts/HistoryLayout.ui

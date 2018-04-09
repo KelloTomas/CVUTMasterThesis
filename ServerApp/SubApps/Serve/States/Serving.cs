@@ -9,6 +9,7 @@ using ServerApp.SubApps.Shared.Layouts;
 using ServerApp.Devices.Actions;
 using System.Data.Entity;
 using DataLayer.Data;
+using ServerApp.SubApps.Serve.Layouts;
 
 namespace ServerApp.SubApps.Serve.States
 {
@@ -19,6 +20,7 @@ namespace ServerApp.SubApps.Serve.States
 		ServeSubApp _app;
 		string _msgConst = "Prilozte kartu";
 		string _msg;
+		Client _client;
 		#endregion
 
 		#region constructors...
@@ -54,28 +56,27 @@ namespace ServerApp.SubApps.Serve.States
 
 						new ShowLayoutAction(
 
-						_app.ClientTextLayout.Name,
-				_app.ClientTextLayout.SetDateTimeTo()
+						_app.ServingLayout.Name,
+				_app.ServingLayout.SetDateTimeTo()
 				.Concat
-					(_app.ClientTextLayout.SetTexts("Prebieha vydaj"))
-				.Concat
-					(_app.ClientTextLayout.SetContent(_msg))
+					(_app.ServingLayout.SetMenu(null, _client, _msg == _msgConst?_app.AppName:_msg))
 				.ToArray())
 				}.ToArray()
 			));
 			_msg = _msgConst;
+			_client = null;
 			return this;
 		}
 
 		public override IStateBase ProcessCardReadAction(CardReadAction card, ref bool forceCallStateMethod)
 		{
-			Client c = _app.databaseLayer.GetClient(card.CardNumber);
-			if (c != null)
+			_client = _app.databaseLayer.GetClient(card.CardNumber);
+			if (_client != null)
 			{
-				Menu m = _app.databaseLayer.ServeOrder(c.Id);
+				Menu m = _app.databaseLayer.ServeOrder(_client.Id);
 				if (m != null)
 				{
-					return new Served(_app, m);
+					return new Served(_app, m, _client);
 				}
 				else
 					_msg = "Nemate ziadne objednavky";
@@ -84,7 +85,19 @@ namespace ServerApp.SubApps.Serve.States
 			{
 				_msg = "Neznama karta";
 			}
+			forceCallStateMethod = true;
 			return this;
+		}
+		public override IStateBase ProcessButtonClickAction(ButtonClickAction button, ref bool forceCallStateMethod)
+		{
+			switch (button.ButtonName)
+			{
+				case ServingLayout.Buttons.StopBtn:
+					return new SetServing(_app);
+				case ServingLayout.Buttons.ShowServedBtn:
+					return new History(_app);
+			}
+			return base.ProcessButtonClickAction(button, ref forceCallStateMethod);
 		}
 	}
 }

@@ -13,28 +13,29 @@ using ServerApp.SubApps.Serve.Layouts;
 
 namespace ServerApp.SubApps.Serve.States
 {
-	public class SetServing : StateBase
+	public class History : StateBase
 	{
 
-		#region private fields...
-		ServeSubApp _app;
+        #region private fields...
+        ServeSubApp _app;
 		private int _selected;
-		List<Menu> _menu;
+		List<DataLayer.Data.Order> _orders;
 		#endregion
 
 		#region constructors...
-		public SetServing(ServeSubApp subApp) : base(3000)
+		public History(ServeSubApp subApp) : base(6000)
 		{
 			_app = subApp;
-			_menu = _app.databaseLayer.GetMenu().ToList();
 		}
 		#endregion
 
 		public override void Enter()
-		{
-			base.Enter();
+        {
+            base.Enter();
+			_orders = _app.databaseLayer.GetServedOrders(10).ToList();
 			ProcessTimerElapsed();
-		}
+        }
+
 		public override IStateBase ProcessTimerElapsed()
 		{
 			_app.ClientDevice.SendMessage(new Message(
@@ -51,19 +52,17 @@ namespace ServerApp.SubApps.Serve.States
 				.ToArray())
 				}.ToArray()
 			));
+
 			_app.ServiceDevice.SendMessage(new Message(
 					new List<IAction> {
 
 						new ShowLayoutAction(
-
-						_app.SetServingLayout.Name,
-				_app.ClientTextLayout.SetDateTimeTo()
+						_app.HistoryLayout.Name,
+				_app.HistoryLayout.SetDateTimeTo()
 				.Concat
-					(_app.SetServingLayout.SetTitle(_app.AppName))
+					(_app.HistoryLayout.SetMenu(_orders.Any()?_orders.ElementAt(_selected):null))
 				.Concat
-					(_app.SetServingLayout.SetMeal(_menu.Any()?_menu.ElementAt(_selected):null))
-				.Concat
-					(_app.SetServingLayout.SetNavigationButtons(_selected, _menu.Count))
+					(_app.HistoryLayout.SetNavigationButtons(_selected, _orders.Count))
 				.ToArray())
 				}.ToArray()
 			));
@@ -73,14 +72,14 @@ namespace ServerApp.SubApps.Serve.States
 		{
 			switch (button.ButtonName)
 			{
-				case SetServingLayout.Buttons.StartBtn:
+				case HistoryLayout.Buttons.BackBtn:
 					return new Serving(_app);
-				case SetServingLayout.Buttons.PrevBtn:
+				case HistoryLayout.Buttons.PrevBtn:
 					if (_selected != 0)
 						_selected--;
 					break;
-				case SetServingLayout.Buttons.NextBtn:
-					if (_selected < _menu.Count-1)
+				case HistoryLayout.Buttons.NextBtn:
+					if (_selected < _orders.Count - 1)
 						_selected++;
 					break;
 				default:

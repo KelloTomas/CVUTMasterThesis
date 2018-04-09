@@ -17,14 +17,16 @@ namespace ServerApp.SubApps.Serve.States
 
         #region private fields...
         ServeSubApp _app;
-		private readonly Menu _vydane;
+		private readonly Menu _menu;
+		private readonly Client _client;
 		#endregion
 
 		#region constructors...
-		public Served(ServeSubApp subApp, Menu vydane) : base(3000)
+		public Served(ServeSubApp subApp, Menu menu, Client client) : base(6000)
 		{
 			_app = subApp;
-			_vydane = vydane;
+			_menu = menu;
+			_client = client;
 		}
 		#endregion
 		public override void Enter()
@@ -41,12 +43,10 @@ namespace ServerApp.SubApps.Serve.States
 
 						new ShowLayoutAction(
 
-						_app.ClientTextLayout.Name,
-				_app.ClientTextLayout.SetDateTimeTo()
+						_app.ClientServedLayout.Name,
+				_app.ClientServedLayout.SetDateTimeTo()
 				.Concat
-					(_app.ClientTextLayout.SetTexts("Vydane jedlo"))
-				.Concat
-					(_app.ClientTextLayout.SetContent(_vydane.ForDate.ToString()))
+					(_app.ClientServedLayout.SetMenu(_menu, _client, null))
 				.ToArray())
 				}.ToArray()
 			));
@@ -54,13 +54,10 @@ namespace ServerApp.SubApps.Serve.States
 					new List<IAction> {
 
 						new ShowLayoutAction(
-
-						_app.ClientTextLayout.Name,
-				_app.ClientTextLayout.SetDateTimeTo()
+						_app.ServingLayout.Name,
+				_app.ServingLayout.SetDateTimeTo()
 				.Concat
-					(_app.ClientTextLayout.SetTexts("Vydane jedlo"))
-				.Concat
-					(_app.ClientTextLayout.SetContent($"{_vydane.Items[0].Name} {_vydane.Items[0].Description}, {_vydane.Items[1].Name} {_vydane.Items[1].Description}, {_vydane.Items[2].Name} {_vydane.Items[2].Description}"))
+					(_app.ServingLayout.SetMenu(_menu, _client, null))
 				.ToArray())
 				}.ToArray()
 			));

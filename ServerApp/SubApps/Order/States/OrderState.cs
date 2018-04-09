@@ -150,7 +150,7 @@ namespace ServerApp.SubApps.Order.States
 					app.db.Orders.Add(new ServerApp.Order() { ForDate = dateToOrder, IdClient = client.IdClient, IdMenu = menuOnScreen[selected.GetValueOrDefault()].IdMenu });
 					app.db.SaveChanges();
 					*/
-					var o = new DataLayer.Data.Order { IdClient = _client.Id, ForDate = _dateToOrder, IdMenu = _menuOnScreen[_selected.GetValueOrDefault()].IdMenu };
+					var o = new DataLayer.Data.Order { Client = _client, ForDate = _dateToOrder, IdMenu = _menuOnScreen[_selected.GetValueOrDefault()].IdMenu };
 					_app.databaseLayer.Add(o);
 					//throw new NotImplementedException();
 					_clientMsg = "Objednane";

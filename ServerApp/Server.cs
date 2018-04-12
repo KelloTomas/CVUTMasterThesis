@@ -1,23 +1,18 @@
 ﻿using DataLayer;
 using DataLayer.Data;
-using ServerApp.Devices;
-using ServerApp.Devices.Actions;
 using ServerApp.SubApps;
 using ServerApp.SubApps.Inform;
 using ServerApp.SubApps.Order;
 using ServerApp.SubApps.Serve;
-using ServerApp.SubApps.Shared.States;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ServerApp
 {
-    class Server
+	class Server
     {
 		DatabaseLayer dbLayer = new DatabaseLayer();
         public void Start()

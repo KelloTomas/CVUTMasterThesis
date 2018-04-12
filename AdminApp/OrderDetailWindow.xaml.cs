@@ -1,17 +1,8 @@
-﻿using DataLayer.Data;
+﻿using DataLayer;
+using DataLayer.Data;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace AdminApp
 {
@@ -20,10 +11,10 @@ namespace AdminApp
 	/// </summary>
 	public partial class OrderDetailWindow : Window
 	{
-		private readonly DataLayer.DatabaseLayer _db;
+		private readonly DatabaseLayer _db;
 		private readonly Client _forClient;
 
-		public OrderDetailWindow(DataLayer.DatabaseLayer db, Client forClient)
+		public OrderDetailWindow(DatabaseLayer db, Client forClient)
 		{
 			InitializeComponent();
 			_db = db;
@@ -38,10 +29,10 @@ namespace AdminApp
 				return;
 			}
 			Order order = new Order{
-				Client = _forClient.Id,
+				Client = _forClient,
 				ForDate = date.DisplayDate,
-				IdMenu = (menuDataGrid.SelectedItem as DataLayer.Data.Menu).IdMenu,
-				Served = false,
+				IdMenu = (menuDataGrid.SelectedItem as Menu).IdMenu,
+				Served = null,
 			};
 			_db.Add(order);
 			Close();
@@ -63,7 +54,7 @@ namespace AdminApp
 				LoadData(t);
 		}
 
-		private void date_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+		private void date_SelectedDateChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
 		{
 			LoadData((DateTime)date.SelectedDate);
 		}

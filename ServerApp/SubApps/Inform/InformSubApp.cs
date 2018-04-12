@@ -8,8 +8,8 @@ using ServerApp.Devices;
 using System.Linq;
 using ServerApp.SubApps.Inform.Layouts;
 using ServerApp.Devices.Actions;
-using DataLayer;
 using DataLayer.Data;
+using DataLayer;
 
 namespace ServerApp.SubApps.Inform
 {

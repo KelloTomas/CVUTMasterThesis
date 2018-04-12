@@ -1,17 +1,8 @@
-﻿using DataLayer.Data;
+﻿using DataLayer;
+using DataLayer.Data;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace AdminApp
 {
@@ -20,10 +11,10 @@ namespace AdminApp
 	/// </summary>
 	public partial class MenuDetailWindow : Window
 	{
-		private readonly DataLayer.DatabaseLayer _db;
+		private readonly DatabaseLayer _db;
 		private readonly DataLayer.Data.Menu _menu;
 
-		public MenuDetailWindow(DataLayer.DatabaseLayer db, DateTime forDate)
+		public MenuDetailWindow(DatabaseLayer db, DateTime forDate)
 		{
 			InitializeComponent();
 			_db = db;

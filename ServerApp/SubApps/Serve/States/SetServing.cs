@@ -1,13 +1,7 @@
 ﻿using System.Collections.Generic;
-using System;
 using System.Linq;
-using System.Timers;
 using ServerApp.SubApps.Shared.States;
-using ServerApp.Devices;
-using ServerApp.SubApps.Shared.Data;
-using ServerApp.SubApps.Shared.Layouts;
 using ServerApp.Devices.Actions;
-using System.Data.Entity;
 using DataLayer.Data;
 using ServerApp.SubApps.Serve.Layouts;
 

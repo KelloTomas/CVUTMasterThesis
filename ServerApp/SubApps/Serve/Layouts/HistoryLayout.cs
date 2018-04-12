@@ -1,7 +1,5 @@
-﻿using DataLayer.Data;
-using ServerApp.SubApps.Shared.Data;
+﻿using ServerApp.SubApps.Shared.Data;
 using ServerApp.SubApps.Shared.Layouts;
-using System;
 using System.Collections.Generic;
 
 namespace ServerApp.SubApps.Serve.Layouts
@@ -29,7 +27,7 @@ namespace ServerApp.SubApps.Serve.Layouts
 		#endregion
 
 		#region public methods...
-		public IEnumerable<ModifyLayoutItem> SetMenu(DataLayer.Data.Order order)
+		public IEnumerable<Shared.Data.ModifyLayoutItem> SetMenu(DataLayer.Data.Order order)
 		{
 			if (order == null)
 			{

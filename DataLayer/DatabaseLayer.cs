@@ -134,7 +134,7 @@ namespace DataLayer
 				connection.Open();
 				using (MySqlCommand command = connection.CreateCommand())
 				{
-					command.CommandText = $"UPDATE Applications SET IsRunning = {app.IsRunning}, Applications.Name = {app.AppName} Where IdApplication = {app.Id}";
+					command.CommandText = $"UPDATE Applications SET IsRunning = {app.IsRunning}, Applications.Name = '{app.AppName}' Where IdApplication = {app.Id}";
 					command.CommandType = System.Data.CommandType.Text;
 					using (MySqlDataReader reader = command.ExecuteReader())
 					{
@@ -147,7 +147,7 @@ namespace DataLayer
 				{
 					using (MySqlCommand command = connection.CreateCommand())
 					{
-						command.CommandText = $"UPDATE Devices SET IP = {d.IP}, Port = {d.Port} Where IdDevice = {d.IdDevice}";
+						command.CommandText = $"UPDATE Devices SET IP = '{d.IP}', Port = {d.Port} Where IdDevice = {d.IdDevice}";
 						command.CommandType = System.Data.CommandType.Text;
 						using (MySqlDataReader reader = command.ExecuteReader())
 						{
@@ -403,7 +403,7 @@ namespace DataLayer
 				connection.Open();
 				using (MySqlCommand command = connection.CreateCommand())
 				{
-					command.CommandText = "[dbo].[GetServerdOrders]";
+					command.CommandText = "GetServedOrders";
 					command.CommandType = System.Data.CommandType.StoredProcedure;
 					command.Parameters.AddWithValue("Count", count);
 					using (MySqlDataReader reader = command.ExecuteReader())
@@ -448,6 +448,8 @@ namespace DataLayer
 		public Client GetOrders(string cardNumber)
 		{
 			Client c = GetClient(cardNumber);
+			if (c == null)
+				return null;
 			// <root><Client IdClient=\"2\" FirstName=\"Mato      \" LastName=\"Vyskocany \" Balance=\"8.520000000000000e+002\"/><Order IdOrder=\"11\" ForDate=\"2018-01-28\" IdMenu=\"1005\" SoupName=\"Paradajková\" MealName=\"Rezen\" DesertName=\"Puding\"/><Order IdOrder=\"16\" ForDate=\"2018-01-28\" IdMenu=\"1006\" SoupName=\"Paradajková\" MealName=\"Kurca\" DesertName=\"Puding\"/><Order IdOrder=\"17\" ForDate=\"2018-01-28\" IdMenu=\"1006\" SoupName=\"Paradajková\" MealName=\"Kurca\" DesertName=\"Puding\"/><Order IdOrder=\"18\" ForDate=\"2018-01-30\" IdMenu=\"1014\" SoupName=\"Paradajková\" MealName=\"Rezen\" DesertName=\"Puding\"/></root>
 			using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
 			{

@@ -7,15 +7,30 @@ namespace DataLayer
 {
 	public class DatabaseLayer
 	{
+#pragma warning disable IDE1006 // Naming Styles
 		private readonly string CONNECTION_STRING;// = "Data Source=DESKTOP-M5V50NA;Initial Catalog=CVUTdb;Persist Security Info=True;User ID=sa;Password=root";
+#pragma warning restore IDE1006 // Naming Styles
 
 		public DatabaseLayer()
 		{
 			MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder();
+			if (false)
+			{
+#pragma warning disable CS0162 // Unreachable code detected
+				// http://www.phpmyadmin.co/index.php
+				builder.Server = "sql7.freemysqlhosting.net";
+				builder.UserID = "sql7233334";
+				builder.Password = "gaQBuD7bXJ";
+				builder.Database = "sql7233334";
+#pragma warning restore CS0162 // Unreachable code detected
+			}
+			else
+			{
 			builder.Server = "localhost";
 			builder.UserID = "root";
 			builder.Password = "root";
 			builder.Database = "cvutdb";
+			}
 			CONNECTION_STRING = builder.ToString();
 		}
 
@@ -91,7 +106,6 @@ namespace DataLayer
 		}
 		public IEnumerable<MenuItem> GetTable(MenuItem menuItem)
 		{
-			string xmlResult = "";
 			using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
 			{
 				connection.Open();
@@ -214,7 +228,6 @@ namespace DataLayer
 		{
 			if (forDate == null)
 				forDate = DateTime.Now.Date;
-			string xmlResult = "";
 			using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
 			{
 				connection.Open();
@@ -245,7 +258,6 @@ namespace DataLayer
 		{
 			if (forClient == null)
 				yield break;
-			string xmlResult = "";
 			using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
 			{
 				connection.Open();
@@ -378,7 +390,6 @@ namespace DataLayer
 		}
 		public IEnumerable<Client> GetClients()
 		{
-			string xmlResult = "";
 			using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
 			{
 				connection.Open();

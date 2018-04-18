@@ -22,8 +22,8 @@ namespace ServerApp.Devices
 		private InitDelegate _inicializationMethod;
 		private TcpClient _client;
 		public NetworkStream _netStream;
-		private ReceivedDataAsync ReceivedDataAsync;
-		private byte[] readBuffer = new byte[4096];
+		private ReceivedDataAsync _receivedDataAsync;
+		private byte[] _readBuffer = new byte[4096];
 		#endregion
 		#region public properties...
 
@@ -36,10 +36,6 @@ namespace ServerApp.Devices
 		public AutoResetEvent ConnectedEvent { get; set; }
 
 		public AutoResetEvent DisconnectedEvent { get; set; }
-
-		public event EventHandler ConnectionStatusChanged;
-
-		public event EventHandler ConnectionErrorOccurred;
 
 		public bool AutoReconnect { get; set; }
 
@@ -79,7 +75,7 @@ namespace ServerApp.Devices
 		#region constructors...
 		public TCPIPCommunicator(int port, string ip, InitDelegate inicializationMethod, ReceivedDataAsync receivedDataAsyncMethod = null)
 		{
-			ReceivedDataAsync = receivedDataAsyncMethod;
+			_receivedDataAsync = receivedDataAsyncMethod;
 			Port = port;
 			Ip = ip;
 			_inicializationMethod = inicializationMethod;
@@ -101,11 +97,11 @@ namespace ServerApp.Devices
 			{
 				if (ConnectionStatus == ConnectionStatusEnum.Disconnected)
 				{
-					// closeActiveConnection(); neni nutne volat, protoze je zajistono, ze se metoda Connect vola pouze pri odpojenem spojeni.
 					ConnectionStatus = ConnectionStatusEnum.Connecting;
-					ConnectThread = new Thread(ConnectMethod);
-					// Kak: 03.11.2017 Zkraceno, at se nam vejde do sirky polozky v logu
-					ConnectThread.Name = "TCPIPComm.Connect";
+					ConnectThread = new Thread(ConnectMethod)
+					{
+						Name = "TCPIPComm.Connect"
+					};
 					ConnectThread.Start();
 				}
 			});
@@ -122,12 +118,11 @@ namespace ServerApp.Devices
 
 		#endregion
 		#region private methods...
-		private bool connectToTCPServer()
+		private bool ConnectToTCPServer()
 		{
 			try
 			{
-				IPAddress ipAdress;
-				if (IPAddress.TryParse(Ip, out ipAdress))
+				if (IPAddress.TryParse(Ip, out IPAddress ipAdress))
 				{
 					_client.Connect(new IPEndPoint(ipAdress, Port));
 				}
@@ -158,7 +153,7 @@ namespace ServerApp.Devices
 			{
 				CloseActiveConnection();
 				_client = new TcpClient();
-				while (!Terminated && !connectToTCPServer())
+				while (!Terminated && !ConnectToTCPServer())
 				{
 					Thread.Sleep(ReconnectInterval);
 				}
@@ -167,14 +162,14 @@ namespace ServerApp.Devices
 					_netStream = _client.GetStream();
 					_netStream.ReadTimeout = _readTimeOut;
 					_netStream.WriteTimeout = _writeTimeOut;
-					if (ReceivedDataAsync != null)
+					if (_receivedDataAsync != null)
 					{
 						// subscribe for receiving messages
-						_netStream.BeginRead(readBuffer,
+						_netStream.BeginRead(_readBuffer,
 									0,
-									readBuffer.Length,
+									_readBuffer.Length,
 									EndRead,
-									readBuffer);
+									_readBuffer);
 					}
 					WorkWithSync(() =>
 					{
@@ -191,9 +186,8 @@ namespace ServerApp.Devices
 					}
 				}
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
-				// odchytam vsechny vyjimky, abych je mohl alespon zalogovat
 				throw;
 			}
 		}
@@ -236,14 +230,14 @@ namespace ServerApp.Devices
 			try
 			{
 				int i = _netStream.EndRead(ar);
-				msg = Encoding.ASCII.GetString(readBuffer, 0, i);
-				_netStream.BeginRead(readBuffer, 0, readBuffer.Length, EndRead, readBuffer);
+				msg = Encoding.ASCII.GetString(_readBuffer, 0, i);
+				_netStream.BeginRead(_readBuffer, 0, _readBuffer.Length, EndRead, _readBuffer);
 			}
 			catch (IOException)
 			{
 				return;
 			}
-			ReceivedDataAsync.Invoke(msg);
+			_receivedDataAsync.Invoke(msg);
 		}
 		#endregion
 
@@ -262,7 +256,7 @@ namespace ServerApp.Devices
 						_netStream.Write(data, 0, length);
 						return true;
 					}
-					catch (IOException e) //timeout
+					catch (IOException) //timeout
 					{
 						ConnectionStatus = ConnectionStatusEnum.Disconnected;
 						DisconnectedEvent.Set();
@@ -318,7 +312,7 @@ namespace ServerApp.Devices
 						length = _netStream.Read(data, 0, data.Length);
 						return true;
 					}
-					catch (IOException e) //timeout
+					catch (IOException) //timeout
 					{
 						ConnectionStatus = ConnectionStatusEnum.Disconnected;
 						DisconnectedEvent.Set();
@@ -368,7 +362,7 @@ namespace ServerApp.Devices
 
 							return true;
 						}
-						catch (IOException e) //timeout
+						catch (IOException) //timeout
 						{
 							ConnectionStatus = ConnectionStatusEnum.Disconnected;
 							DisconnectedEvent.Set();

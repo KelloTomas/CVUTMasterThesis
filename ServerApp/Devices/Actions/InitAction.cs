@@ -2,8 +2,6 @@
 {
 	internal class InitAction : IInitAction
 	{
-		private object p;
-
 		public InitAction()
 		{
 		}

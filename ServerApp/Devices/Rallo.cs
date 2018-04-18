@@ -17,7 +17,6 @@ namespace ServerApp.Devices
 		private int _queueCapacity = 200;
 		private Semaphore _semaphore;
 		private Thread _signalThread;
-		private bool _signalThreadJoinCalled = false;
 		private TCPIPCommunicator _tcpipCommunicator;
 		private QtPacketParser _packetParser;
 		#endregion
@@ -25,7 +24,7 @@ namespace ServerApp.Devices
 		#region constructors...		
 		public Rallo(ISubApp subApp)
 		{
-			this.subApp = subApp;
+			this._subApp = subApp;
 			_packetParser = new QtPacketParser();
 		}
 		#endregion
@@ -55,7 +54,7 @@ namespace ServerApp.Devices
 			}
 		}
 		private ManualResetEvent _terminatedEvent;
-		private ISubApp subApp;
+		private ISubApp _subApp;
 
 		public ManualResetEvent TerminatedEvent
 		{
@@ -156,7 +155,6 @@ namespace ServerApp.Devices
 		protected void SignalThreadJoin()
 		{
 			_signalThread.Join(); //nejprve se musi ukoncit signalThread, protoze tcpThread uvolnuje sdilene objekty
-			_signalThreadJoinCalled = true;
 		}
 		private void DisposeThreadInterfaceResources()
 		{
@@ -196,7 +194,7 @@ namespace ServerApp.Devices
 				}
 				foreach (IAction action in actions)
 				{
-					subApp?.ProcessAction(action);
+					_subApp?.ProcessAction(action);
 				}
 				// remove processed data from message
 				msg = msg.Remove(0, end);
@@ -220,10 +218,11 @@ namespace ServerApp.Devices
 			_terminatedEvent = new ManualResetEvent(false);
 
 
-			_signalThread = new Thread(QueueMethod);
-			_signalThread.Name = "HWSignalThread";
+			_signalThread = new Thread(QueueMethod)
+			{
+				Name = "HWSignalThread"
+			};
 			_signalThread.Start();
-			_signalThreadJoinCalled = false;
 		}
 
 		#region private methods...
@@ -231,7 +230,7 @@ namespace ServerApp.Devices
 
 		private bool InitTerminal()
 		{
-			foreach (IAction initAction in subApp.InitActions)
+			foreach (IAction initAction in _subApp.InitActions)
 			{
 				// send data
 				if (!_tcpipCommunicator.Send(GetPacket(initAction).GetData()))

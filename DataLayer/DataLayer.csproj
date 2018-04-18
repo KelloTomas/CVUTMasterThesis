@@ -104,7 +104,6 @@
     <Compile Include="Data\MenuItem.cs" />
     <Compile Include="Data\MyApplication.cs" />
     <Compile Include="Data\Order.cs" />
-    <Compile Include="Shared.cs" />
     <Compile Include="Data\Soup.cs" />
   </ItemGroup>
   <ItemGroup>

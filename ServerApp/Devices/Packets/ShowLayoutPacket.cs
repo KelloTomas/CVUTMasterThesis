@@ -1,5 +1,5 @@
 ﻿using ServerApp.Devices.Actions;
-using ServerApp.SubApps.Shared.Data;
+using ServerApp.TerminalServices.Shared.Data;
 using System.Collections.Generic;
 using System.Xml.Linq;
 

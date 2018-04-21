@@ -1,9 +1,9 @@
 ﻿using DataLayer;
 using DataLayer.Data;
-using ServerApp.SubApps;
-using ServerApp.SubApps.Inform;
-using ServerApp.SubApps.Order;
-using ServerApp.SubApps.Serve;
+using ServerApp.TerminalServices;
+using ServerApp.TerminalServices.Inform;
+using ServerApp.TerminalServices.Order;
+using ServerApp.TerminalServices.Serve;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,15 +27,15 @@ namespace ServerApp
 						{
 							case "Inform":
 								Thread t1 = new Thread(new ParameterizedThreadStart(RunSubApp));
-								t1.Start(new InformSubApp(subApp.Devices.ToList(), subApp.AppName, dbLayer));
+								t1.Start(new InformTerminalService(subApp.Devices.ToList(), subApp.AppName, dbLayer));
 								break;
 							case "Order":
 								Thread t2 = new Thread(new ParameterizedThreadStart(RunSubApp));
-								t2.Start(new OrderSubApp(subApp.Devices.ToList(), subApp.AppName, dbLayer));
+								t2.Start(new OrderTerminalService(subApp.Devices.ToList(), subApp.AppName, dbLayer));
 								break;
 							case "Serve":
 								Thread t3 = new Thread(new ParameterizedThreadStart(RunSubApp));
-								t3.Start(new ServeSubApp(subApp.Devices.ToList(), subApp.AppName, dbLayer));
+								t3.Start(new ServeTerminalService(subApp.Devices.ToList(), subApp.AppName, dbLayer));
 								break;
 							default:
 								throw new ArgumentOutOfRangeException();
@@ -61,7 +61,7 @@ namespace ServerApp
 
 		private void RunSubApp(object o)
         {
-			SubApp subApp = o as SubApp;
+			TerminalService subApp = o as TerminalService;
 			subApp.Start();
 		}
     }

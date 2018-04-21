@@ -1,4 +1,4 @@
-﻿using ServerApp.SubApps.Shared.Data;
+﻿using ServerApp.TerminalServices.Shared.Data;
 
 namespace ServerApp.Devices.Actions
 {

@@ -73,7 +73,8 @@
     <Compile Include="Devices\Actions\IModalWindowCloseAction.cs" />
     <Compile Include="Devices\Actions\Message.cs" />
     <Compile Include="Devices\Actions\IMessage.cs" />
-    <Compile Include="Devices\Actions\ShowLayoutQtAction.cs" />
+    <Compile Include="Devices\Actions\ShowLayoutAction.cs" />
+    <Compile Include="Devices\Actions\ShowMessageBoxAction.cs" />
     <Compile Include="Devices\Packets\BasePacket.cs" />
     <Compile Include="Devices\Packets\BeepPacket.cs" />
     <Compile Include="Devices\ConnectionStatusEnum.cs" />
@@ -92,7 +93,6 @@
     <Compile Include="Devices\QtPacketParser.cs" />
     <Compile Include="Devices\Packets\ShowLayoutPacket.cs" />
     <Compile Include="Devices\Packets\ShowMessageBoxPacket.cs" />
-    <Compile Include="Devices\Actions\ShowMessageBoxQtAction.cs" />
     <Compile Include="Devices\Actions\StoreLayoutAction.cs" />
     <Compile Include="Devices\Packets\StoreLayoutPacket.cs" />
     <Compile Include="Devices\TCPIPCommunicator.cs" />
@@ -102,42 +102,42 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
-    <Compile Include="SubApps\Inform\IInformSubApp.cs" />
-    <Compile Include="SubApps\Inform\InformSubApp.cs" />
     <Compile Include="Devices\Rallo.cs" />
-    <Compile Include="SubApps\Order\IOrderSubApp.cs" />
-    <Compile Include="SubApps\Order\Layouts\MessageLayout.cs" />
-    <Compile Include="SubApps\Order\Layouts\OrdersLayout.cs" />
-    <Compile Include="SubApps\Order\OrderSubApp.cs" />
-    <Compile Include="SubApps\Order\States\OrderState.cs" />
-    <Compile Include="SubApps\Serve\IServeSubApp.cs" />
-    <Compile Include="SubApps\Serve\Layouts\ClientServedLayout.cs" />
-    <Compile Include="SubApps\Serve\Layouts\ClientTextLayout.cs" />
-    <Compile Include="SubApps\Serve\Layouts\HistoryLayout.cs" />
-    <Compile Include="SubApps\Serve\Layouts\ServingLayout.cs" />
-    <Compile Include="SubApps\Serve\Layouts\SetServingLayout.cs" />
-    <Compile Include="SubApps\Serve\ServeSubApp.cs" />
-    <Compile Include="SubApps\Serve\States\History.cs" />
-    <Compile Include="SubApps\Serve\States\Served.cs" />
-    <Compile Include="SubApps\Serve\States\Serving.cs" />
-    <Compile Include="SubApps\Serve\States\SetServing.cs" />
-    <Compile Include="SubApps\Shared\States\DefaultState.cs" />
-    <Compile Include="SubApps\Shared\States\IStateBase.cs" />
-    <Compile Include="SubApps\SubApp.cs" />
-    <Compile Include="SubApps\ISubApp.cs" />
-    <Compile Include="SubApps\Inform\Layouts\CardScannedLayout.cs" />
-    <Compile Include="SubApps\Inform\Layouts\ScanCardLayout.cs" />
-    <Compile Include="SubApps\Inform\States\InformState.cs" />
-    <Compile Include="SubApps\Shared\Data\ModifyLayoutItem.cs" />
-    <Compile Include="SubApps\Shared\Layouts\ILayout.cs" />
-    <Compile Include="SubApps\Shared\Layouts\LayoutBase.cs" />
-    <Compile Include="SubApps\Shared\Layouts\LayoutTimeBase.cs" />
-    <Compile Include="SubApps\Shared\States\StateBase.cs" />
+    <Compile Include="TerminalServices\Inform\IInformTerminalService.cs" />
+    <Compile Include="TerminalServices\Inform\InformTerminalService.cs" />
+    <Compile Include="TerminalServices\ITerminalService.cs" />
+    <Compile Include="TerminalServices\Order\IOrderTerminalService.cs" />
+    <Compile Include="TerminalServices\Order\Layouts\MessageLayout.cs" />
+    <Compile Include="TerminalServices\Order\Layouts\OrdersLayout.cs" />
+    <Compile Include="TerminalServices\Order\OrderTerminalService.cs" />
+    <Compile Include="TerminalServices\Order\States\OrderState.cs" />
+    <Compile Include="TerminalServices\Serve\IServeTerminalService.cs" />
+    <Compile Include="TerminalServices\Serve\Layouts\ClientServedLayout.cs" />
+    <Compile Include="TerminalServices\Serve\Layouts\ClientTextLayout.cs" />
+    <Compile Include="TerminalServices\Serve\Layouts\HistoryLayout.cs" />
+    <Compile Include="TerminalServices\Serve\Layouts\ServingLayout.cs" />
+    <Compile Include="TerminalServices\Serve\Layouts\SetServingLayout.cs" />
+    <Compile Include="TerminalServices\Serve\ServeTerminalService.cs" />
+    <Compile Include="TerminalServices\Serve\States\History.cs" />
+    <Compile Include="TerminalServices\Serve\States\Served.cs" />
+    <Compile Include="TerminalServices\Serve\States\Serving.cs" />
+    <Compile Include="TerminalServices\Serve\States\SetServing.cs" />
+    <Compile Include="TerminalServices\Shared\States\DefaultState.cs" />
+    <Compile Include="TerminalServices\Shared\States\IStateBase.cs" />
+    <Compile Include="TerminalServices\Inform\Layouts\CardScannedLayout.cs" />
+    <Compile Include="TerminalServices\Inform\Layouts\ScanCardLayout.cs" />
+    <Compile Include="TerminalServices\Inform\States\InformState.cs" />
+    <Compile Include="TerminalServices\Shared\Data\ModifyLayoutItem.cs" />
+    <Compile Include="TerminalServices\Shared\Layouts\ILayout.cs" />
+    <Compile Include="TerminalServices\Shared\Layouts\LayoutBase.cs" />
+    <Compile Include="TerminalServices\Shared\Layouts\LayoutTimeBase.cs" />
+    <Compile Include="TerminalServices\Shared\States\StateBase.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="TerminalServices\TerminalService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -166,28 +166,28 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SubApps\Order\Layouts\MessageLayout.ui" />
-    <EmbeddedResource Include="SubApps\Order\Layouts\OrdersLayout.ui" />
-    <None Include="SubApps\Inform\QtStyleSheet.style" />
+    <EmbeddedResource Include="TerminalServices\Order\Layouts\MessageLayout.ui" />
+    <EmbeddedResource Include="TerminalServices\Order\Layouts\OrdersLayout.ui" />
+    <None Include="TerminalServices\Inform\QtStyleSheet.style" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SubApps\Inform\Layouts\CardScannedLayout.ui" />
-    <EmbeddedResource Include="SubApps\Inform\Layouts\ScanCardLayout.ui" />
+    <EmbeddedResource Include="TerminalServices\Inform\Layouts\CardScannedLayout.ui" />
+    <EmbeddedResource Include="TerminalServices\Inform\Layouts\ScanCardLayout.ui" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SubApps\Serve\Layouts\SetServingLayout.ui" />
+    <EmbeddedResource Include="TerminalServices\Serve\Layouts\SetServingLayout.ui" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SubApps\Serve\Layouts\ClientTextLayout.ui" />
+    <EmbeddedResource Include="TerminalServices\Serve\Layouts\ClientTextLayout.ui" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SubApps\Serve\Layouts\ClientServedLayout.ui" />
+    <EmbeddedResource Include="TerminalServices\Serve\Layouts\ClientServedLayout.ui" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SubApps\Serve\Layouts\ServingLayout.ui" />
+    <EmbeddedResource Include="TerminalServices\Serve\Layouts\ServingLayout.ui" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SubApps\Serve\Layouts\HistoryLayout.ui" />
+    <EmbeddedResource Include="TerminalServices\Serve\Layouts\HistoryLayout.ui" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLayer\DataLayer.csproj">

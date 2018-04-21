@@ -18,6 +18,9 @@ namespace ServerApp.Devices.Packets
 				GetShowContent());
 
 
+
+
+
 			string result = root.ToString();
 			return result;
 		}

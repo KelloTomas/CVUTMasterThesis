@@ -36,6 +36,7 @@ namespace ServerApp.Devices
 							}
 							else
 							{
+								Console.WriteLine("Warning: unknow received message: " + xmlReader.Name);
 							}
 						}
 					}

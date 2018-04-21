@@ -1,10 +1,8 @@
 ﻿using ServerApp.Devices.Actions;
 using ServerApp.Devices.Packets;
-using ServerApp.SubApps;
-using ServerApp.SubApps.Shared.Data;
+using ServerApp.TerminalServices;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 
 namespace ServerApp.Devices
@@ -22,7 +20,7 @@ namespace ServerApp.Devices
 		#endregion
 
 		#region constructors...		
-		public Rallo(ISubApp subApp)
+		public Rallo(ITerminalService subApp)
 		{
 			this._subApp = subApp;
 			_packetParser = new QtPacketParser();
@@ -54,7 +52,7 @@ namespace ServerApp.Devices
 			}
 		}
 		private ManualResetEvent _terminatedEvent;
-		private ISubApp _subApp;
+		private ITerminalService _subApp;
 
 		public ManualResetEvent TerminatedEvent
 		{
@@ -122,8 +120,7 @@ namespace ServerApp.Devices
 
 		private void ProcessMessage(IMessage message)
 		{
-			ConnectionStatusEnum connectionStatus = _tcpipCommunicator.ConnectionStatus;
-			if (connectionStatus == ConnectionStatusEnum.ConnectedInicialized)
+			if (_tcpipCommunicator.ConnectionStatus == ConnectionStatusEnum.ConnectedInicialized)
 			{
 				foreach (IAction action in message.Actions)
 				{
@@ -180,7 +177,7 @@ namespace ServerApp.Devices
 				{
 					return;
 				}
-				end += 6; // add length of </RSO> tag
+				end += 6; // add length of </RLO> tag
 				IEnumerable<IAction> actions;
 				if (end == msg.Length)
 				{

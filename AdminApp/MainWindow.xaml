@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdminApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="725">
     <Grid Margin="0,40,0,0">
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="100"/>
+			<ColumnDefinition Width="200"/>
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
 		<StackPanel Grid.Column="0">

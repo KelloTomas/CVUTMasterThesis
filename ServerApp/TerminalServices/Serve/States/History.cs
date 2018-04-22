@@ -39,7 +39,7 @@ namespace ServerApp.TerminalServices.Serve.States
 						_app.ClientTextLayout.Name,
 				_app.ClientTextLayout.SetDateTimeTo()
 				.Concat
-					(_app.ClientTextLayout.SetTexts(_app.AppName))
+					(_app.ClientTextLayout.SetTexts(_app.ServiceName))
 				.Concat
 					(_app.ClientTextLayout.SetContent("Nerikladajte kartu"))
 				.ToArray())

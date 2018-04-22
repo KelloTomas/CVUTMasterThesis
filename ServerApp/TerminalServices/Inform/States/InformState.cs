@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System;
 using System.Linq;
-using System.Timers;
 using DataLayer.Data;
 using ServerApp.TerminalServices.Shared.States;
-using ServerApp.Devices;
 using ServerApp.TerminalServices.Shared.Data;
 using ServerApp.TerminalServices.Shared.Layouts;
 using ServerApp.Devices.Actions;
@@ -16,23 +14,23 @@ namespace ServerApp.TerminalServices.Inform.States
 	{
 
 		#region private fields...
-		InformTerminalService app;
-		LayoutBase layout;
-		Client client;
-		private string clientMsg = null;
+		InformTerminalService _app;
+		LayoutBase _layout;
+		Client _client;
+		private string _clientMsg = null;
 		#endregion
 
 		#region constructors...
 		public InformState(InformTerminalService subApp) : base(10000)
 		{
-			app = subApp;
-			layout = app.ScanCardLayout;
+			_app = subApp;
+			_layout = _app.ScanCardLayout;
 		}
 		#endregion
 		public override IStateBase ProcessTimerElapsed()
 		{
 			List<IAction> action;
-			switch (layout)
+			switch (_layout)
 			{
 				case ScanCardLayout scanCard:
 					action = new List<IAction>
@@ -40,7 +38,7 @@ namespace ServerApp.TerminalServices.Inform.States
 						new ShowLayoutAction(scanCard.Name,
 						SetDateTimeToNow()
 						.Concat
-							(scanCard.SetTexts("Informácie o objednávkach", clientMsg??"Prilozte kartu"))
+							(scanCard.SetTexts("Informácie o objednávkach", _clientMsg??"Priložte kartu"))
 						.ToArray())
 					};
 					break;
@@ -50,7 +48,7 @@ namespace ServerApp.TerminalServices.Inform.States
 						new ShowLayoutAction(cardScanned.Name,
 						SetDateTimeToNow()
 						.Concat
-							(cardScanned.SetMeals(client))
+							(cardScanned.SetMeals(_client))
 						.ToArray()),
 					};
 					break;
@@ -58,28 +56,28 @@ namespace ServerApp.TerminalServices.Inform.States
 					action = new List<IAction>();
 					break;
 			}
-			app.Rallo.SendMessage(new Message(action.ToArray()));
-			layout = app.ScanCardLayout;
-			clientMsg = null;
+			_app.Rallo.SendMessage(new Message(action.ToArray()));
+			_layout = _app.ScanCardLayout;
+			_clientMsg = null;
 			return this;
 		}
 		public override IStateBase ProcessButtonClickAction(ButtonClickAction button, ref bool forceCallStateMethod)
 		{
-			layout = app.CardScannedLayout;
+			_layout = _app.CardScannedLayout;
 			return this;
 		}
 
 		public override IStateBase ProcessCardReadAction(CardReadAction card, ref bool forceCallStateMethod)
 		{
-			client = app.databaseLayer.GetOrders(card.CardNumber);
-			if (client == null)
+			_client = _app.databaseLayer.GetOrders(card.CardNumber);
+			if (_client == null)
 			{
-				clientMsg = "Neznama karta";
+				_clientMsg = "Neznáma karta";
 			}
 			else
 			{
-				layout = app.CardScannedLayout;
-				client.Orders = client.Orders.Where(o=> o.Served == null && o.ForDate.Date >= DateTime.Now.Date).ToList();
+				_layout = _app.CardScannedLayout;
+				_client.Orders = _client.Orders.Where(o=> o.Served == null && o.ForDate.Date >= DateTime.Now.Date).ToList();
 			}
 			forceCallStateMethod = true;
 			return this;

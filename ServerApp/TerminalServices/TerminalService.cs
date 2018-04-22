@@ -12,22 +12,22 @@ namespace ServerApp.TerminalServices
 	public class TerminalService : ITerminalService
 	{
 		public DatabaseLayer databaseLayer;
-		private Timer t;
+		private Timer _t;
 
-		public TerminalService(string appName, DatabaseLayer databaseLayer)
+		public TerminalService(string serviceName, DatabaseLayer databaseLayer)
 		{
 			this.databaseLayer = databaseLayer;
-			AppName = appName;
+			ServiceName = serviceName;
 		}
 
 		public void Start()
 		{
 			ActualState = GetInitState();
-			t = new Timer();
-			t.Elapsed += TimerElapsed;
-			t.AutoReset = true;
-			t.Interval = ActualState.TimeOut;
-			t.Start();
+			_t = new Timer();
+			_t.Elapsed += TimerElapsed;
+			_t.AutoReset = true;
+			_t.Interval = ActualState.TimeOut;
+			_t.Start();
 			ActualState.Enter();
 			CheckNewState(ActualState.ProcessTimerElapsed());
 		}
@@ -37,7 +37,7 @@ namespace ServerApp.TerminalServices
 			Console.WriteLine($"TimeElapsed: {GetType()}");
 			CheckNewState(ActualState.ProcessTimerElapsed());
 		}
-		public string AppName { get; private set; }
+		public string ServiceName { get; private set; }
 
 		public IStateBase ActualState { get; set; }
 
@@ -46,11 +46,13 @@ namespace ServerApp.TerminalServices
 
 		public virtual IStateBase GetInitState()
 		{
+			// implementation in derivated class
 			throw new NotImplementedException();
 		}
 
 		IStateBase ITerminalService.GetInitState()
 		{
+			// implementation in derivated class
 			throw new NotImplementedException();
 		}
 
@@ -67,8 +69,8 @@ namespace ServerApp.TerminalServices
 				if (forceCallStateMethod)
 				{
 					ActualState.ProcessTimerElapsed();
-					t.Stop();
-					t.Start();
+					_t.Stop();
+					_t.Start();
 				}
 		}
 
@@ -87,10 +89,10 @@ namespace ServerApp.TerminalServices
 		{
 			if (newState != ActualState)
 			{
-				t.Stop();
+				_t.Stop();
 				ActualState?.Exit();
 				newState.Enter();
-				t.Start();
+				_t.Start();
 				ActualState = newState;
 				return true;
 			}

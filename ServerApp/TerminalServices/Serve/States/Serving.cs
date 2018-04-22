@@ -59,7 +59,7 @@ namespace ServerApp.TerminalServices.Serve.States
 						_app.ServingLayout.Name,
 				_app.ServingLayout.SetDateTimeTo()
 				.Concat
-					(_app.ServingLayout.SetMenu(null, _client, _msg == _msgConst?_app.AppName:_msg))
+					(_app.ServingLayout.SetMenu(null, _client, _msg == _msgConst?_app.ServiceName:_msg))
 				.ToArray())
 				}.ToArray()
 			));

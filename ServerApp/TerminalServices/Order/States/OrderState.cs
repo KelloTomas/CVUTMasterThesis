@@ -153,7 +153,7 @@ namespace ServerApp.TerminalServices.Order.States
 					var o = new DataLayer.Data.Order { Client = _client, ForDate = _dateToOrder, IdMenu = _menuOnScreen[_selected.GetValueOrDefault()].IdMenu };
 					_app.databaseLayer.Add(o);
 					//throw new NotImplementedException();
-					_clientMsg = "Objednane";
+					_clientMsg = "Objednané";
 				}
 			}
 			forceCallStateMethod = true;

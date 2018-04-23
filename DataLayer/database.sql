@@ -1,4 +1,5 @@
-USE `sql7233334`;
+CREATE DATABASE  IF NOT EXISTS `cvutdb` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `cvutdb`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: localhost    Database: cvutdb
@@ -186,6 +187,7 @@ CREATE TABLE `menu` (
   `IdSoup` int(11) DEFAULT NULL,
   `IdMeal` int(11) DEFAULT NULL,
   `IdDesert` int(11) DEFAULT NULL,
+  `Price` float DEFAULT NULL,
   PRIMARY KEY (`IdMenu`,`ForDate`),
   KEY `IdDesert` (`IdDesert`),
   KEY `IdMeal` (`IdMeal`),
@@ -195,7 +197,7 @@ CREATE TABLE `menu` (
   CONSTRAINT `IdDesert` FOREIGN KEY (`IdDesert`) REFERENCES `deserts` (`IdDesert`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `IdMeal` FOREIGN KEY (`IdMeal`) REFERENCES `meals` (`IdMeal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `IdSoup` FOREIGN KEY (`IdSoup`) REFERENCES `soups` (`IdSoup`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -204,7 +206,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES ('2018-04-22',1,1,1,1),('2018-04-22',2,3,2,2),('2018-04-23',3,1,1,1),('2018-04-23',4,2,2,1),('2018-04-23',5,1,1,1),('2018-04-23',6,1,2,1),('2018-04-23',7,2,1,1),('2018-04-23',8,1,1,1),('2018-04-23',9,1,2,1),('2018-04-23',10,1,1,2),('2018-04-23',11,2,1,1),('2018-04-23',12,1,1,2),('2018-04-24',13,2,1,1),('2018-04-24',14,1,1,2),('2018-04-23',15,1,1,2);
+INSERT INTO `menu` VALUES ('2018-04-22',1,1,1,1,2),('2018-04-22',2,3,2,2,1),('2018-04-23',3,1,1,1,5),('2018-04-23',4,2,2,1,3),('2018-04-23',5,1,1,1,4),('2018-04-23',6,1,2,1,5),('2018-04-23',7,2,1,1,6),('2018-04-23',8,1,1,1,1),('2018-04-23',9,1,2,1,2),('2018-04-23',10,1,1,2,3),('2018-04-23',11,2,1,1,4),('2018-04-23',12,1,1,2,6),('2018-04-24',13,2,1,1,7),('2018-04-24',14,1,1,2,6),('2018-04-23',15,1,1,2,5),('2018-04-23',16,1,1,1,855);
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,11 +222,13 @@ CREATE TABLE `orders` (
   `ForDate` date NOT NULL,
   `IdMenu` int(11) NOT NULL,
   `IdClient` int(11) NOT NULL,
-  `Vydane` datetime(6) DEFAULT NULL,
+  `Vydane` datetime DEFAULT NULL,
   PRIMARY KEY (`IdOrder`),
   KEY `FK_ORDERS_CLIENTS` (`IdClient`),
-  CONSTRAINT `FK_ORDERS_CLIENTS` FOREIGN KEY (`IdClient`) REFERENCES `clients` (`IdClient`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+  KEY `FK_ORDERS_MENU_idx` (`ForDate`,`IdMenu`),
+  CONSTRAINT `FK_ORDERS_CLIENTS` FOREIGN KEY (`IdClient`) REFERENCES `clients` (`IdClient`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `FK_ORDERS_MENU` FOREIGN KEY (`ForDate`, `IdMenu`) REFERENCES `menu` (`ForDate`, `IdMenu`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -233,7 +237,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'2018-04-22',1,2,NULL),(4,'2018-04-22',2,4,NULL),(5,'2018-04-23',4,3,NULL),(10,'2018-04-23',10,2,NULL);
+INSERT INTO `orders` VALUES (1,'2018-04-22',1,2,NULL),(4,'2018-04-22',2,4,NULL),(5,'2018-04-23',4,3,'2018-04-23 05:12:02'),(10,'2018-04-23',10,2,'2018-04-23 22:49:28'),(11,'2018-04-23',4,1,'2018-04-23 22:49:22'),(12,'2018-04-23',4,1,NULL),(13,'2018-04-23',4,1,NULL),(14,'2018-04-23',4,7,NULL),(15,'2018-04-23',5,7,NULL),(16,'2018-04-23',4,7,NULL);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -263,5 +267,79 @@ INSERT INTO `soups` VALUES (1,'Paradajkova','Cervena s cestovinou'),(2,'Vývar',
 UNLOCK TABLES;
 
 --
--- Table structure for table `sysdiagrams`
+-- Dumping routines for database 'cvutdb'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `GetServedOrders` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetServedOrders`(
+IN Count int
+)
+BEGIN
+SELECT Orders.IdOrder, Orders.Vydane, Clients.IdClient, Clients.LastName, Clients.FirstName, Soups.*, Meals.*, Deserts.* 
+	FROM Orders
+		LEFT JOIN Clients ON Orders.IdClient = Clients.IdClient
+		LEFT JOIN Menu ON Orders.IdMenu = Menu.IdMenu
+		LEFT JOIN Soups ON Menu.IdSoup = Soups.IdSoup
+		LEFT JOIN Meals ON Menu.IdMeal = Meals.IdMeal
+		LEFT JOIN Deserts ON Menu.IdDesert = Deserts.IdDesert
+		where vydane is not null ORDER BY Vydane DESC
+        LIMIT Count;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `ServeOrder` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ServeOrder`(
+  IN ClientId int
+)
+BEGIN
+	DECLARE tmpOrderId int;
+	SET tmpOrderId =
+      (SELECT IdOrder FROM Orders
+        WHERE IdClient = ClientId
+		  AND Vydane is null
+          AND ForDate = CAST(CURRENT_TIMESTAMP AS DATE)
+	  );
+	UPDATE Orders SET Vydane = CURRENT_TIMESTAMP WHERE IdOrder = tmpOrderId;
+	SELECT Orders.IdMenu, Orders.ForDate, Soups.*, Meals.*, Deserts.*  FROM Orders
+		LEFT JOIN Menu ON Orders.IdMenu = Menu.IdMenu
+		LEFT JOIN Soups ON Menu.IdSoup = Soups.IdSoup
+		LEFT JOIN Meals ON Menu.IdMeal = Meals.IdMeal
+		LEFT JOIN Deserts ON Menu.IdDesert = Deserts.IdDesert
+		WHERE IdOrder = tmpOrderId;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-04-23 23:33:31

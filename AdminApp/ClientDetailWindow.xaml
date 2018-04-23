@@ -1,0 +1,35 @@
+﻿<Window x:Class="AdminApp.ClientDetailWindow"
+        WindowStyle="None"
+        WindowStartupLocation="CenterOwner"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdminApp"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="MenuDetailWindow" Height="300" Width="300">
+    <Grid >
+		<Grid.RowDefinitions>
+			<RowDefinition Height="50"/>
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition Height="50" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+        <Label VerticalAlignment="Bottom" Grid.ColumnSpan="2" FontWeight="ExtraBold" FontSize="30" HorizontalContentAlignment="Center" Content="Úprava uživateľa" />
+        <TextBox Margin="20,0,20,0" Grid.Row="1" Grid.ColumnSpan="2"  x:Name="FirstName"
+  materialDesign:HintAssist.Hint="Meno"
+  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+        <TextBox Margin="20,0,20,0" VerticalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" x:Name="LastName" materialDesign:HintAssist.Hint="Priezvisko"
+  Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+        <TextBox Margin="20,0,20,0" VerticalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="2" x:Name="CardNumber" materialDesign:HintAssist.Hint="Číslo karty"
+  Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+		<Button Grid.Column="0" Grid.Row="4" Content="Uložiť" Click="SaveBtn_Click" />
+		<Button Grid.Column="1" Grid.Row="4" Content="Zrušiť" Click="CancelBtn_Click"/>
+	</Grid>
+</Window>

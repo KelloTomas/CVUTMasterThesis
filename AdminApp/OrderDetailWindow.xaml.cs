@@ -19,7 +19,8 @@ namespace AdminApp
 			InitializeComponent();
 			_db = db;
 			_forClient = forClient;
-		}
+            date.SelectedDate = DateTime.Now.Date;
+        }
 
 		private void SaveBtn_Click(object sender, RoutedEventArgs e)
 		{

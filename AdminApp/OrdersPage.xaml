@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:AdminApp"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="OrdersPage">
@@ -16,14 +17,51 @@
 			<ColumnDefinition/>
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
 			<RowDefinition/>
-			<RowDefinition Height="30"/>
 		</Grid.RowDefinitions>
-		<ComboBox x:Name="clientSelect" Grid.ColumnSpan="4" SelectionChanged="clientSelect_SelectionChanged" />
-		<DataGrid Grid.Row="1" Grid.ColumnSpan="4" x:Name="ordersDataGrid"
-				  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True" />
-		<Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="Add" Click="AddBtnClick" />
-		<Button Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Content="Remove" Click="RemoveBtnClick" />
+        <Label Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Content="Zoznam objednávok" />
+
+        <ComboBox Grid.Row="1" x:Name="clientSelect" Grid.ColumnSpan="4" SelectionChanged="ClientSelect_SelectionChanged"
+  materialDesign:HintAssist.Hint="Vyber užívateľa"
+  IsEditable="True"
+  Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+        </ComboBox>
+        <DataGrid AutoGenerateColumns="False" Grid.Row="2" Grid.ColumnSpan="4" x:Name="ordersDataGrid"
+				  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True" >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Path=IdMenu}" />
+                <DataGridTextColumn Header="Na datum" Binding="{Binding Path=ForDate}" />
+                <DataGridTextColumn Header="Vydane" Binding="{Binding Path=Served}"/>
+                <DataGridTextColumn Header="Polievka" Binding="{Binding Path=Items[0].Name}" />
+                <DataGridTextColumn Header="Hl. jedlo" Binding="{Binding Path=Items[1].Name}" />
+                <DataGridTextColumn Header="Dezert" Binding="{Binding Path=Items[2].Name}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel
+            Grid.ColumnSpan="4" Orientation="Horizontal" Grid.Row="2"  HorizontalAlignment="Right" VerticalAlignment="Bottom">
+
+            <Button Margin="0,20,20,20"
+                    Click="AddBtnClick"
+              Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+              ToolTip="Pridať">
+                <materialDesign:PackIcon
+                        Kind="Plus"
+                        Height="24"
+                        Width="24" />
+            </Button>
+            <Button Margin="0,20,20,20"
+                    Click="RemoveBtnClick"
+              Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+              ToolTip="Vymazať">
+                <materialDesign:PackIcon
+                        Kind="Delete"
+                        Height="24"
+                        Width="24" />
+            </Button>
+        </StackPanel>
 	</Grid>
 </Page>

@@ -28,12 +28,12 @@ SOURCES +=
 HEADERS +=
 
 FORMS += \
-    ServerApp/SubApps/Inform/Layouts/CardScannedLayout.ui \
-    ServerApp/SubApps/Inform/Layouts/ScanCardLayout.ui \
-    ServerApp/SubApps/Order/Layouts/MessageLayout.ui \
-    ServerApp/SubApps/Order/Layouts/OrdersLayout.ui \
-    ServerApp/SubApps/Serve/Layouts/ClientTextLayout.ui \
-    ServerApp/SubApps/Serve/Layouts/SetServingLayout.ui \
-    ServerApp/SubApps/Serve/Layouts/ClientServedLayout.ui \
-    ServerApp/SubApps/Serve/Layouts/ServingLayout.ui \
-    ServerApp/SubApps/Serve/Layouts/HistoryLayout.ui
+    ServerApp/TerminalServices/Inform/Layouts/CardScannedLayout.ui \
+    ServerApp/TerminalServices/Inform/Layouts/ScanCardLayout.ui \
+    ServerApp/TerminalServices/Order/Layouts/MessageLayout.ui \
+    ServerApp/TerminalServices/Order/Layouts/OrdersLayout.ui \
+    ServerApp/TerminalServices/Serve/Layouts/ClientTextLayout.ui \
+    ServerApp/TerminalServices/Serve/Layouts/SetServingLayout.ui \
+    ServerApp/TerminalServices/Serve/Layouts/ClientServedLayout.ui \
+    ServerApp/TerminalServices/Serve/Layouts/ServingLayout.ui \
+    ServerApp/TerminalServices/Serve/Layouts/HistoryLayout.ui

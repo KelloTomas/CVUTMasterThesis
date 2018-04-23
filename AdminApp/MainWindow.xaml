@@ -5,21 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdminApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="725">
-    <Grid Margin="0,40,0,0">
+        Title="MainWindow" Height="550" Width="725">
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
-		<StackPanel Grid.Column="0">
-			<Button Content="Aplikacie" Click="ApplicationButtonClick" />
-			<Button Content="Uzivatelia" Click="ClientsButtonClick"/>
-			<Button Content="Zoznam menu" Click="ListMenuButtonClick"/>
-			<Button Content="Objednavky"  Click="OrdersButtonClick"/>
+            <!-- Background="#FF3C238C" -->
+        <Label
+            Foreground="#FF3C238C" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="50" FontWeight="ExtraBold" Content="Správa systému" />
+        <StackPanel Grid.Row="1" Grid.Column="0" >
+			<Button x:Name="App" Content="Aplikácie" Click="ApplicationButtonClick" />
+            <Button x:Name="Client" Content="Užívatelia" Click="ClientsButtonClick"/>
+            <Button x:Name="Charge" Content="Vklad na kartu" Click="ChargeCardButtonClick"/>
+            <Button x:Name="Soups" Content="Polievky" Click="MenuItemButtonClick"/>
+            <Button x:Name="Meals" Content="Hl. jedlá" Click="MenuItemButtonClick"/>
+            <Button x:Name="Deserts" Content="Dezerty" Click="MenuItemButtonClick"/>
+            <Button x:Name="Menu" Content="Jedálny lístok" Click="ListMenuButtonClick"/>
+			<Button x:Name="Order" Content="Objednávky"  Click="OrdersButtonClick"/>
 		</StackPanel>
-		
-		<Frame NavigationUIVisibility="Hidden" Grid.Column="1" x:Name="frame">
 
-		</Frame>
+        <Frame Grid.Row="1" NavigationUIVisibility="Hidden" Grid.Column="1" x:Name="frame" />
+        <TextBlock Grid.Row="1" TextAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Diplomova práca,&#x0a;Tomáš Kello,&#x0a;2018" />
 	</Grid>
 </Window>

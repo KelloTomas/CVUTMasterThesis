@@ -130,7 +130,7 @@
          <string notr="true">margin:5</string>
         </property>
         <property name="text">
-         <string>&lt;-</string>
+         <string>←</string>
         </property>
        </widget>
       </item>
@@ -153,7 +153,7 @@
          <string notr="true">margin:5</string>
         </property>
         <property name="text">
-         <string>-&gt;</string>
+         <string>→</string>
         </property>
        </widget>
       </item>
@@ -348,8 +348,15 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
-         <string>+up+</string>
+         <string>↑</string>
         </property>
        </widget>
       </item>
@@ -361,8 +368,15 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="font">
+         <font>
+          <pointsize>20</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
         <property name="text">
-         <string>+down+</string>
+         <string>↓</string>
         </property>
        </widget>
       </item>

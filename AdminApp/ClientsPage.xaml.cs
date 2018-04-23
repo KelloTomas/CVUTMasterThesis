@@ -1,53 +1,62 @@
 ﻿using DataLayer;
 using DataLayer.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AdminApp
 {
 	/// <summary>
-	/// Interaction logic for UsersPage.xaml
+	/// Interaction logic for MenuPage.xaml
 	/// </summary>
 	public partial class ClientsPage : Page
 	{
-		private readonly DatabaseLayer db;
-		private List<Client> clients;
-		public ClientsPage(DatabaseLayer db)
+		private readonly DatabaseLayer _db;
+        private readonly Window _owner;
+        public ClientsPage(Window owner, DatabaseLayer db)
 		{
+            _owner = owner;
+            _db = db;
 			InitializeComponent();
-			this.db = db;
-			LoadData();
+            ReloadData();
 		}
 
-		private void LoadData()
-		{
-			clients = db.GetClients().ToList();
-			clientsDataGrid.ItemsSource = clients;
-		}
+		private void ReloadData()
+        {
+            clientSelect.ItemsSource = _db.GetClients().ToList();
+        }
 
-		private void CancelBtnClick(object sender, RoutedEventArgs e)
-		{
-			LoadData();
-		}
+        private void ClientSelect_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            BtnEdit_Click(this, null);
+        }
 
-		private void SaveBtnClick(object sender, RoutedEventArgs e)
-		{
-			foreach(var client in clients)
-			{
-				db.UpdateClient(client);
-			}
-		}
-	}
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            ClientDetailWindow window = new ClientDetailWindow(_db, new Client());
+            window.Owner = _owner;
+            window.ShowDialog();
+            ReloadData();
+        }
+
+        private void BtnEdit_Click(object sender, RoutedEventArgs e)
+        {
+            Client c = clientSelect.SelectedItem as Client;
+            if(c!= null)
+            {
+
+            ClientDetailWindow window = new ClientDetailWindow(_db, c);
+            window.Owner = _owner;
+            window.ShowDialog();
+            ReloadData();
+            }
+        }
+        private void BtnRemove_Click(object sender, RoutedEventArgs e)
+        {
+            Client c = clientSelect.SelectedItem as Client;
+            _db.RemoveFromDatabase(c);
+            ReloadData();
+        }
+    }
 }

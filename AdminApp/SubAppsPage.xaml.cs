@@ -23,9 +23,11 @@ namespace AdminApp
 	public partial class SubAppsPage : Page
 	{
 		private readonly DatabaseLayer db;
-		public SubAppsPage(DatabaseLayer db)
+        private readonly Window _owner;
+        public SubAppsPage(Window owner, DatabaseLayer db)
 		{
-			InitializeComponent();
+            _owner = owner;
+            InitializeComponent();
 			this.db = db;
 			LoadData();
 		}
@@ -48,7 +50,9 @@ namespace AdminApp
 			if (subApp == null)
 				return;
 			SubAppDetailWindow appWindow = new SubAppDetailWindow(subApp, db);
-			appWindow.ShowDialog();
+            appWindow.Owner = _owner;
+
+            appWindow.ShowDialog();
 			LoadData();
 		}
 	}

@@ -4,29 +4,61 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:AdminApp"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="MenuPage">
 
-	<Grid>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition/>
-			<ColumnDefinition/>
-			<ColumnDefinition/>
-			<ColumnDefinition/>
-		</Grid.ColumnDefinitions>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="50"/>
-			<RowDefinition/>
-			<RowDefinition Height="30"/>
-		</Grid.RowDefinitions>
-		<Label Grid.Column="1" Grid.ColumnSpan="2" FontSize="25" FontWeight="ExtraBold" x:Name="dateLabel" HorizontalAlignment="Center" VerticalAlignment="Center" />
-		<Button Grid.Row="0" Grid.Column="0" Content="&lt;-" Click="PrevBtnClick" />
-		<Button Grid.Row="0" Grid.Column="3" Content="-&gt;" Click="NextBtnClick" />
-		<DataGrid Grid.Row="1" Grid.ColumnSpan="4" x:Name="menuDataGrid"
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Grid.ColumnSpan="4" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Content="Jedálny lístok" />
+        <Label Grid.Column="1" Grid.ColumnSpan="2" FontSize="25" FontWeight="ExtraBold" x:Name="dateLabel" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" />
+        <Button Grid.Row="1" Grid.Column="0" Content="&lt;-" Click="PrevBtnClick" Margin="0,9" />
+        <Button Grid.Row="1" Grid.Column="3" Content="-&gt;" Click="NextBtnClick" Margin="0,9" />
+        <DataGrid Grid.Row="2" Grid.ColumnSpan="4" x:Name="menuDataGrid"
 				  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True"
-				  MouseDoubleClick="menuDataGrid_MouseDoubleClick"/>
-		<Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="Add" Click="AddBtnClick" />
-		<Button Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Content="Remove" Click="RemoveBtnClick" />
-	</Grid>
+				  MouseDoubleClick="menuDataGrid_MouseDoubleClick"
+                  AutoGenerateColumns="False" >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Id" Binding="{Binding Path=IdMenu}" />
+                <DataGridTextColumn Width="3*" Header="Polievka" Binding="{Binding Path=Items[0].Name}" />
+                <DataGridTextColumn Width="3*" Header="Hl. jedlo" Binding="{Binding Path=Items[1].Name}" />
+                <DataGridTextColumn Width="3*" Header="Dezert" Binding="{Binding Path=Items[2].Name}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel
+            Grid.ColumnSpan="3" Orientation="Horizontal" Grid.Row="2"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="1">
+
+            <Button Margin="0,20,20,20"
+                    Click="AddBtnClick"
+              Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+              ToolTip="Pridať">
+                <materialDesign:PackIcon
+                        Kind="Plus"
+                        Height="24"
+                        Width="24" />
+            </Button>
+            <Button Margin="0,20,20,20"
+                    Click="RemoveBtnClick"
+              Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+              ToolTip="Vymazať">
+                <materialDesign:PackIcon
+                        Kind="Delete"
+                        Height="24"
+                        Width="24" />
+            </Button>
+        </StackPanel>
+    </Grid>
 </Page>

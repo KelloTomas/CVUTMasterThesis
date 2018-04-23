@@ -1,0 +1,46 @@
+﻿<Page
+    x:Class="AdminApp.ChargeCardPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:AdminApp"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="ClientsPage"
+    >
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Content="Vyberte klienta" />
+
+
+
+        <DataGrid AutoGenerateColumns="False" Grid.Row="1" x:Name="clientSelect" MouseDoubleClick="clientSelect_MouseDoubleClick"
+				  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True" >
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*" Header="Meno" Binding="{Binding Path=FirstName}" />
+                <DataGridTextColumn Width="*" Header="Priezvisko" Binding="{Binding Path=LastName}" />
+                <DataGridTextColumn Width="*" Header="Stav účtu" Binding="{Binding Path=Balance}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+        <!---
+        <dxg:GridControl Grid.Row="1" x:Name="clientSelect" MouseDoubleClick="clientSelect_MouseDoubleClick" AllowMRUFilterList="False" AllowColumnMRUFilterList="False" SelectionMode="Row">
+            <dxg:GridColumn FieldName="FirstName" Header="Meno"/>
+            <dxg:GridColumn FieldName="LastName" Header="Priezvisko"/>
+            <dxg:GridColumn FieldName="Balance" Header="Stav účtu"/>
+            <dxg:GridControl.View>
+                <dxg:TableView AutoWidth="True" AllowEditing="False" ShowAutoFilterRow="True" ShowGroupPanel="False"/>
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+        -->
+        <Button Grid.Row="1" Margin="20"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="ChargeBtnClick"
+              Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+              ToolTip="MaterialDesignFloatingActionDarkButton" Content="$" FontSize="25" FontWeight="ExtraBlack"/>
+    </Grid>
+
+</Page>

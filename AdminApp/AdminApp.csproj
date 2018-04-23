@@ -42,7 +42,11 @@
       <HintPath>..\packages\MaterialDesignThemes.2.4.0.1044\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -52,6 +56,8 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -61,12 +67,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ClientsPage.xaml.cs" />
+    <Compile Include="ChargeCardDetailWindow.xaml.cs">
+      <DependentUpon>ChargeCardDetailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuItemDetailWindow.xaml.cs">
+      <DependentUpon>MenuItemDetailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuItemPage.xaml.cs">
+      <DependentUpon>MenuItemPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ClientsPage.xaml.cs">
+      <DependentUpon>ClientsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ClientDetailWindow.xaml.cs">
+      <DependentUpon>ClientDetailWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="OrderDetailWindow.xaml.cs">
       <DependentUpon>OrderDetailWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="MenuDetailWindow.xaml.cs">
       <DependentUpon>MenuDetailWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChargeCardPage.xaml.cs">
+      <DependentUpon>ChargeCardPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="OrdersPage.xaml.cs">
       <DependentUpon>OrdersPage.xaml</DependentUpon>
@@ -80,6 +103,22 @@
     <Compile Include="SubAppDetailWindow.xaml.cs">
       <DependentUpon>SubAppDetailWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="ChargeCardDetailWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MenuItemDetailWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MenuItemPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ClientsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -92,6 +131,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ClientDetailWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="OrderDetailWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -99,6 +142,10 @@
     <Page Include="MenuDetailWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChargeCardPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="OrdersPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -113,10 +160,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SubAppDetailWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ClientsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -135,6 +178,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\Licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

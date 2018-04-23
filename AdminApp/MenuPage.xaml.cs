@@ -1,32 +1,26 @@
 ﻿using DataLayer;
+using DataLayer.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AdminApp
 {
 	/// <summary>
 	/// Interaction logic for MenuPage.xaml
 	/// </summary>
-	public partial class MenuPage : Page
-	{
+	public partial class MenuPage : System.Windows.Controls.Page
+    {
 		private readonly DatabaseLayer _db;
 		private DateTime _forDate;
-		private List<DataLayer.Data.Menu> _menu;
-		public MenuPage(DatabaseLayer db)
+		private List<Menu> _menu;
+        private readonly Window _owner;
+        public MenuPage(Window owner, DatabaseLayer db)
 		{
-			_db = db;
+            _owner = owner;
+            _db = db;
 			InitializeComponent();
 			_forDate = DateTime.Now.Date;
 			LoadData();
@@ -43,7 +37,8 @@ namespace AdminApp
 		private void AddBtnClick(object sender, RoutedEventArgs e)
 		{
 			MenuDetailWindow menuWindow = new MenuDetailWindow(_db, _forDate);
-			menuWindow.ShowDialog();
+            menuWindow.Owner = _owner;
+            menuWindow.ShowDialog();
 			LoadData();
 		}
 

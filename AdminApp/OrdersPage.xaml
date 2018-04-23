@@ -33,8 +33,8 @@
 
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=IdMenu}" />
-                <DataGridTextColumn Header="Na datum" Binding="{Binding Path=ForDate}" />
-                <DataGridTextColumn Header="Vydane" Binding="{Binding Path=Served}"/>
+                <DataGridTextColumn Header="Na datum" Binding="{Binding Path=ForDate, StringFormat=\{0:dd.MM.yyyy\}}" />
+                <DataGridTextColumn Header="Vydane" Binding="{Binding Path=Served, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"/>
                 <DataGridTextColumn Header="Polievka" Binding="{Binding Path=Items[0].Name}" />
                 <DataGridTextColumn Header="Hl. jedlo" Binding="{Binding Path=Items[1].Name}" />
                 <DataGridTextColumn Header="Dezert" Binding="{Binding Path=Items[2].Name}" />
@@ -44,6 +44,15 @@
         <StackPanel
             Grid.ColumnSpan="4" Orientation="Horizontal" Grid.Row="2"  HorizontalAlignment="Right" VerticalAlignment="Bottom">
 
+            <Button Margin="0,20,20,20"
+                    Click="ServeBtnClick"
+              Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+              ToolTip="Vydat">
+                <materialDesign:PackIcon
+                        Kind="Food"
+                        Height="24"
+                        Width="24" />
+            </Button>
             <Button Margin="0,20,20,20"
                     Click="AddBtnClick"
               Style="{StaticResource MaterialDesignFloatingActionDarkButton}"

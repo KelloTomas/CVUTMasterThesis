@@ -71,7 +71,20 @@ namespace AdminApp
                 LoadData();
             }
         }
-
+        private void ServeBtnClick(object sender, RoutedEventArgs e)
+        {
+            if (ordersDataGrid.SelectedItem == null)
+            {
+                MessageBox.Show("Nevybrali ste objednavku");
+            }
+            else
+            {
+                Order o = ordersDataGrid.SelectedItem as Order;
+                _db.ServeOrder(o);
+                LoadData();
+            }
+        }
+        
         private void ClientSelect_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _forClient = clientSelect.SelectedItem as Client;

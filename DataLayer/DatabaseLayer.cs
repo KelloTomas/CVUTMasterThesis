@@ -15,7 +15,7 @@ namespace DataLayer
         public DatabaseLayer()
         {
             MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder();
-            if (true)
+            if (false)
             {
 #pragma warning disable CS0162 // Unreachable code detected
                 // http://www.phpmyadmin.co/index.php
@@ -52,6 +52,24 @@ namespace DataLayer
         #endregion
 
         #region public methods...
+        public void ServeOrder(Order o)
+        {
+            using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
+            {
+                connection.Open();
+                using (MySqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = $"update orders set vydane = '{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}' where idorder = {o.IdOrder}";
+                    command.CommandType = System.Data.CommandType.Text;
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                        }
+                    }
+                }
+            }
+        }
         public Menu ServeOrder(int clientId)
         {
             using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
@@ -149,7 +167,7 @@ namespace DataLayer
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = $"UPDATE Applications SET IsRunning = {app.IsRunning}, Applications.Name = '{app.AppName}' Where IdApplication = {app.Id}";
+                    command.CommandText = $"update applications set isrunning = {app.IsRunning}, applications.name = '{app.AppName}' where idapplication = {app.Id}";
                     command.CommandType = System.Data.CommandType.Text;
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {

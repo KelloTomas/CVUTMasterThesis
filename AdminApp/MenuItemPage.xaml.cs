@@ -23,13 +23,13 @@ namespace AdminApp
             switch (item)
             {
                 case Soup s:
-                    Title.Content = $"Zoznam polievok";
+                    MyTitle.Content = $"Zoznam polievok";
                     break;
                 case Meal s:
-                    Title.Content = $"Zoznam hl. jedál";
+                    MyTitle.Content = $"Zoznam hl. jedál";
                     break;
                 case Desert s:
-                    Title.Content = $"Zoznam dezertov";
+                    MyTitle.Content = $"Zoznam dezertov";
                     break;
             }
             ReloadData();

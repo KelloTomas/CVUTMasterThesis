@@ -24,7 +24,7 @@ namespace AdminApp
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            _menuItem.Name = Name.Text;
+            _menuItem.Name = ItemName.Text;
             _menuItem.Description = Description.Text;
             _db.Add(_menuItem);
             Close();
@@ -37,7 +37,7 @@ namespace AdminApp
 
         private void LoadData()
         {
-            Name.Text = _menuItem.Name;
+            ItemName.Text = _menuItem.Name;
             Description.Text = _menuItem.Description;
         }
     }

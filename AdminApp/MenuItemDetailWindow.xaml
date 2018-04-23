@@ -21,7 +21,7 @@
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
         <Label VerticalAlignment="Bottom" Grid.ColumnSpan="2" FontWeight="ExtraBold" FontSize="30" HorizontalContentAlignment="Center" Content="Úprava jedla" />
-        <TextBox Margin="20,0,20,0" Grid.Row="1" Grid.ColumnSpan="2"  x:Name="Name"
+        <TextBox Margin="20,0,20,0" Grid.Row="1" Grid.ColumnSpan="2"  x:Name="ItemName"
   materialDesign:HintAssist.Hint="Meno"
   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
         <TextBox Margin="20,0,20,0" VerticalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" x:Name="Description" materialDesign:HintAssist.Hint="Opis"

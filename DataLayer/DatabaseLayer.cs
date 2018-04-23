@@ -253,7 +253,7 @@ namespace DataLayer
                 using (MySqlCommand command = connection.CreateCommand())
                 {
                     command.CommandType = System.Data.CommandType.Text;
-                    command.CommandText = $"select fordate, idmenu, soups.idsoup, soups.name soupname, meals.idmeal, meals.name mealname, deserts.iddesert, deserts.name desertname from menu join soups on menu.idsoup = soups.idsoup join meals on menu.idmeal = meals.idmeal join deserts on menu.iddesert = deserts.iddesert where fordate >= '{forDate?.ToString("yyyy-MM-dd")}'";
+                    command.CommandText = $"select fordate, idmenu, soups.idsoup, soups.name soupname, meals.idmeal, meals.name mealname, deserts.iddesert, deserts.name desertname, price from menu join soups on menu.idsoup = soups.idsoup join meals on menu.idmeal = meals.idmeal join deserts on menu.iddesert = deserts.iddesert where fordate >= '{forDate?.ToString("yyyy-MM-dd")}'";
                     command.CommandType = System.Data.CommandType.Text;
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
@@ -262,7 +262,8 @@ namespace DataLayer
                             Menu menu = new Menu
                             {
                                 ForDate = reader.GetDateTime(0),
-                                IdMenu = reader.GetInt32(1)
+                                IdMenu = reader.GetInt32(1),
+                                Price = reader.GetFloat(8)
                             };
                             menu.Items[0] = new MenuItem { Id = reader.GetInt32(2), Name = reader.GetString(3) };
                             menu.Items[1] = new MenuItem { Id = reader.GetInt32(4), Name = reader.GetString(5) };
@@ -305,7 +306,6 @@ namespace DataLayer
 
         public void Add(Object o)
         {
-            string xmlResult = "";
             using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
             {
                 connection.Open();
@@ -314,34 +314,34 @@ namespace DataLayer
                     switch (o)
                     {
                         case Order order:
-                            command.CommandText = $"INSERT INTO Orders (ForDate, IdMenu, IdClient, Vydane) VALUES('{order.ForDate.ToString("yyyy-MM-dd")}', {order.IdMenu}, {order.Client.Id}, null)";
+                            command.CommandText = $"INSERT INTO orders (fordate, idmenu, idclient, vydane) VALUES('{order.ForDate.ToString("yyyy-MM-dd")}', {order.IdMenu}, {order.Client.Id}, null)";
                             break;
                         case Menu menu:
-                            command.CommandText = $"INSERT INTO Menu (ForDate, IdSoup, IdMeal, IdDesert) VALUES('{menu.ForDate.ToString("yyyy-MM-dd")}', {menu.Items[0].Id}, {menu.Items[1].Id}, {menu.Items[2].Id})";
+                            command.CommandText = $"INSERT INTO menu (fordate, idsoup, idmeal, iddesert, price) VALUES('{menu.ForDate.ToString("yyyy-MM-dd")}', {menu.Items[0].Id}, {menu.Items[1].Id}, {menu.Items[2].Id}, {menu.Price})";
                             break;
                         case Client c:
                             if (c.Id == 0)
-                                command.CommandText = $"INSERT INTO Clients (FirstName, LastName, CardNumber, Balance) VALUES('{c.FirstName}', '{c.LastName}', '{c.CardNumber}', '{c.Balance}')";
+                                command.CommandText = $"INSERT INTO clients (firstname, lastname, cardnumber, balance) VALUES('{c.FirstName}', '{c.LastName}', '{c.CardNumber}', '{c.Balance}')";
                             else
-                                command.CommandText = $"UPDATE Clients SET FirstName = '{c.FirstName}', LastName = '{c.LastName}', Balance = \"{c.Balance}\", CardNumber = \"{c.CardNumber}\" Where IdClient = \"{c.Id}\"";
+                                command.CommandText = $"UPDATE clients SET firstname = '{c.FirstName}', lastname = '{c.LastName}', balance = \"{c.Balance}\", cardnumber = \"{c.CardNumber}\" Where idclient = \"{c.Id}\"";
                             break;
                         case Soup s:
                             if (s.Id == 0)
-                                command.CommandText = $"INSERT INTO soups (Name, Description) VALUES('{s.Name}', '{s.Description}')";
+                                command.CommandText = $"INSERT INTO soups (name, description) VALUES('{s.Name}', '{s.Description}')";
                             else
-                                command.CommandText = $"UPDATE soups SET Name='{s.Name}', Description = '{s.Description}' WHERE IdSoup = {s.Id}";
+                                command.CommandText = $"UPDATE soups SET name='{s.Name}', description = '{s.Description}' WHERE idsoup = {s.Id}";
                             break;
                         case Meal s:
                             if (s.Id == 0)
-                                command.CommandText = $"INSERT INTO meals (Name, Description) VALUES('{s.Name}', '{s.Description}')";
+                                command.CommandText = $"INSERT INTO meals (name, description) VALUES('{s.Name}', '{s.Description}')";
                             else
-                                command.CommandText = $"UPDATE meals SET Name='{s.Name}', Description = '{s.Description}' WHERE IdMeal = {s.Id}";
+                                command.CommandText = $"UPDATE meals SET name='{s.Name}', description = '{s.Description}' WHERE idmeal = {s.Id}";
                             break;
                         case Desert s:
                             if (s.Id == 0)
-                                command.CommandText = $"INSERT INTO deserts (Name, Description) VALUES('{s.Name}', '{s.Description}')";
+                                command.CommandText = $"INSERT INTO deserts (name, description) VALUES('{s.Name}', '{s.Description}')";
                             else
-                                command.CommandText = $"UPDATE deserts SET Name='{s.Name}', Description = '{s.Description}' WHERE IdDesert = {s.Id}";
+                                command.CommandText = $"UPDATE deserts SET name='{s.Name}', description = '{s.Description}' WHERE iddesert = {s.Id}";
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -351,7 +351,7 @@ namespace DataLayer
                     {
                         while (reader.Read())
                         {
-                            xmlResult += reader.GetString(0);
+                            reader.GetString(0);
                         }
                     }
                 }
@@ -441,9 +441,11 @@ namespace DataLayer
                 {
                     if (_useStoredProcedure)
                     {
+#pragma warning disable CS0162 // Unreachable code detected
                         command.CommandText = "GetServedOrders";
                         command.CommandType = System.Data.CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("Count", count);
+#pragma warning restore CS0162 // Unreachable code detected
                     }
                     else
                     {
@@ -561,6 +563,20 @@ namespace DataLayer
                 }
             }
             yield break;
+        }
+        public (bool, string) CreateOrder(Client client, Menu menu)
+        {
+            if (client.Balance >= menu.Price)
+            {
+                var o = new Order { Client = client, ForDate = menu.ForDate, IdMenu = menu.IdMenu };
+                this.Add(o);
+                return (true, "Objednané");
+            }
+            else
+            {
+                return (false, "Nedostatok penazí na účte");
+
+            }
         }
         #endregion
     }

@@ -36,7 +36,7 @@ namespace AdminApp
 
         private void LoadData()
         {
-            Name.Content = _client.FullName;
+            FullName.Content = _client.FullName;
         }
     }
 }

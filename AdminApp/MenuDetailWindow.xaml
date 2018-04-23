@@ -9,22 +9,24 @@
         mc:Ignorable="d"
         Title="MenuDetailWindow" Height="300" Width="300">
     <Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
-		</Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition />
-			<ColumnDefinition />
-		</Grid.ColumnDefinitions>
-		<Label VerticalAlignment="Bottom" Grid.ColumnSpan="2" FontWeight="ExtraBold" FontSize="30" HorizontalContentAlignment="Center" x:Name="date" />
-		<ComboBox Grid.ColumnSpan="2" Grid.Row="1" FontSize="20" VerticalContentAlignment="Center" Text="Soups" x:Name="soupsCombo" />
-		<ComboBox Grid.ColumnSpan="2" Grid.Row="2" FontSize="20" VerticalContentAlignment="Center" x:Name="mealsCombo" />
-		<ComboBox Grid.ColumnSpan="2" Grid.Row="3" FontSize="20" VerticalContentAlignment="Center" x:Name="desertsCombo" />
-		<Button Grid.Column="0" Grid.Row="4" Content="Uložiť" Click="SaveBtn_Click" />
-		<Button Grid.Column="1" Grid.Row="4" Content="Zrušiť" Click="CancelBtn_Click"/>
-	</Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Label VerticalAlignment="Bottom" Grid.ColumnSpan="2" FontWeight="ExtraBold" FontSize="30" HorizontalContentAlignment="Center" x:Name="date" />
+        <ComboBox Grid.ColumnSpan="2" Grid.Row="1" FontSize="20" VerticalContentAlignment="Center" Text="Soups" x:Name="soupsCombo"  />
+        <ComboBox Grid.ColumnSpan="2" Grid.Row="2" FontSize="20" VerticalContentAlignment="Center" x:Name="mealsCombo"  />
+        <ComboBox Grid.ColumnSpan="2" Grid.Row="3" FontSize="20" VerticalContentAlignment="Center" x:Name="desertsCombo" />
+        <TextBox Grid.ColumnSpan="2" Grid.Row="4" FontSize="20" VerticalContentAlignment="Center" x:Name="price" />
+        <Button Grid.Column="0" Grid.Row="5" Content="Uložiť" Click="SaveBtn_Click" />
+        <Button Grid.Column="1" Grid.Row="5" Content="Zrušiť" Click="CancelBtn_Click" />
+    </Grid>
 </Window>

@@ -30,6 +30,7 @@ namespace AdminApp
 			_menu.Items[0] = soupsCombo.SelectedItem as DataLayer.Data.MenuItem;
 			_menu.Items[1] = mealsCombo.SelectedItem as DataLayer.Data.MenuItem;
 			_menu.Items[2] = desertsCombo.SelectedItem as DataLayer.Data.MenuItem;
+			_menu.Price = float.Parse(price.Text);
 			_db.Add(_menu);
 			Close();
 		}
@@ -48,6 +49,7 @@ namespace AdminApp
 			mealsCombo.SelectedIndex = 0;
 			desertsCombo.ItemsSource = _db.GetTable(new Desert()).ToList();
 			desertsCombo.SelectedIndex = 0;
-		}
+            price.Text = "0";
+        }
 	}
 }

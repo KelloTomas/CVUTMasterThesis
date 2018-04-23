@@ -13,7 +13,7 @@
             <RowDefinition Height="50" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Content="Zoznam XXX" x:Name="Title" />
+        <Label Grid.Row="0" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Content="Zoznam XXX" x:Name="MyTitle" />
 
         <DataGrid AutoGenerateColumns="False" Grid.Row="1" x:Name="clientSelect" MouseDoubleClick="ClientSelect_MouseDoubleClick"
 				  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True" >

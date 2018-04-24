@@ -23,6 +23,7 @@ namespace DataLayer
                 builder.UserID = "sql7233334";
                 builder.Password = "gaQBuD7bXJ";
                 builder.Database = "sql7233334";
+				builder.SslMode = MySqlSslMode.None;
 #pragma warning restore CS0162 // Unreachable code detected
             }
             else
@@ -32,6 +33,7 @@ namespace DataLayer
                 builder.UserID = "root";
                 builder.Password = "root";
                 builder.Database = "cvutdb";
+				builder.SslMode = MySqlSslMode.None;
 #pragma warning restore CS0162 // Unreachable code detected
 			}
 			CONNECTION_STRING = builder.ToString();

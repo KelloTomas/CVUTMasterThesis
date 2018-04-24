@@ -5,8 +5,7 @@
     xmlns:local="clr-namespace:AdminApp"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
-	Title="ClientsPage"
-	Height="500" Width="500">
+	Title="ClientsPage">
 
 	<Grid>
 		<Grid.RowDefinitions>

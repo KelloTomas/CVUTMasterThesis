@@ -184,7 +184,7 @@ namespace DataLayer
                 {
                     using (MySqlCommand command = connection.CreateCommand())
                     {
-                        command.CommandText = $"UPDATE Devices SET IP = '{d.IP}', Port = {d.Port} Where IdDevice = {d.IdDevice}";
+                        command.CommandText = $"UPDATE devices SET IP = '{d.IP}', Port = {d.Port} Where IdDevice = {d.IdDevice}";
                         command.CommandType = System.Data.CommandType.Text;
                         using (MySqlDataReader reader = command.ExecuteReader())
                         {

@@ -9,27 +9,30 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MenuDetailWindow" Height="300" Width="300">
-    <Grid >
+	<Grid >
 		<Grid.RowDefinitions>
 			<RowDefinition Height="50"/>
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*" />
+			<RowDefinition Height="*"/>
 			<RowDefinition Height="50" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
-        <Label VerticalAlignment="Bottom" Grid.ColumnSpan="2" FontWeight="ExtraBold" FontSize="30" HorizontalContentAlignment="Center" Content="Úprava uživateľa" />
-        <TextBox Margin="20,0,20,0" Grid.Row="1" Grid.ColumnSpan="2"  x:Name="FirstName"
+		<Label VerticalAlignment="Bottom" Grid.ColumnSpan="2" FontWeight="ExtraBold" FontSize="30" HorizontalContentAlignment="Center" Content="Úprava uživateľa" />
+		<TextBox Margin="20,0,20,0" Grid.Row="1" Grid.ColumnSpan="2"  x:Name="FirstName"
   materialDesign:HintAssist.Hint="Meno"
   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-        <TextBox Margin="20,0,20,0" VerticalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" x:Name="LastName" materialDesign:HintAssist.Hint="Priezvisko"
+		<TextBox Margin="20,0,20,0" VerticalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" x:Name="LastName" materialDesign:HintAssist.Hint="Priezvisko"
   Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-        <TextBox Margin="20,0,20,0" VerticalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="2" x:Name="CardNumber" materialDesign:HintAssist.Hint="Číslo karty"
-  Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
-		<Button Grid.Column="0" Grid.Row="4" Content="Uložiť" Click="SaveBtn_Click" />
-		<Button Grid.Column="1" Grid.Row="4" Content="Zrušiť" Click="CancelBtn_Click"/>
+		<TextBox Margin="20,0,20,0" VerticalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="2" x:Name="Adress" materialDesign:HintAssist.Hint="Adresa"
+  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+		<TextBox Margin="20,0,20,0" VerticalAlignment="Center" Grid.Row="4" Grid.ColumnSpan="2" x:Name="City" materialDesign:HintAssist.Hint="Mesto"
+  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+		<Button Grid.Column="0" Grid.Row="5" Content="Uložiť" Click="SaveBtn_Click" Margin="0,9" />
+		<Button Grid.Column="1" Grid.Row="5" Content="Zrušiť" Click="CancelBtn_Click" Margin="0,9"/>
 	</Grid>
 </Window>

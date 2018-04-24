@@ -9,12 +9,12 @@ namespace AdminApp
     /// <summary>
     /// Interaction logic for MenuDetailWindow.xaml
     /// </summary>
-    public partial class ClientDetailWindow : Window
+    public partial class SetCardDetailWindow : Window
     {
         private readonly DatabaseLayer _db;
         private readonly Client _client;
 
-        public ClientDetailWindow(DatabaseLayer db, Client client)
+        public SetCardDetailWindow(DatabaseLayer db, Client client)
         {
             InitializeComponent();
             _client = client;
@@ -24,8 +24,7 @@ namespace AdminApp
 
         private void SaveBtn_Click(object sender, RoutedEventArgs e)
         {
-            _client.FirstName = FirstName.Text;
-            _client.LastName = LastName.Text;
+            _client.CardNumber = CardNumber.Text;
             _db.Add(_client);
             Close();
         }
@@ -37,10 +36,9 @@ namespace AdminApp
 
         private void LoadData()
         {
-            FirstName.Text = _client.FirstName;
-            LastName.Text = _client.LastName;
-            Adress.Text = "Velkolepa 48";
-            City.Text = "Brno";
-        }
+            FullName.Content = _client.FullName;
+			CardNumber.Text = _client.CardNumber;
+
+		}
     }
 }

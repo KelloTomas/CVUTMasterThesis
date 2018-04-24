@@ -32,7 +32,7 @@
 				  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True" >
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Path=IdMenu}" />
+                <DataGridTextColumn Width="40" Header="Id" Binding="{Binding Path=IdMenu}" />
                 <DataGridTextColumn Header="Na datum" Binding="{Binding Path=ForDate, StringFormat=\{0:dd.MM.yyyy\}}" />
                 <DataGridTextColumn Header="Vydane" Binding="{Binding Path=Served, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"/>
                 <DataGridTextColumn Header="Polievka" Binding="{Binding Path=Items[0].Name}" />

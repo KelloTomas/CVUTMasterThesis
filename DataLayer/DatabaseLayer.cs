@@ -15,7 +15,7 @@ namespace DataLayer
         public DatabaseLayer()
         {
             MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder();
-            if (false)
+            if (true)
             {
 #pragma warning disable CS0162 // Unreachable code detected
                 // http://www.phpmyadmin.co/index.php
@@ -26,13 +26,15 @@ namespace DataLayer
 #pragma warning restore CS0162 // Unreachable code detected
             }
             else
-            {
-                builder.Server = "localhost";
+			{
+#pragma warning disable CS0162 // Unreachable code detected
+				builder.Server = "localhost";
                 builder.UserID = "root";
                 builder.Password = "root";
                 builder.Database = "cvutdb";
-            }
-            CONNECTION_STRING = builder.ToString();
+#pragma warning restore CS0162 // Unreachable code detected
+			}
+			CONNECTION_STRING = builder.ToString();
         }
 
         #region private methods...
@@ -321,10 +323,11 @@ namespace DataLayer
                             break;
                         case Client c:
                             if (c.Id == 0)
-                                command.CommandText = $"INSERT INTO clients (firstname, lastname, cardnumber, balance) VALUES('{c.FirstName}', '{c.LastName}', '{c.CardNumber}', '{c.Balance}')";
+                                command.CommandText = $"INSERT INTO clients (firstname, lastname, cardnumber, balance) VALUES('{c.FirstName}', '{c.LastName}', '{c.CardNumber}', '{c.Balance.ToString(System.Globalization.CultureInfo.InvariantCulture)}')";
                             else
-                                command.CommandText = $"UPDATE clients SET firstname = '{c.FirstName}', lastname = '{c.LastName}', balance = \"{c.Balance}\", cardnumber = \"{c.CardNumber}\" Where idclient = \"{c.Id}\"";
-                            break;
+                                command.CommandText = $"UPDATE clients SET firstname = '{c.FirstName}', lastname = '{c.LastName}', balance = \"{c.Balance.ToString(System.Globalization.CultureInfo.InvariantCulture)}\", cardnumber = \"{c.CardNumber}\" Where idclient = \"{c.Id}\"";
+
+							break;
                         case Soup s:
                             if (s.Id == 0)
                                 command.CommandText = $"INSERT INTO soups (name, description) VALUES('{s.Name}', '{s.Description}')";

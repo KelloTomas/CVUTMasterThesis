@@ -31,11 +31,11 @@
                   AutoGenerateColumns="False" >
 
             <DataGrid.Columns>
-                <DataGridTextColumn Width="*" Header="Id" Binding="{Binding Path=IdMenu}" />
+                <DataGridTextColumn Width="40" Header="Id" Binding="{Binding Path=IdMenu}" />
                 <DataGridTextColumn Width="3*" Header="Polievka" Binding="{Binding Path=Items[0].Name}" />
                 <DataGridTextColumn Width="3*" Header="Hl. jedlo" Binding="{Binding Path=Items[1].Name}" />
                 <DataGridTextColumn Width="3*" Header="Dezert" Binding="{Binding Path=Items[2].Name}" />
-                <DataGridTextColumn Width="*" Header="Cena" Binding="{Binding Path=Price}" />
+                <DataGridTextColumn Width="100" Header="Cena" Binding="{Binding Path=Price}" />
             </DataGrid.Columns>
         </DataGrid>
 

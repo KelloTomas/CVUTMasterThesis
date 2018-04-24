@@ -34,7 +34,6 @@ namespace AdminApp
         {
             App.IsEnabled = true;
             Client.IsEnabled = true;
-            Charge.IsEnabled = true;
             Menu.IsEnabled = true;
             Order.IsEnabled = true;
             Soups.IsEnabled = true;
@@ -47,9 +46,6 @@ namespace AdminApp
                     break;
                 case "Client":
                     Client.IsEnabled = false;
-                    break;
-                case "Charge":
-                    Charge.IsEnabled = false;
                     break;
                 case "Menu":
                     Menu.IsEnabled = false;
@@ -96,11 +92,6 @@ namespace AdminApp
         {
             SetSelected(((Button)e.Source).Name);
             frame.Navigate(new OrdersPage(this, db));
-        }
-        private void ChargeCardButtonClick(object sender, RoutedEventArgs e)
-        {
-            SetSelected(((Button)e.Source).Name);
-            frame.Navigate(new ChargeCardPage(this, db));
         }
 
         private void MenuItemButtonClick(object sender, RoutedEventArgs e)

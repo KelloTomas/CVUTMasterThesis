@@ -21,7 +21,6 @@
         <StackPanel Grid.Row="1" Grid.Column="0" >
 			<Button x:Name="App" Content="Aplikácie" Click="ApplicationButtonClick" />
             <Button x:Name="Client" Content="Užívatelia" Click="ClientsButtonClick"/>
-            <Button x:Name="Charge" Content="Vklad na kartu" Click="ChargeCardButtonClick"/>
             <Button x:Name="Soups" Content="Polievky" Click="MenuItemButtonClick"/>
             <Button x:Name="Meals" Content="Hl. jedlá" Click="MenuItemButtonClick"/>
             <Button x:Name="Deserts" Content="Dezerty" Click="MenuItemButtonClick"/>
@@ -30,6 +29,6 @@
 		</StackPanel>
 
         <Frame Grid.Row="1" NavigationUIVisibility="Hidden" Grid.Column="1" x:Name="frame" />
-        <TextBlock Grid.Row="1" TextAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Diplomova práca,&#x0a;Tomáš Kello,&#x0a;2018" />
+        <TextBlock Margin="0,0,0,20" Grid.Row="1" TextAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Diplomova práca,&#x0a;Tomáš Kello,&#x0a;2018" />
 	</Grid>
 </Window>

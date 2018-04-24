@@ -1,4 +1,4 @@
-﻿<Window x:Class="AdminApp.ChargeCardDetailWindow"
+﻿<Window x:Class="AdminApp.SetCardDetailWindow"
     WindowStyle="None"
         WindowStartupLocation="CenterOwner"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:AdminApp"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="ChargeCardDetailWindow" Height="200" Width="300">
+        Title="SetCardDetailWindow" Height="200" Width="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
@@ -20,11 +20,10 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-		<Label VerticalAlignment="Bottom" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="30" HorizontalContentAlignment="Center" Content="Vklad penazí" />
+		<Label VerticalAlignment="Bottom" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="30" HorizontalContentAlignment="Center" Content="Nastavenie karty" />
 		<Label FontSize="20" FontWeight="ExtraBold" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" x:Name="FullName"/>
-        <Label Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Content="EUR"/>
-        <TextBox VerticalAlignment="Center" Grid.Row="2" x:Name="Balance" materialDesign:HintAssist.Hint="Suma"
-  Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+		<TextBox VerticalAlignment="Center" Grid.Row="2" x:Name="CardNumber" materialDesign:HintAssist.Hint="Číslo karty"
+  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Grid.ColumnSpan="2" Margin="0,6"/>
         <Button Grid.Column="0" Grid.Row="3" Content="Uložiť" Click="SaveBtn_Click" />
         <Button Grid.Column="1" Grid.Row="3" Content="Zrušiť" Click="CancelBtn_Click"/>
     </Grid>

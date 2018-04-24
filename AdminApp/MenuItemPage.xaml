@@ -19,48 +19,38 @@
 				  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True" >
 
             <DataGrid.Columns>
-                <DataGridTextColumn Width="*" Header="Id" Binding="{Binding Path=Id}" />
+                <DataGridTextColumn Width="40" Header="Id" Binding="{Binding Path=Id}" />
                 <DataGridTextColumn Width="*" Header="Názov" Binding="{Binding Path=Name}" />
-                <DataGridTextColumn Width="*" Header="Opis" Binding="{Binding Path=Description}"/>
+                <DataGridTextColumn Width="2*" Header="Opis" Binding="{Binding Path=Description}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <!--
-        <dxg:GridControl Grid.Row="1" x:Name="clientSelect" MouseDoubleClick="ClientSelect_MouseDoubleClick" AllowMRUFilterList="False" AllowColumnMRUFilterList="False" SelectionMode="Row">
-            <dxg:GridColumn FieldName="FirstName" Header="Meno"/>
-            <dxg:GridColumn FieldName="LastName" Header="Priezvisko"/>
-            <dxg:GridColumn FieldName="Balance" Header="Stav účtu"/>
-            <dxg:GridControl.View>
-                <dxg:TableView AutoWidth="True" AllowEditing="False" ShowAutoFilterRow="True" ShowGroupPanel="False" FixedLineHeight="8"/>
-            </dxg:GridControl.View>
-        </dxg:GridControl>
-        -->
 
         <StackPanel Orientation="Horizontal" Grid.Row="1"  HorizontalAlignment="Right" VerticalAlignment="Bottom">
 
             <Button  Margin="0,20,20,20"
               Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-              ToolTip="MaterialDesignFloatingActionDarkButton"
+              ToolTip="Pridať"
                 Click="BtnAdd_Click">
                 <materialDesign:PackIcon
-                        Kind="AccountPlus"
+                        Kind="Plus"
                         Height="24"
                         Width="24" />
             </Button>
             <Button Margin="0,20,20,20"
                     Click="BtnEdit_Click"
               Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-              ToolTip="MaterialDesignFloatingActionDarkButton">
+              ToolTip="Editovať">
                 <materialDesign:PackIcon
-                        Kind="AccountEdit"
+                        Kind="Pencil"
                         Height="24"
                         Width="24" />
             </Button>
             <Button Margin="0,20,20,20"
                     Click="BtnRemove_Click"
               Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-              ToolTip="MaterialDesignFloatingActionDarkButton">
+              ToolTip="Vymazať">
                 <materialDesign:PackIcon
-                        Kind="AccountRemove"
+                        Kind="Delete"
                         Height="24"
                         Width="24" />
             </Button>

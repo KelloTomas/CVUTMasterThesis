@@ -26,9 +26,11 @@
             <Button x:Name="Deserts" Content="Dezerty" Click="MenuItemButtonClick"/>
             <Button x:Name="Menu" Content="Jedálny lístok" Click="ListMenuButtonClick"/>
 			<Button x:Name="Order" Content="Objednávky"  Click="OrdersButtonClick"/>
+			<Button x:Name="Close" Content="Zatvoriť"  Click="Close_Click"/>
 		</StackPanel>
-
-        <Frame Grid.Row="1" NavigationUIVisibility="Hidden" Grid.Column="1" x:Name="frame" />
         <TextBlock Margin="0,0,0,20" Grid.Row="1" TextAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Diplomova práca,&#x0a;Tomáš Kello,&#x0a;2018" />
+
+		<Frame Grid.Row="1" NavigationUIVisibility="Hidden" Grid.Column="1" x:Name="frame"/>
+		<Image x:Name="CanteenPic" Margin="50" Grid.Row="1" Grid.Column="1" Source="pic\canteenIcon.jpg" />
 	</Grid>
 </Window>

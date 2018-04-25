@@ -7,7 +7,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdminApp"
         mc:Ignorable="d"
-        Title="SubAppDetailWindow" MinHeight="320" Height="300" Width="300">
+        Title="SubAppDetailWindow" MinHeight="400" Height="400" Width="300">
     <Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition MinHeight="80" Height="80"/>
@@ -28,7 +28,7 @@
 		<CheckBox Grid.Row="2" Grid.Column="1" x:Name="AppIsRunning" />
 		<Label Grid.Row="3" Grid.Column="0" Content="Name"/>
 		<TextBox Grid.Row="3" Grid.Column="1"  x:Name="AppName"/>
-		<DataGrid Grid.Row="4" Grid.ColumnSpan="2" x:Name="AppDevicesDataGrid" />
+		<DataGrid Grid.Row="4" Grid.ColumnSpan="2" CanUserAddRows="False" x:Name="AppDevicesDataGrid" />
 		<Button Grid.Row="5" Grid.Column="0" Content="Uložiť" Click="SaveBtnClick"/>
 		<Button Grid.Row="5" Grid.Column="1" Content="Zrušiť" Click="CancelBtnClick"/>
 	</Grid>

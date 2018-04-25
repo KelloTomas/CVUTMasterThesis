@@ -183,7 +183,7 @@
      <property name="class" stdset="0">
       <string>darkPanelStyle</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout" rowstretch="2,2,1,1,1,1,1,0" columnstretch="2,3,1,1">
+     <layout class="QGridLayout" name="gridLayout" rowstretch="2,2,1,1,1,1,1,0" columnstretch="2,5,1,1">
       <item row="0" column="0" colspan="2">
        <widget class="QLabel" name="label">
         <property name="font">

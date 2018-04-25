@@ -267,7 +267,12 @@
         <property name="font">
          <font>
           <pointsize>20</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:checked { background-color: green; } QPushButton { background-color: white; }</string>
         </property>
         <property name="text">
          <string>+ menu1 +</string>
@@ -288,7 +293,12 @@
         <property name="font">
          <font>
           <pointsize>20</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:checked { background-color: green; } QPushButton { background-color: white; }</string>
         </property>
         <property name="text">
          <string>+ menu2 +</string>
@@ -309,7 +319,12 @@
         <property name="font">
          <font>
           <pointsize>20</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:checked { background-color: green; } QPushButton { background-color: white; }</string>
         </property>
         <property name="text">
          <string>+ menu0 +</string>
@@ -330,7 +345,12 @@
         <property name="font">
          <font>
           <pointsize>20</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
          </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton:checked { background-color: green; } QPushButton { background-color: white; }</string>
         </property>
         <property name="text">
          <string>+ menu3 +</string>
@@ -350,7 +370,7 @@
         </property>
         <property name="font">
          <font>
-          <pointsize>20</pointsize>
+          <pointsize>80</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -370,7 +390,7 @@
         </property>
         <property name="font">
          <font>
-          <pointsize>20</pointsize>
+          <pointsize>80</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>

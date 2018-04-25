@@ -183,7 +183,7 @@
      <property name="class" stdset="0">
       <string>darkPanelStyle</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout" rowstretch="1,1,0,1,1,0,1,1,0,1,1" columnstretch="1,6,1">
+     <layout class="QGridLayout" name="gridLayout" rowstretch="1,1,0,1,1,0,1,1,0,1,1" columnstretch="2,18,3">
       <item row="2" column="0" colspan="2">
        <widget class="QWidget" name="widget" native="true">
         <property name="minimumSize">
@@ -398,6 +398,9 @@
           <bold>true</bold>
          </font>
         </property>
+        <property name="styleSheet">
+         <string notr="true">background:red</string>
+        </property>
         <property name="text">
          <string>Stop</string>
         </property>
@@ -413,7 +416,7 @@
         </property>
         <property name="font">
          <font>
-          <pointsize>20</pointsize>
+          <pointsize>18</pointsize>
          </font>
         </property>
         <property name="text">

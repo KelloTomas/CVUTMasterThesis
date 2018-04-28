@@ -21,7 +21,7 @@
             <RowDefinition Height="50"/>
 			<RowDefinition/>
 		</Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Content="Zoznam objednávok" />
+        <Label Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Center" Content="Zoznam objednávok" />
 
         <ComboBox Grid.Row="1" x:Name="clientSelect" Grid.ColumnSpan="4" SelectionChanged="ClientSelect_SelectionChanged"
   materialDesign:HintAssist.Hint="Vyber užívateľa"

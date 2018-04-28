@@ -14,7 +14,7 @@
             <RowDefinition Height="50" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Content="Zoznam aplikácii" />
+        <Label Grid.Row="0" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Center" Content="Zoznam aplikácii" />
 
         <DataGrid Grid.Row="1" x:Name="appsDataGrid" MouseDoubleClick="appsDataGrid_MouseDoubleClick"
 				  CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False"

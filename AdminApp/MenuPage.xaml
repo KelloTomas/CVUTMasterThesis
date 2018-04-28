@@ -21,10 +21,14 @@
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Label Grid.ColumnSpan="4" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Content="Jedálny lístok" />
-        <Label Grid.Column="1" Grid.ColumnSpan="2" FontSize="25" FontWeight="ExtraBold" x:Name="dateLabel" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" />
-        <Button Grid.Row="1" Grid.Column="0" Content="&lt;-" Click="PrevBtnClick" Margin="0,9" />
-        <Button Grid.Row="1" Grid.Column="3" Content="-&gt;" Click="NextBtnClick" Margin="0,9" />
+        <Label Grid.ColumnSpan="4" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Center" Content="Jedálny lístok" />
+        <Label Grid.Column="1" Grid.ColumnSpan="2" FontSize="25" FontWeight="Bold" x:Name="dateLabel" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" />
+        <Button Grid.Row="1" Grid.Column="0" Click="PrevBtnClick" Margin="10,9">
+            <materialDesign:PackIcon Kind="ArrowLeftThick" />
+        </Button>
+        <Button Grid.Row="1" Grid.Column="3" Click="NextBtnClick" Margin="10,9">
+            <materialDesign:PackIcon Kind="ArrowRightThick" />
+        </Button>
         <DataGrid Grid.Row="2" Grid.ColumnSpan="4" x:Name="menuDataGrid"
 				  CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True"
 				  MouseDoubleClick="menuDataGrid_MouseDoubleClick"

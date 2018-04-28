@@ -4,33 +4,128 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdminApp"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainWindow" Height="550" Width="725">
+
+    <Window.Resources>
+        <Style x:Key="NavbarBtnStyle" TargetType="{x:Type Button}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Height="35">
+                            <Border.Style>
+                                <Style TargetType="{x:Type Border}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="LightGray"/>
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Background" Value="#FFE0E0E0"/>
+                                            <!--<Setter Property="Foreground" Value="DeepPink"/>-->
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <Grid Background="Transparent" Height="Auto" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <!--<ContentPresenter></ContentPresenter>-->
+                                <TextBlock Text="{TemplateBinding Content}" FontSize="16">
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="78"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200"/>
-			<ColumnDefinition Width="*"/>
-		</Grid.ColumnDefinitions>
-            <!-- Background="#FF3C238C" -->
-        <Label
-            Foreground="#FF3C238C" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="50" FontWeight="ExtraBold" Content="Správa systému" />
-        <StackPanel Grid.Row="1" Grid.Column="0" >
-			<Button x:Name="App" Content="Aplikácie" Click="ApplicationButtonClick" />
-            <Button x:Name="Client" Content="Užívatelia" Click="ClientsButtonClick"/>
-            <Button x:Name="Soups" Content="Polievky" Click="MenuItemButtonClick"/>
-            <Button x:Name="Meals" Content="Hl. jedlá" Click="MenuItemButtonClick"/>
-            <Button x:Name="Deserts" Content="Dezerty" Click="MenuItemButtonClick"/>
-            <Button x:Name="Menu" Content="Jedálny lístok" Click="ListMenuButtonClick"/>
-			<Button x:Name="Order" Content="Objednávky"  Click="OrdersButtonClick"/>
-			<Button x:Name="Close" Content="Zatvoriť"  Click="Close_Click"/>
-		</StackPanel>
-        <TextBlock Margin="0,0,0,20" Grid.Row="1" TextAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Diplomova práca,&#x0a;Tomáš Kello,&#x0a;2018" />
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <!-- Background="#FF3C238C" -->
+        <!--<TextB-->
+        <!--lock  Grid.ColumnSpan="2" 
+             Style="{StaticResource MaterialDesignDisplay2TextBlock}" HorizontalAlignment="Center" VerticalAlignment="Center">
+          Správa systému
+        </TextBlock>-->
 
-		<Frame Grid.Row="1" NavigationUIVisibility="Hidden" Grid.Column="1" x:Name="frame"/>
-		<Image x:Name="CanteenPic" Margin="50" Grid.Row="1" Grid.Column="1" Source="pic\canteenIcon.jpg" />
-	</Grid>
+        <materialDesign:ColorZone
+             Grid.ColumnSpan="2"
+  Mode="PrimaryDark"
+  Padding="16"
+  CornerRadius="3"
+  materialDesign:ShadowAssist.ShadowDepth="Depth3"
+  Margin="2,2,2,0" Height="76">
+            <StackPanel
+    Orientation="Horizontal">
+                <ToggleButton
+      Style="{DynamicResource MaterialDesignHamburgerToggleButton}" />
+                <TextBlock
+      VerticalAlignment="Center"
+      Margin="16,0,0,4" FontSize="30">
+    Správa systému
+                </TextBlock>
+            </StackPanel>
+        </materialDesign:ColorZone>
+
+        <!--<Lab-->
+        <!--el   
+            Foreground="{DynamicResource PrimaryHueMidBrush}" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="46" FontWeight="Regular" Content="Správa systému" Background="#FFF1F1F1" Margin="0" >
+        </Label>-->
+        <StackPanel Grid.Column="0" Background="#FFF0F0F0" Panel.ZIndex="-1" Grid.Row="1" >
+            <!--<ListBox 
+            HorizontalAlignment="Left" Width="200">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                        x:Name="App" >
+                    Aplikácie
+                </TextBlock>
+                <TextBlock>
+	                Užívatelia
+                </TextBlock>
+                <TextBlock>
+	                Polievky
+                </TextBlock>
+                <TextBlock>
+	                Hl. jedlá
+                </TextBlock>
+                <TextBlock>
+	                Hl. jedlá
+                </TextBlock>
+                <TextBlock>
+	                Dezerty
+                </TextBlock>
+                <TextBlock>
+	                Jedálny lístok
+                </TextBlock>
+                <TextBlock>
+	                Objednávky
+                </TextBlock>
+                <TextBlock>
+	                Zatvoriť
+                </TextBlock>
+            </ListBox>-->
+
+
+
+            <Button x:Name="App" Content="Aplikácie" Click="ApplicationButtonClick" Style="{StaticResource NavbarBtnStyle}" Margin="0,20,0,0" />
+            <Button x:Name="Client" Content="Užívatelia" Click="ClientsButtonClick" Style="{StaticResource NavbarBtnStyle}"/>
+            <Button x:Name="Soups" Content="Polievky" Click="MenuItemButtonClick" Style="{StaticResource NavbarBtnStyle}"/>
+            <Button x:Name="Meals" Content="Hl. jedlá" Click="MenuItemButtonClick" Style="{StaticResource NavbarBtnStyle}"/>
+            <Button x:Name="Deserts" Content="Dezerty" Click="MenuItemButtonClick" Style="{StaticResource NavbarBtnStyle}"/>
+            <Button x:Name="Menu" Content="Jedálny lístok" Click="ListMenuButtonClick" Style="{StaticResource NavbarBtnStyle}"/>
+            <Button x:Name="Order" Content="Objednávky"  Click="OrdersButtonClick" Style="{StaticResource NavbarBtnStyle}"/>
+            <Button x:Name="Close" Content="Zatvoriť"  Click="Close_Click" Style="{StaticResource NavbarBtnStyle}"/>
+        </StackPanel>
+        <TextBlock Margin="54,0,54,10" Grid.Row="1" TextAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Diplomova práca&#xA;Tomáš Kello, 2018" Height="33" Width="92" FontSize="11" />
+
+        <Frame Grid.Row="1" NavigationUIVisibility="Hidden" Grid.Column="1" x:Name="frame" Margin="0,10,0,0"/>
+        <materialDesign:PackIcon  x:Name="CanteenPic" Kind="Food" Grid.Row="1"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="100" Foreground="#FFBBBBBB" />
+        <!--<Image x:Name="CanteenPic" Margin="50" Grid.Row="1" Grid.Column="1" Source="pic\canteenIcon.jpg" />-->
+    </Grid>
 </Window>

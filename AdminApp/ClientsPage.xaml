@@ -12,7 +12,7 @@
 			<RowDefinition Height="50" />
 			<RowDefinition />
 		</Grid.RowDefinitions>
-		<Label Grid.Row="0" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Content="Zoznam klientov" />
+		<Label Grid.Row="0" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Center" Content="Zoznam klientov" />
 
 		<materialDesign:DialogHost Grid.Row="1" DialogClosing="DialogChargeMoney_Closing"
                                  HorizontalAlignment="Center" VerticalAlignment="Center">

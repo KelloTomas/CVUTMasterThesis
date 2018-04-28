@@ -22,7 +22,7 @@
 			<ColumnDefinition />
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
-		<Label VerticalAlignment="Bottom" Grid.ColumnSpan="2" FontWeight="ExtraBold" FontSize="30" HorizontalContentAlignment="Center" Content="Úprava uživateľa" />
+		<Label VerticalAlignment="Bottom" Grid.ColumnSpan="2" FontSize="30" HorizontalContentAlignment="Center" Content="Úprava uživateľa" />
 		<TextBox Margin="20,0,20,0" Grid.Row="1" Grid.ColumnSpan="2"  x:Name="FirstName"
   materialDesign:HintAssist.Hint="Meno"
   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />

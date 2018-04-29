@@ -49,6 +49,7 @@ namespace AdminApp
 			Soups.IsEnabled = true;
 			Meals.IsEnabled = true;
 			Deserts.IsEnabled = true;
+			TerminalService.IsEnabled = true;
 			switch (name)
 			{
 				case "App":
@@ -71,6 +72,9 @@ namespace AdminApp
 					break;
 				case "Deserts":
 					Deserts.IsEnabled = false;
+					break;
+				case "TerminalService":
+					TerminalService.IsEnabled = false;
 					break;
 				default:
 					_isPageShown = false;
@@ -131,7 +135,8 @@ namespace AdminApp
 
 		private void TerminalService_Click(object sender, RoutedEventArgs e)
 		{
-
+			SetSelected(((Button)e.Source).Name);
+			frame.Navigate(new TerminalServicePage(this, _db));
 		}
 	}
 }

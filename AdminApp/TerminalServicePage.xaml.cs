@@ -13,25 +13,11 @@ namespace AdminApp
 	{
 		private readonly DatabaseLayer _db;
 		private readonly Window _owner;
-		private MenuItem _item;
-		public TerminalServicePage(Window owner, DatabaseLayer db, DataLayer.Data.MenuItem item)
+		public TerminalServicePage(Window owner, DatabaseLayer db)
 		{
-			_item = item;
 			_owner = owner;
 			_db = db;
 			InitializeComponent();
-			switch (item)
-			{
-				case Soup s:
-					MyTitle.Content = $"Zoznam polievok";
-					break;
-				case Meal s:
-					MyTitle.Content = $"Zoznam hl. jedál";
-					break;
-				case Desert s:
-					MyTitle.Content = $"Zoznam dezertov";
-					break;
-			}
 			ReloadData();
 		}
 
@@ -46,9 +32,11 @@ namespace AdminApp
 
 		private void BtnAdd_Click(object sender, RoutedEventArgs e)
 		{
+			/*
 			MenuItemDetailWindow window = new MenuItemDetailWindow(_db, (MenuItem)Activator.CreateInstance(_item.GetType())) { Owner = _owner };
 			window.ShowDialog();
 			ReloadData();
+			*/
 		}
 
 		private void BtnEdit_Click(object sender, RoutedEventArgs e)

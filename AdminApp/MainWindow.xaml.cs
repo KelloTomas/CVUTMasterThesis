@@ -128,5 +128,10 @@ namespace AdminApp
 			frame.Content = null;
 			SetSelected(null);
 		}
+
+		private void TerminalService_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
 	}
 }

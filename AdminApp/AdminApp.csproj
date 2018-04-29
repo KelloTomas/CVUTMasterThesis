@@ -67,6 +67,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="TerminalServicePage.xaml.cs">
+      <DependentUpon>TerminalServicePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SetCardDetailWindow.xaml.cs">
       <DependentUpon>SetCardDetailWindow.xaml</DependentUpon>
     </Compile>
@@ -103,6 +106,10 @@
     <Compile Include="SubAppDetailWindow.xaml.cs">
       <DependentUpon>SubAppDetailWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="TerminalServicePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="SetCardDetailWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

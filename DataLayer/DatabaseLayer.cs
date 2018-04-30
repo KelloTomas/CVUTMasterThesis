@@ -15,7 +15,7 @@ namespace DataLayer
         public DatabaseLayer()
         {
             MySqlConnectionStringBuilder builder = new MySqlConnectionStringBuilder();
-            if (true)
+            if (false)
             {
 #pragma warning disable CS0162 // Unreachable code detected
                 // http://www.phpmyadmin.co/index.php
@@ -23,20 +23,20 @@ namespace DataLayer
                 builder.UserID = "sql7233334";
                 builder.Password = "gaQBuD7bXJ";
                 builder.Database = "sql7233334";
-				builder.SslMode = MySqlSslMode.None;
+                builder.SslMode = MySqlSslMode.None;
 #pragma warning restore CS0162 // Unreachable code detected
             }
             else
-			{
+            {
 #pragma warning disable CS0162 // Unreachable code detected
-				builder.Server = "localhost";
+                builder.Server = "localhost";
                 builder.UserID = "root";
                 builder.Password = "root";
                 builder.Database = "cvutdb";
-				builder.SslMode = MySqlSslMode.None;
+                builder.SslMode = MySqlSslMode.None;
 #pragma warning restore CS0162 // Unreachable code detected
-			}
-			CONNECTION_STRING = builder.ToString();
+            }
+            CONNECTION_STRING = builder.ToString();
         }
 
         #region private methods...
@@ -257,7 +257,7 @@ namespace DataLayer
                 using (MySqlCommand command = connection.CreateCommand())
                 {
                     command.CommandType = System.Data.CommandType.Text;
-                    command.CommandText = $"select fordate, idmenu, soups.idsoup, soups.name soupname, meals.idmeal, meals.name mealname, deserts.iddesert, deserts.name desertname, price from menu join soups on menu.idsoup = soups.idsoup join meals on menu.idmeal = meals.idmeal join deserts on menu.iddesert = deserts.iddesert where fordate >= '{forDate?.ToString("yyyy-MM-dd")}'";
+                    command.CommandText = $"select fordate, idmenu, soups.idsoup, soups.name soupname, meals.idmeal, meals.name mealname, deserts.iddesert, deserts.name desertname, price from menu left join soups on menu.idsoup = soups.idsoup left join meals on menu.idmeal = meals.idmeal left join deserts on menu.iddesert = deserts.iddesert where fordate >= '{forDate?.ToString("yyyy-MM-dd")}'";
                     command.CommandType = System.Data.CommandType.Text;
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
@@ -269,9 +269,12 @@ namespace DataLayer
                                 IdMenu = reader.GetInt32(1),
                                 Price = reader.GetFloat(8)
                             };
-                            menu.Items[0] = new MenuItem { Id = reader.GetInt32(2), Name = reader.GetString(3) };
-                            menu.Items[1] = new MenuItem { Id = reader.GetInt32(4), Name = reader.GetString(5) };
-                            menu.Items[2] = new MenuItem { Id = reader.GetInt32(6), Name = reader.GetString(7) };
+                            if (!reader.IsDBNull(2))
+                                menu.Items[0] = new MenuItem { Id = reader.GetInt32(2), Name = reader.GetString(3) };
+                            if (!reader.IsDBNull(4))
+                                menu.Items[1] = new MenuItem { Id = reader.GetInt32(4), Name = reader.GetString(5) };
+                            if (!reader.IsDBNull(6))
+                                menu.Items[2] = new MenuItem { Id = reader.GetInt32(6), Name = reader.GetString(7) };
                             yield return menu;
                         }
                     }
@@ -321,7 +324,8 @@ namespace DataLayer
                             command.CommandText = $"INSERT INTO orders (fordate, idmenu, idclient, vydane) VALUES('{order.ForDate.ToString("yyyy-MM-dd")}', {order.IdMenu}, {order.Client.Id}, null)";
                             break;
                         case Menu menu:
-                            command.CommandText = $"INSERT INTO menu (fordate, idsoup, idmeal, iddesert, price) VALUES('{menu.ForDate.ToString("yyyy-MM-dd")}', {menu.Items[0].Id}, {menu.Items[1].Id}, {menu.Items[2].Id}, {menu.Price})";
+                            command.CommandText = $"INSERT INTO menu (fordate, idsoup, idmeal, iddesert, price) VALUES('{menu.ForDate.ToString("yyyy-MM-dd")}', '{menu.Items[0]?.Id}', '{menu.Items[1]?.Id}', '{menu.Items[2]?.Id}', {menu.Price})";
+                            command.CommandText = command.CommandText.Replace("''", "null");
                             break;
                         case Client c:
                             if (c.Id == 0)
@@ -329,7 +333,7 @@ namespace DataLayer
                             else
                                 command.CommandText = $"UPDATE clients SET firstname = '{c.FirstName}', lastname = '{c.LastName}', balance = \"{c.Balance.ToString(System.Globalization.CultureInfo.InvariantCulture)}\", cardnumber = \"{c.CardNumber}\" Where idclient = \"{c.Id}\"";
 
-							break;
+                            break;
                         case Soup s:
                             if (s.Id == 0)
                                 command.CommandText = $"INSERT INTO soups (name, description) VALUES('{s.Name}', '{s.Description}')";

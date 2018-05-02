@@ -77,7 +77,7 @@ namespace ServerApp.TerminalServices.Inform.States
 			else
 			{
 				_layout = _app.CardScannedLayout;
-				_client.Orders = _client.Orders.Where(o=> o.Served == null && o.ForDate.Date >= DateTime.Now.Date).ToList();
+				_client.Orders = _client.Orders.Where(o => o.Served == null && o.ForDate.Date >= DateTime.Now.Date).ToList();
 			}
 			forceCallStateMethod = true;
 			return this;

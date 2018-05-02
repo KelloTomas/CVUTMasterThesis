@@ -8,48 +8,24 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     Title="TerminalServicePage" Width="400" Height="400">
 
-    <Grid>
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
-			<RowDefinition Height="70"/>
-			<RowDefinition Height="70"/>
-			<RowDefinition />
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition />
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Content="Správa zariadenia" x:Name="MyTitle" />
-		<TextBox Margin="20,0,20,0" Grid.Row="1" Grid.ColumnSpan="2"  x:Name="ItemName"
-  materialDesign:HintAssist.Hint="IP adresa"
-  Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-		<ComboBox Grid.ColumnSpan="2" Grid.Row="2" FontSize="20" VerticalContentAlignment="Center" Text="Soups" x:Name="soupsCombo"  />
-		<StackPanel Orientation="Horizontal" Grid.RowSpan="10"  HorizontalAlignment="Right" VerticalAlignment="Bottom">
-
-            <Button  Margin="0,20,20,20"
-              Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-              ToolTip="Pridať"
-                Click="BtnAdd_Click">
-                <materialDesign:PackIcon
-                        Kind="Plus"
-                        Height="24"
-                        Width="24" />
-            </Button>
-            <Button Margin="0,20,20,20"
-                    Click="BtnEdit_Click"
-              Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-              ToolTip="Editovať">
-                <materialDesign:PackIcon
-                        Kind="Pencil"
-                        Height="24"
-                        Width="24" />
-            </Button>
-            <Button Margin="0,20,20,20"
-                    Click="BtnRemove_Click"
-              Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
-              ToolTip="Vymazať">
-                <materialDesign:PackIcon
-                        Kind="Delete"
-                        Height="24"
-                        Width="24" />
-            </Button>
-        </StackPanel>
+        <Label Grid.Row="0" VerticalAlignment="Center" FontSize="25" FontWeight="Bold" HorizontalAlignment="Center" Content="Správa terminálu" x:Name="MyTitle" Grid.ColumnSpan="2" Margin="92,4" />
+        <TextBox Margin="30,0" Grid.Row="1" Grid.ColumnSpan="2"  x:Name="IpAddress" materialDesign:HintAssist.Hint="IP adresa" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+        <ComboBox IsEditable="True" Margin="30,0" Grid.ColumnSpan="2" Grid.Row="2" VerticalContentAlignment="Center" materialDesign:HintAssist.Hint="Funkcia" x:Name="functionsCombo" Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
+        <TextBox Margin="30,0" Grid.Row="3" Grid.ColumnSpan="2"  x:Name="FieldData" materialDesign:HintAssist.Hint="Data" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+        <Button Style="{StaticResource MaterialDesignRaisedButton}" Grid.Row="5" Content="Spusti" Grid.ColumnSpan="2" Margin="10,0" Click="BtnStart_Click" />
     </Grid>
 
 </Page>

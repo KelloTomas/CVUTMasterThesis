@@ -12,6 +12,6 @@ namespace ServerApp.TerminalServices.Shared.States
 		*/
 		IStateBase ProcessAction(IAction action, ref bool forceCallStateMethod);
 		void Exit();
-		int TimeOut {get;}
+		int TimeOut { get; }
 	}
 }

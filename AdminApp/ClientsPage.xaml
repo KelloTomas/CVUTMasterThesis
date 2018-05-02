@@ -5,7 +5,7 @@
     xmlns:local="clr-namespace:AdminApp"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
-	Title="ClientsPage">
+	Title="ClientsPage" >
 
 	<Grid>
 		<Grid.RowDefinitions>
@@ -15,7 +15,7 @@
 		<Label Grid.Row="0" VerticalAlignment="Center" FontSize="25" HorizontalAlignment="Center" Content="Zoznam klientov" />
 
 		<materialDesign:DialogHost Grid.Row="1" DialogClosing="DialogChargeMoney_Closing"
-                                 HorizontalAlignment="Center" VerticalAlignment="Center">
+                                 >
 			<materialDesign:DialogHost.DialogContent>
 				<StackPanel Margin="16">
 					<TextBlock>Vložiť na kartu</TextBlock>

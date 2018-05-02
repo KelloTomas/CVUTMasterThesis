@@ -18,7 +18,16 @@
 
         <DataGrid Grid.Row="1" x:Name="appsDataGrid" MouseDoubleClick="appsDataGrid_MouseDoubleClick"
 				  CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False"
-				  CanUserReorderColumns="False" IsReadOnly="True"/>
+				  CanUserReorderColumns="False" IsReadOnly="True" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="50" Header="Id" Binding="{Binding Path=Id}" />
+                <DataGridTextColumn Width="*" Header="Spus." Binding="{Binding Path=IsRunning}"/>
+                <DataGridTextColumn Width="*" Header="Meno" Binding="{Binding Path=AppName}"/>
+                <DataGridTextColumn Width="20" Header="Spustené" Binding="{Binding Path=IsRunning}" />
+                <DataGridTextColumn Width="*" Header="Typ" Binding="{Binding Path=TypeName}"/>
+                <DataGridTextColumn Width="*" Header="Vydajna" Binding="{Binding Path=ServingPlace.Name}"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
         <StackPanel
             Grid.ColumnSpan="4" Orientation="Horizontal" Grid.Row="1"  HorizontalAlignment="Right" VerticalAlignment="Bottom">

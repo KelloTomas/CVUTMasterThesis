@@ -16,37 +16,48 @@ using System.Windows.Shapes;
 
 namespace AdminApp
 {
-	/// <summary>
-	/// Interaction logic for SubAppWindow.xaml
-	/// </summary>
-	public partial class SubAppDetailWindow : Window
-	{
-		private MyApplication app;
-		private readonly DatabaseLayer db;
-		public SubAppDetailWindow(MyApplication app, DatabaseLayer db)
-		{
-			InitializeComponent();
-			this.app = app;
-			this.db = db;
-			AppTypeName.Content = app.TypeName;
-			AppId.Text = app.Id.ToString();
-			AppIsRunning.IsChecked = app.IsRunning;
-			AppName.Text = app.AppName;
-			AppDevicesDataGrid.ItemsSource = app.Devices;
-			//AppDevicesDataGrid.Columns[0].Visibility = Visibility.Collapsed;
-		}
+    /// <summary>
+    /// Interaction logic for SubAppWindow.xaml
+    /// </summary>
+    public partial class SubAppDetailWindow : Window
+    {
+        private MyApplication _app;
+        private readonly DatabaseLayer _db;
+        public SubAppDetailWindow(MyApplication app, DatabaseLayer db)
+        {
+            InitializeComponent();
+            _app = app;
+            _db = db;
 
-		private void CancelBtnClick(object sender, RoutedEventArgs e)
-		{
-			Close();
-		}
+            ReloadData();
+            //AppDevicesDataGrid.Columns[0].Visibility = Visibility.Collapsed;
+        }
 
-		private void SaveBtnClick(object sender, RoutedEventArgs e)
-		{
-			app.IsRunning = AppIsRunning.IsChecked == true;
-			app.AppName = AppName.Text;
-			db.UpdateSubApp(app);
-			Close();
-		}
-	}
+        private void ReloadData()
+        {
+            AppTypeName.Content = _app.TypeName;
+            AppId.Text = _app.Id.ToString();
+            AppIsRunning.IsChecked = _app.IsRunning;
+            AppName.Text = _app.AppName;
+            AppDevicesDataGrid.ItemsSource = _app.Devices;
+            var servingPlaces = _db.Get(new ServingPlace()).ToList();
+            servingPlaceCombo.ItemsSource = servingPlaces;
+            if (_app.ServingPlace != null)
+                servingPlaceCombo.SelectedItem = servingPlaces.FirstOrDefault(o => o.Id == _app.ServingPlace.Id);
+        }
+
+        private void CancelBtnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void SaveBtnClick(object sender, RoutedEventArgs e)
+        {
+            _app.IsRunning = AppIsRunning.IsChecked == true;
+            _app.AppName = AppName.Text;
+            _app.ServingPlace = servingPlaceCombo.SelectedItem as ServingPlace;
+            _db.UpdateSubApp(_app);
+            Close();
+        }
+    }
 }

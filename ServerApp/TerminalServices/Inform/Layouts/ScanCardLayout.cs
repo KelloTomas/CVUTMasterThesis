@@ -9,10 +9,10 @@ namespace ServerApp.TerminalServices.Inform.Layouts
 	/// </summary>
 	public class ScanCardLayout : LayoutTimeBase
 	{
-        #region constructors...
-        public ScanCardLayout() : base()
+		#region constructors...
+		public ScanCardLayout() : base()
 		{
-        }
+		}
 		#endregion
 
 		#region public methods...

@@ -308,7 +308,6 @@ namespace ServerApp.Devices
 
 					try
 					{
-						//_log.Debug("RECEIVING...");
 						length = _netStream.Read(data, 0, data.Length);
 						return true;
 					}

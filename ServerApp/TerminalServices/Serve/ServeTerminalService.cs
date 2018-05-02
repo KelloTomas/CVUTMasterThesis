@@ -15,16 +15,18 @@ namespace ServerApp.TerminalServices.Serve
 	{
 		public Rallo ClientDevice { get; private set; }
 		public Rallo ServiceDevice { get; private set; }
-		public ServeTerminalService(List<Device> devices, string appName, DatabaseLayer dbLayer) : base(appName, dbLayer)
+		public ServeTerminalService(List<Device> devices, MyApplication app, DatabaseLayer dbLayer) : base(app, dbLayer)
 		{
 			if (devices.Count != 2)
 				throw new ArgumentOutOfRangeException();
+			// pripojenie sa na terminaly
 			ClientDevice = new Rallo(this);
 			ClientDevice.Connect(devices[0].IP, devices[0].Port);
 			ServiceDevice = new Rallo(this);
 			ServiceDevice.Connect(devices[1].IP, devices[1].Port);
 		}
 
+		// definicia layoutov ktore sa v automate budu pouzivat
 		public ClientTextLayout ClientTextLayout { get; } = new ClientTextLayout();
 		public ClientServedLayout ClientServedLayout { get; } = new ClientServedLayout();
 		public SetServingLayout SetServingLayout { get; } = new SetServingLayout();
@@ -33,8 +35,8 @@ namespace ServerApp.TerminalServices.Serve
 
 
 		public override IStateBase GetInitState()
-        {
-            return new SetServing(this);
+		{
+			return new SetServing(this);
 		}
 
 		public override IEnumerable<IStoreLayoutAction> GetStoreLayoutActions()

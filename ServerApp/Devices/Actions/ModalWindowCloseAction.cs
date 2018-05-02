@@ -1,6 +1,6 @@
 ﻿namespace ServerApp.Devices.Actions
 {
-	internal class ModalWindowCloseAction
-	{
+	internal class ModalWindowCloseAction : IAction, IModalWindowCloseAction
+    {
 	}
 }

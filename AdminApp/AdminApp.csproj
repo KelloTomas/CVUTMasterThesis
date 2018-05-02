@@ -41,6 +41,9 @@
     <Reference Include="MaterialDesignThemes.Wpf, Version=2.4.0.1044, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignThemes.2.4.0.1044\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -106,6 +109,7 @@
     <Compile Include="SubAppDetailWindow.xaml.cs">
       <DependentUpon>SubAppDetailWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TerminalService.cs" />
     <Page Include="TerminalServicePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

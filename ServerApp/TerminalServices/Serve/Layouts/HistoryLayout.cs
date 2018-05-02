@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace ServerApp.TerminalServices.Serve.Layouts
 {
 	/// <summary>
-	/// Obrazovka z pohladu klienta pri zobrazeni jedla pripadne ak nema objednane jedlo ale ma dalsie objednavky
+	/// Obrazovka z pohladu obsluhy so zobrazenymy vydanymi jedlami
 	/// </summary>
 	public class HistoryLayout : LayoutTimeBase
 	{
@@ -14,6 +14,7 @@ namespace ServerApp.TerminalServices.Serve.Layouts
 		{
 			public const string PrevBtn = "PrevBtn";
 			public const string NextBtn = "NextBtn";
+			public const string RemoveBtn = "removeButton";
 			public const string BackBtn = "BackBtn";
 		}
 		public static class Labels

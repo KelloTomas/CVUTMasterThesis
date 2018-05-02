@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace ServerApp.TerminalServices.Shared.Data
 {
+	// funkcia na upravu objektu na obrazovke
 	public class ModifyLayoutItem
 	{
 		public ModifyLayoutItem(string id, string attributeName, string attributeValue)
@@ -17,9 +18,9 @@ namespace ServerApp.TerminalServices.Shared.Data
 		public string AttributeName { get; }
 		public string AttributeValue { get; }
 
-        public override string ToString()
-        {
-            return $"ModifyLayout {Id} {AttributeName}={AttributeValue}";
-        }
-    }
+		public override string ToString()
+		{
+			return $"ModifyLayout {Id} {AttributeName}={AttributeValue}";
+		}
+	}
 }

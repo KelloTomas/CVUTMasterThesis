@@ -6,18 +6,20 @@ using ServerApp.Devices;
 using ServerApp.Devices.Actions;
 using ServerApp.TerminalServices.Shared.States;
 using DataLayer;
+using DataLayer.Data;
 
 namespace ServerApp.TerminalServices
 {
+	// vseobecna obsluha terminalu
 	public class TerminalService : ITerminalService
 	{
 		public DatabaseLayer databaseLayer;
 		private Timer _t;
 
-		public TerminalService(string serviceName, DatabaseLayer databaseLayer)
+		public TerminalService(MyApplication app, DatabaseLayer databaseLayer)
 		{
 			this.databaseLayer = databaseLayer;
-			ServiceName = serviceName;
+			App = app;
 		}
 
 		public void Start()
@@ -37,7 +39,7 @@ namespace ServerApp.TerminalServices
 			Console.WriteLine($"TimeElapsed: {GetType()}");
 			CheckNewState(ActualState.ProcessTimerElapsed());
 		}
-		public string ServiceName { get; private set; }
+		public MyApplication App { get; private set; }
 
 		public IStateBase ActualState { get; set; }
 

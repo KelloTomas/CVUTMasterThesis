@@ -8,6 +8,7 @@ namespace DataLayer.Data
 		public bool IsRunning { get; set; }
 		public string TypeName { get; set; }
 		public string AppName { get; set; }
+        public ServingPlace ServingPlace { get; set; }
 		public List<Device> Devices { get; set; }
 	}
 }

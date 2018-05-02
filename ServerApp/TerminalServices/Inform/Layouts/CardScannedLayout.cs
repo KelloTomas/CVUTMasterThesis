@@ -5,9 +5,7 @@ using DataLayer.Data;
 
 namespace ServerApp.TerminalServices.Inform.Layouts
 {
-	/// <summary>
-	/// Obrazovka pre klienta, pouziva sa pri necinnosti s textom neprikladajte kartu, pripadne ak je prilozena neznama karta
-	/// </summary>
+	// obrazovka so zobrazenymi jedlami
 	public class CardScannedLayout : LayoutTimeBase
 	{
 

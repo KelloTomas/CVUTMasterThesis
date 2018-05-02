@@ -26,8 +26,7 @@
 		<TextBox Margin="20,0,20,0" Grid.Row="1" Grid.ColumnSpan="2"  x:Name="FirstName"
   materialDesign:HintAssist.Hint="Meno"
   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
-		<TextBox Margin="20,0,20,0" VerticalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" x:Name="LastName" materialDesign:HintAssist.Hint="Priezvisko"
-  Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
+		<TextBox Margin="20,0,20,0" VerticalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="2" x:Name="LastName" materialDesign:HintAssist.Hint="Priezvisko" Style="{StaticResource MaterialDesignFloatingHintTextBox}"/>
 		<TextBox Margin="20,0,20,0" VerticalAlignment="Center" Grid.Row="3" Grid.ColumnSpan="2" x:Name="Adress" materialDesign:HintAssist.Hint="Adresa"
   Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
 		<TextBox Margin="20,0,20,0" VerticalAlignment="Center" Grid.Row="4" Grid.ColumnSpan="2" x:Name="City" materialDesign:HintAssist.Hint="Mesto"

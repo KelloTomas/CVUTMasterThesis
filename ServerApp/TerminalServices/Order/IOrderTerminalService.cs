@@ -5,7 +5,7 @@ using System.Linq;
 namespace ServerApp.TerminalServices.Order
 {
 	public interface IOrderTerminalService : ITerminalService
-	{ 
-	
+	{
+
 	}
 }

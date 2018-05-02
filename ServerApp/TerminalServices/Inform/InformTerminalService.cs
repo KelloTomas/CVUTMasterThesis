@@ -17,7 +17,7 @@ namespace ServerApp.TerminalServices.Inform
 	{
         public Rallo Rallo {get; private set;}
 
-		public InformTerminalService(List<Device> devices, string appName, DatabaseLayer dbLayer) : base(appName, dbLayer)
+		public InformTerminalService(List<Device> devices, MyApplication app, DatabaseLayer dbLayer) : base(app, dbLayer)
 		{
             if (devices.Count != 1)
                 throw new ArgumentOutOfRangeException();

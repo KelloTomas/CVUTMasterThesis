@@ -6,13 +6,14 @@ using ServerApp.Devices.Actions;
 
 namespace ServerApp.TerminalServices.Shared.States
 {
-    public abstract class StateBase : IStateBase
-    {
+	// definovanie zakladnych funkcii stavu a preddefinovanych prechodov
+	public abstract class StateBase : IStateBase
+	{
 		int _timerPeriod;
-        public StateBase(int timerPeriod)
-        {
+		public StateBase(int timerPeriod)
+		{
 			_timerPeriod = timerPeriod;
-        }
+		}
 
 		public int TimeOut => _timerPeriod;
 
@@ -24,7 +25,7 @@ namespace ServerApp.TerminalServices.Shared.States
 		{
 		}
 
-
+		// na zaklade druhu akcie vyvola potrebnu obsluhu prilozenia karty alebo stlacenie tlacidla
 		public IStateBase ProcessAction(IAction action, ref bool forceCallStateMethod)
 		{
 			switch (action)
@@ -38,7 +39,8 @@ namespace ServerApp.TerminalServices.Shared.States
 					return this;
 			}
 		}
-		
+
+		// funkcie ktorych chovanie by mala prepisat trieda ktora od tejto dedi
 		public virtual IStateBase ProcessButtonClickAction(ButtonClickAction button, ref bool forceCallStateMethod)
 		{
 			Console.WriteLine("ProcessButtonClickQtEvenAction(): No Response");
@@ -52,8 +54,8 @@ namespace ServerApp.TerminalServices.Shared.States
 		}
 
 		public virtual IStateBase ProcessTimerElapsed()
-        {
-            return null;
-        }
-    }
+		{
+			return null;
+		}
+	}
 }

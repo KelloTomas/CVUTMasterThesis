@@ -43,7 +43,7 @@ namespace ServerApp.TerminalServices.Serve.Layouts
 		public IEnumerable<ModifyLayoutItem> SetMenu(Menu menu, Client client, string title)
 		{
 			yield return new ModifyLayoutItem(Labels.Title, "text", client.FullName);
-			yield return new ModifyLayoutItem(Labels.Balance, "text", client.Balance.ToString("F2"));
+			yield return new ModifyLayoutItem(Labels.Balance, "text", client.Balance.ToString("F2") + " Kč");
 			int i = 0;
 			foreach (var item in menu.Items)
 			{

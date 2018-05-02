@@ -6,14 +6,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AdminApp"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="SubAppDetailWindow" MinHeight="400" Height="400" Width="300">
     <Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition MinHeight="80" Height="80"/>
+			<RowDefinition MinHeight="60" Height="60"/>
 			<RowDefinition MinHeight="30" Height="30"/>
 			<RowDefinition MinHeight="30" Height="30"/>
-			<RowDefinition MinHeight="30" Height="30"/>
+            <RowDefinition MinHeight="30" Height="30"/>
+            <RowDefinition MinHeight="50" Height="50"/>
 			<RowDefinition MinHeight="80"/>
 			<RowDefinition MinHeight="30" Height="30"/>
 		</Grid.RowDefinitions>
@@ -21,15 +23,19 @@
 			<ColumnDefinition/>
 			<ColumnDefinition/>
 		</Grid.ColumnDefinitions>
-		<Label Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="0" Content="ID:" x:Name="AppTypeName"/>
+		<Label Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Grid.Row="0" Content="Type" x:Name="AppTypeName"/>
 		<Label Grid.Column="0" Grid.Row="1" Content="Id:"/>
-		<TextBox Grid.Column="1" Grid.Row="1" x:Name="AppId" IsReadOnly="True"/>
+		<TextBox Grid.Column="1" Grid.Row="1" x:Name="AppId" IsReadOnly="True" IsEnabled="False"/>
 		<Label Grid.Column="0" Grid.Row="2" Content="Is running:"/>
 		<CheckBox Grid.Row="2" Grid.Column="1" x:Name="AppIsRunning" />
 		<Label Grid.Row="3" Grid.Column="0" Content="Name"/>
 		<TextBox Grid.Row="3" Grid.Column="1"  x:Name="AppName"/>
-		<DataGrid Grid.Row="4" Grid.ColumnSpan="2" CanUserAddRows="False" x:Name="AppDevicesDataGrid" />
-		<Button Grid.Row="5" Grid.Column="0" Content="Uložiť" Click="SaveBtnClick"/>
-		<Button Grid.Row="5" Grid.Column="1" Content="Zrušiť" Click="CancelBtnClick"/>
+		<Label Grid.Row="3" Grid.Column="0" Content="Name"/>
+        <ComboBox IsEditable="True" Grid.Column="1" Grid.Row="4" VerticalContentAlignment="Center" x:Name="servingPlaceCombo" 
+  materialDesign:HintAssist.Hint="Výdajné miesto"
+  Style="{StaticResource MaterialDesignFloatingHintComboBox}"/>
+		<DataGrid Grid.Row="5" Grid.ColumnSpan="2" CanUserAddRows="False" x:Name="AppDevicesDataGrid" />
+		<Button Grid.Row="6" Grid.Column="0" Content="Uložiť" Click="SaveBtnClick"/>
+		<Button Grid.Row="6" Grid.Column="1" Content="Zrušiť" Click="CancelBtnClick"/>
 	</Grid>
 </Window>

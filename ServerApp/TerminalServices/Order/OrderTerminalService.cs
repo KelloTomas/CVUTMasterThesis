@@ -13,8 +13,9 @@ namespace ServerApp.TerminalServices.Order
 {
 	public class OrderTerminalService : TerminalService, IOrderTerminalService
 	{
+		// definicia automatu pre objednavanie
 		public Rallo Rallo { get; private set; }
-		public OrderTerminalService(List<Device> devices, string appName, DatabaseLayer dbLayer) : base(appName, dbLayer)
+		public OrderTerminalService(List<Device> devices, MyApplication app, DatabaseLayer dbLayer) : base(app, dbLayer)
 		{
 			if (devices.Count != 1)
 				throw new ArgumentOutOfRangeException();
@@ -24,8 +25,8 @@ namespace ServerApp.TerminalServices.Order
 		public OrdersLayout OrdersLayout { get; } = new OrdersLayout();
 		public MessageLayout MessageLayout { get; } = new MessageLayout();
 		public override IStateBase GetInitState()
-        {
-            return new OrderState(this);
+		{
+			return new OrderState(this);
 		}
 		public override IEnumerable<IStoreLayoutAction> GetStoreLayoutActions()
 		{

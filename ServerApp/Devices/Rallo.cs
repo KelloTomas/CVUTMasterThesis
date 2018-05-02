@@ -257,7 +257,7 @@ namespace ServerApp.Devices
 				case IModalWindowCloseAction a:
 					return new ModalWindowClosePacket();
 				default:
-					throw new ArgumentOutOfRangeException("type", action.GetType(), "Neznamy typ akce");
+					throw new ArgumentOutOfRangeException("type", action.GetType(), "Neznamy typ akcie");
 			}
 		}
 		#endregion

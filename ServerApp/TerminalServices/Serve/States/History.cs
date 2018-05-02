@@ -9,8 +9,8 @@ namespace ServerApp.TerminalServices.Serve.States
 	public class History : StateBase
 	{
 
-        #region private fields...
-        ServeTerminalService _app;
+		#region private fields...
+		ServeTerminalService _app;
 		private int _selected;
 		List<DataLayer.Data.Order> _orders;
 		#endregion
@@ -23,14 +23,16 @@ namespace ServerApp.TerminalServices.Serve.States
 		#endregion
 
 		public override void Enter()
-        {
-            base.Enter();
+		{
+			base.Enter();
+			// pri vstupe nacitam vydane objednavky a zobrazim
 			_orders = _app.databaseLayer.GetServedOrders(10).ToList();
 			ProcessTimerElapsed();
-        }
+		}
 
 		public override IStateBase ProcessTimerElapsed()
 		{
+			//obnova obrazovky klienta a obsluhy
 			_app.ClientDevice.SendMessage(new Message(
 					new List<IAction> {
 
@@ -39,7 +41,7 @@ namespace ServerApp.TerminalServices.Serve.States
 						_app.ClientTextLayout.Name,
 				_app.ClientTextLayout.SetDateTimeTo()
 				.Concat
-					(_app.ClientTextLayout.SetTexts(_app.ServiceName))
+					(_app.ClientTextLayout.SetTexts(_app.App.AppName))
 				.Concat
 					(_app.ClientTextLayout.SetContent("Nerikladajte kartu"))
 				.ToArray())
@@ -63,8 +65,17 @@ namespace ServerApp.TerminalServices.Serve.States
 		}
 		public override IStateBase ProcessButtonClickAction(ButtonClickAction button, ref bool forceCallStateMethod)
 		{
+			// obsluha stlacenia tlacidla
 			switch (button.ButtonName)
 			{
+				case HistoryLayout.Buttons.RemoveBtn:
+					_app.ServiceDevice.SendMessage(new Message(
+							new List<IAction> {
+
+						new ModalWindowShowAction("Určite si prajete vrátiť výdaj?", new ModalWindowButton[2] {new ModalWindowButton(){BtnId = "a", BtnText = "Ano" }, new ModalWindowButton(){ BtnId = "a", BtnText = "Nie" } })
+						}.ToArray()
+					));
+					break;
 				case HistoryLayout.Buttons.BackBtn:
 					return new Serving(_app);
 				case HistoryLayout.Buttons.PrevBtn:
@@ -74,6 +85,14 @@ namespace ServerApp.TerminalServices.Serve.States
 				case HistoryLayout.Buttons.NextBtn:
 					if (_selected < _orders.Count - 1)
 						_selected++;
+					break;
+				case "a":
+					_app.ServiceDevice.SendMessage(new Message(
+							new List<IAction> {
+
+						new ModalWindowCloseAction()
+						}.ToArray()
+					));
 					break;
 				default:
 					return base.ProcessButtonClickAction(button, ref forceCallStateMethod);

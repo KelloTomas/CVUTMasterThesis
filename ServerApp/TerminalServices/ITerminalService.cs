@@ -11,7 +11,7 @@ namespace ServerApp.TerminalServices
 		void ProcessAction(IAction action);
 
 		/// <summary>
-		/// Akce, ktera se maji provest pri inicializaci HW
+		/// Akcie, ktere sa vykonaju po pripojeni na terminal
 		/// </summary>
 		IEnumerable<IAction> InitActions { get; }
 		IStateBase ActualState { get; }

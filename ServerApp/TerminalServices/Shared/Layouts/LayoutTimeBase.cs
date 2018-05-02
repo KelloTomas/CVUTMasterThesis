@@ -6,9 +6,10 @@ namespace ServerApp.TerminalServices.Shared.Layouts
 {
 	public class LayoutTimeBase : LayoutBase
 	{
-        public LayoutTimeBase() : base()
+		public LayoutTimeBase() : base()
 		{
-        }
+		}
+		// funkcia na obnovu casu, pouzita vo vsetkych obrazovkach
 		public IEnumerable<ModifyLayoutItem> SetDateTimeTo()
 		{
 			return SetDateTimeTo(DateTime.Now);

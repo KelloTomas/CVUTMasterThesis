@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace ServerApp.TerminalServices.Serve.Layouts
 {
 	/// <summary>
-	/// Obrazovka z pohladu klienta pri zobrazeni jedla pripadne ak nema objednane jedlo ale ma dalsie objednavky
+	/// obrazovka obsluhy pocas vydaja
 	/// </summary>
 	public class ServingLayout : LayoutTimeBase
 	{

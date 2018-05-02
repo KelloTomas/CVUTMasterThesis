@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 using DataLayer.Data;
+using System.Linq;
 
 namespace DataLayer
 {
@@ -10,6 +11,8 @@ namespace DataLayer
         private const bool _useStoredProcedure = false;
 #pragma warning disable IDE1006 // Naming Styles
         private readonly string CONNECTION_STRING;// = "Data Source=DESKTOP-M5V50NA;Initial Catalog=CVUTdb;Persist Security Info=True;User ID=sa;Password=root";
+        private bool _isOffline = false;
+        private Random random = new Random();
 #pragma warning restore IDE1006 // Naming Styles
 
         public DatabaseLayer()
@@ -37,6 +40,19 @@ namespace DataLayer
 #pragma warning restore CS0162 // Unreachable code detected
             }
             CONNECTION_STRING = builder.ToString();
+
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
+                {
+                    connection.Open();
+                    connection.Close();
+                }
+            }
+            catch (Exception)
+            {
+                _isOffline = true;
+            }
         }
 
         #region private methods...
@@ -58,6 +74,8 @@ namespace DataLayer
         #region public methods...
         public void ServeOrder(Order o)
         {
+            if (_isOffline)
+                return;
             using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
             {
                 connection.Open();
@@ -76,6 +94,8 @@ namespace DataLayer
         }
         public Menu ServeOrder(int clientId)
         {
+            if (_isOffline)
+                return new Menu();
             using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
             {
                 connection.Open();
@@ -127,23 +147,38 @@ namespace DataLayer
             }
             return null;
         }
-        public IEnumerable<MenuItem> GetTable(MenuItem menuItem)
+        public IEnumerable<MenuItem> Get(object obj)
         {
+            if (_isOffline)
+            {
+
+
+                yield return new MenuItem()
+                {
+                    Id = random.Next(1, 10),
+                    Name = $"Meno{random.Next(1, 100)}",
+                    Description = $"Opis{random.Next(1, 100)}",
+                };
+                yield break;
+            }
             using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
             {
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    switch (menuItem)
+                    switch (obj)
                     {
-                        case Soup order:
-                            command.CommandText = $"select idsoup id, name, description from soups";
+                        case Soup s:
+                            command.CommandText = $"select * from soups where deleted = '0'";
                             break;
-                        case Meal menu:
-                            command.CommandText = $"select idmeal id, name, description from meals";
+                        case Meal m:
+                            command.CommandText = $"select * from meals where deleted = '0'";
                             break;
                         case Desert d:
-                            command.CommandText = $"select iddesert id, name, description from deserts";
+                            command.CommandText = $"select * from deserts where deleted = '0'";
+                            break;
+                        case ServingPlace d:
+                            command.CommandText = $"select *, '' as Description from servingplaces";
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -153,25 +188,28 @@ namespace DataLayer
                     {
                         while (reader.Read())
                         {
-                            yield return new MenuItem()
-                            {
-                                Id = reader.GetInt32(0),
-                                Name = reader.GetString(1),
-                                Description = reader.GetString(2)
-                            };
+                            MenuItem i = (MenuItem)Activator.CreateInstance(obj.GetType());
+                            i.Id = reader.GetInt32(0);
+                            i.Name = reader.GetString(1);
+                            i.Description = reader.GetString(2);
+                            yield return i;
                         }
                     }
                 }
             }
+            yield break;
         }
         public void UpdateSubApp(MyApplication app)
         {
+            if (_isOffline)
+                return;
             using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
             {
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = $"update applications set isrunning = {app.IsRunning}, applications.name = '{app.AppName}' where idapplication = {app.Id}";
+                    command.CommandText = $"update applications set isrunning = {app.IsRunning}, applications.name = '{app.AppName}', IdServingPlace = '{app.ServingPlace?.Id}'  where idapplication = {app.Id}";
+                    command.CommandText = command.CommandText.Replace("''", "null");
                     command.CommandType = System.Data.CommandType.Text;
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
@@ -198,30 +236,40 @@ namespace DataLayer
         }
         public IEnumerable<MyApplication> GetSubApps()
         {
+            if (_isOffline)
+                return new MyApplication[] { GetRandomMyApp() };
             List<MyApplication> apps = new List<MyApplication>();
             using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
             {
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = "select idapplication id, isrunning, applicationtype.name typename, apps.name appname from applications apps join applicationtype on apps.idapplicationtype = applicationtype.idapplicationtype";
+                    command.CommandText = "select idapplication o0, isrunning o1, applicationtype.name o2, apps.name o3, servingplaces.id o4, servingplaces.Name o5 from applications apps join applicationtype on apps.idapplicationtype = applicationtype.idapplicationtype left join servingplaces on IdServingPlace = servingplaces.id";
                     command.CommandType = System.Data.CommandType.Text;
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            apps.Add(new MyApplication
+                            var app = new MyApplication
                             {
                                 Id = reader.GetInt32(0),
                                 IsRunning = reader.GetBoolean(1),
                                 TypeName = reader.GetString(2),
                                 AppName = reader.GetString(3),
-                                Devices = new List<Device>()
-                            });
+                                Devices = new List<Device>(),
+                            };
+                            if (!reader.IsDBNull(4))
+                            {
+                                app.ServingPlace = new ServingPlace()
+                                {
+                                    Id = reader.GetInt32(4),
+                                    Name = reader.GetString(5),
+                                };
+                            }
+                            apps.Add(app);
                         }
                     }
                 }
-
                 foreach (var app in apps)
                 {
 
@@ -249,6 +297,8 @@ namespace DataLayer
 
         public IEnumerable<Menu> GetMenu(DateTime? forDate = null)
         {
+            if (_isOffline)
+                yield break;
             if (forDate == null)
                 forDate = DateTime.Now.Date;
             using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
@@ -256,8 +306,7 @@ namespace DataLayer
                 connection.Open();
                 using (MySqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandType = System.Data.CommandType.Text;
-                    command.CommandText = $"select fordate, idmenu, soups.idsoup, soups.name soupname, meals.idmeal, meals.name mealname, deserts.iddesert, deserts.name desertname, price from menu left join soups on menu.idsoup = soups.idsoup left join meals on menu.idmeal = meals.idmeal left join deserts on menu.iddesert = deserts.iddesert where fordate >= '{forDate?.ToString("yyyy-MM-dd")}'";
+                    command.CommandText = $"select fordate, idmenu, soups.idsoup, soups.name soupname, meals.idmeal, meals.name mealname, deserts.iddesert, deserts.name desertname, price, servingplaces.name from menu left join soups on menu.idsoup = soups.idsoup left join meals on menu.idmeal = meals.idmeal left join deserts on menu.iddesert = deserts.iddesert left join servingplaces on menu.idservingplace = servingplaces.id where fordate >= '{forDate?.ToString("yyyy-MM-dd")}' and menu.deleted = 0";
                     command.CommandType = System.Data.CommandType.Text;
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
@@ -275,6 +324,8 @@ namespace DataLayer
                                 menu.Items[1] = new MenuItem { Id = reader.GetInt32(4), Name = reader.GetString(5) };
                             if (!reader.IsDBNull(6))
                                 menu.Items[2] = new MenuItem { Id = reader.GetInt32(6), Name = reader.GetString(7) };
+                            menu.ServingPlace = new ServingPlace { Name = reader.GetString(9) };
+
                             yield return menu;
                         }
                     }
@@ -283,6 +334,8 @@ namespace DataLayer
         }
         public IEnumerable<Menu> GetMenu(Client forClient)
         {
+            if (_isOffline)
+                yield break;
             if (forClient == null)
                 yield break;
             using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
@@ -313,6 +366,8 @@ namespace DataLayer
 
         public void Add(Object o)
         {
+            if (_isOffline)
+                return;
             using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
             {
                 connection.Open();
@@ -324,7 +379,7 @@ namespace DataLayer
                             command.CommandText = $"INSERT INTO orders (fordate, idmenu, idclient, vydane) VALUES('{order.ForDate.ToString("yyyy-MM-dd")}', {order.IdMenu}, {order.Client.Id}, null)";
                             break;
                         case Menu menu:
-                            command.CommandText = $"INSERT INTO menu (fordate, idsoup, idmeal, iddesert, price) VALUES('{menu.ForDate.ToString("yyyy-MM-dd")}', '{menu.Items[0]?.Id}', '{menu.Items[1]?.Id}', '{menu.Items[2]?.Id}', {menu.Price})";
+                            command.CommandText = $"INSERT INTO menu (fordate, idsoup, idmeal, iddesert, price, idservingplace) VALUES('{menu.ForDate.ToString("yyyy-MM-dd")}', '{menu.Items[0]?.Id}', '{menu.Items[1]?.Id}', '{menu.Items[2]?.Id}', {menu.Price}, {menu.ServingPlace.Id})";
                             command.CommandText = command.CommandText.Replace("''", "null");
                             break;
                         case Client c:
@@ -369,6 +424,8 @@ namespace DataLayer
 
         public void RemoveFromDatabase(object obj)
         {
+            if (_isOffline)
+                return;
             string xmlResult = "";
             using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
             {
@@ -381,10 +438,19 @@ namespace DataLayer
                             command.CommandText = $"DELETE FROM Orders WHERE IdOrder = {order.IdOrder}";
                             break;
                         case Menu menu:
-                            command.CommandText = $"DELETE FROM Menu WHERE IdMenu = {menu.IdMenu}";
+                            command.CommandText = $"UPDATE menu set deleted = 1 WHERE IdMenu = {menu.IdMenu}";
                             break;
                         case Client client:
                             command.CommandText = $"DELETE FROM Clients WHERE IdClient = {client.Id}";
+                            break;
+                        case Soup soup:
+                            command.CommandText = $"UPDATE soups set deleted = 1 WHERE Idsoup = {soup.Id}";
+                            break;
+                        case Meal meal:
+                            command.CommandText = $"UPDATE meals set deleted = 1 WHERE Idmeal = {meal.Id}";
+                            break;
+                        case Desert desert:
+                            command.CommandText = $"UPDATE deserts set deleted = 1 WHERE Iddesert = {desert.Id}";
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -404,6 +470,8 @@ namespace DataLayer
 
         public Client GetClient(string cardNumber)
         {
+            if (_isOffline)
+                return GetRandomClient();
             using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
             {
                 connection.Open();
@@ -424,6 +492,11 @@ namespace DataLayer
         }
         public IEnumerable<Client> GetClients()
         {
+            if (_isOffline)
+            {
+                yield return GetRandomClient();
+                yield break;
+            }
             using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
             {
                 connection.Open();
@@ -443,6 +516,11 @@ namespace DataLayer
         }
         public IEnumerable<Order> GetServedOrders(int count)
         {
+            if (_isOffline)
+            {
+                yield return GetRandomOrder();
+                yield break;
+            }
             using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
             {
                 connection.Open();
@@ -459,7 +537,7 @@ namespace DataLayer
                     else
                     {
                         command.CommandType = System.Data.CommandType.Text;
-                        command.CommandText = $"select orders.idorder, orders.vydane, clients.idclient, clients.lastname, clients.firstname, soups.*, meals.*, deserts.* from orders left join clients on orders.idclient = clients.idclient left join menu on orders.idmenu = menu.idmenu left join soups on menu.idsoup = soups.idsoup left join meals on menu.idmeal = meals.idmeal left join deserts on menu.iddesert = deserts.iddesert where vydane is not null order by vydane desc limit {count}";
+                        command.CommandText = $"select orders.idorder, orders.vydane, clients.idclient, clients.lastname, clients.firstname, Soups.idsoup, Soups.name, soups.description, Meals.idmeal, Meals.name, Meals.description, Deserts.Iddesert, Deserts.name, Deserts.description from orders left join clients on orders.idclient = clients.idclient left join menu on orders.idmenu = menu.idmenu left join soups on menu.idsoup = soups.idsoup left join meals on menu.idmeal = meals.idmeal left join deserts on menu.iddesert = deserts.iddesert where vydane is not null order by vydane desc limit {count}";
                     }
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
@@ -476,24 +554,27 @@ namespace DataLayer
                                     FirstName = reader.GetString(4),
                                 }
                             };
-                            o.Items[0] = new MenuItem()
-                            {
-                                Id = reader.GetInt32(5),
-                                Name = reader.GetString(6),
-                                Description = reader.GetString(7),
-                            };
-                            o.Items[1] = new MenuItem()
-                            {
-                                Id = reader.GetInt32(8),
-                                Name = reader.GetString(9),
-                                Description = reader.GetString(10),
-                            };
-                            o.Items[2] = new MenuItem()
-                            {
-                                Id = reader.GetInt32(11),
-                                Name = reader.GetString(12),
-                                Description = reader.GetString(13),
-                            };
+                            if (!reader.IsDBNull(5))
+                                o.Items[0] = new MenuItem()
+                                {
+                                    Id = reader.GetInt32(5),
+                                    Name = reader.GetString(6),
+                                    Description = reader.GetString(7),
+                                };
+                            if (!reader.IsDBNull(8))
+                                o.Items[1] = new MenuItem()
+                                {
+                                    Id = reader.GetInt32(8),
+                                    Name = reader.GetString(9),
+                                    Description = reader.GetString(10),
+                                };
+                            if (!reader.IsDBNull(11))
+                                o.Items[2] = new MenuItem()
+                                {
+                                    Id = reader.GetInt32(11),
+                                    Name = reader.GetString(12),
+                                    Description = reader.GetString(13),
+                                };
                             yield return o;
                         }
                     }
@@ -502,6 +583,8 @@ namespace DataLayer
         }
         public Client GetOrders(string cardNumber)
         {
+            if (_isOffline)
+                return GetRandomClient();
             Client c = GetClient(cardNumber);
             if (c == null)
                 return null;
@@ -526,9 +609,12 @@ namespace DataLayer
                                 Served = reader.IsDBNull(3) ? (DateTime?)null : reader.GetDateTime(3),
                             };
 
-                            o.Items[0] = new MenuItem { Name = reader.GetString(4) };
-                            o.Items[1] = new MenuItem { Name = reader.GetString(5) };
-                            o.Items[2] = new MenuItem { Name = reader.GetString(6) };
+                            if (!reader.IsDBNull(4))
+                                o.Items[0] = new MenuItem { Name = reader.GetString(4) };
+                            if (!reader.IsDBNull(5))
+                                o.Items[1] = new MenuItem { Name = reader.GetString(5) };
+                            if (!reader.IsDBNull(6))
+                                o.Items[2] = new MenuItem { Name = reader.GetString(6) };
                             c.Orders.Add(o);
                         }
                     }
@@ -536,45 +622,15 @@ namespace DataLayer
             }
             return c;
         }
-        public IEnumerable<MenuItem> Get(object obj)
-        {
-            using (MySqlConnection connection = new MySqlConnection(CONNECTION_STRING))
-            {
-                connection.Open();
-                using (MySqlCommand command = connection.CreateCommand())
-                {
-                    switch (obj)
-                    {
-                        case Soup s:
-                            command.CommandText = $"select * from soups";
-                            break;
-                        case Meal m:
-                            command.CommandText = $"select * from meals";
-                            break;
-                        case Desert d:
-                            command.CommandText = $"select * from deserts";
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-                    command.CommandType = System.Data.CommandType.Text;
-                    using (MySqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            MenuItem i = (MenuItem)Activator.CreateInstance(obj.GetType());
-                            i.Id = reader.GetInt32(0);
-                            i.Name = reader.GetString(1);
-                            i.Description = reader.GetString(2);
-                            yield return i;
-                        }
-                    }
-                }
-            }
-            yield break;
-        }
         public (bool, string) CreateOrder(Client client, Menu menu)
         {
+            if (_isOffline)
+            {
+                if (random.Next(0, 1) == 0)
+                    return (true, "Objednané");
+                else
+                    return (true, "Nedostatok penazí na účte");
+            }
             if (client.Balance >= menu.Price)
             {
                 var o = new Order { Client = client, ForDate = menu.ForDate, IdMenu = menu.IdMenu };
@@ -586,6 +642,65 @@ namespace DataLayer
                 return (false, "Nedostatok penazí na účte");
 
             }
+        }
+        #endregion
+        #region OfflineRandomFunctions
+
+        private Client GetRandomClient(bool setOrders = true)
+        {
+            var c = new Client() { FirstName = "Ondrej", LastName = "Testovaci", Balance = (float)random.NextDouble() * 500, Id = random.Next(1, 10), CardNumber = "123" };
+            if (setOrders)
+            {
+                c.Orders = new Order[] { GetRandomOrder() }.ToList();
+            }
+            return c;
+        }
+        private ServingPlace GetRandomServingPlace()
+        {
+            return new ServingPlace()
+            {
+                Id = random.Next(1, 10),
+                Name = "Testovna",
+                Description = String.Empty,
+            };
+        }
+        private MyApplication GetRandomMyApp()
+        {
+            return new MyApplication()
+            {
+                Id = random.Next(1, 10),
+                AppName = $"Meno{random.Next(1, 10)}",
+                IsRunning = random.Next(1, 2) == 1,
+                ServingPlace = GetRandomServingPlace(),
+                TypeName = $"Typ{random.Next(1, 10)}",
+                Devices = new Device[]
+                            {
+                                new Device()
+                                    {
+                                        IdDevice = random.Next(1, 10),
+                                        IP = $"{random.Next(1, 255)}.{random.Next(1, 255)}.{random.Next(1, 255)}.{random.Next(1, 255)}",
+                                        Port = random.Next(1, 255),
+                                    }
+                            }.ToList()
+            };
+        }
+        private Order GetRandomOrder()
+        {
+            return new Order()
+            {
+                ForDate = DateTime.Now,
+                IdMenu = random.Next(1, 10),
+                IdOrder = random.Next(1, 10),
+                Client = GetRandomClient(false),
+                Price = (float)random.NextDouble() * 10,
+                ServingPlace = GetRandomServingPlace(),
+                Items = new MenuItem[]
+                {
+                    new MenuItem() { Id = random.Next(1, 10), Name = $"Test{random.Next(1,100)}", Description = $"Desc{random.Next(1,100)}" },
+                    new MenuItem() { Id = random.Next(1, 10), Name = $"Test{random.Next(1,100)}", Description = $"Desc{random.Next(1,100)}" },
+                    new MenuItem() { Id = random.Next(1, 10), Name = $"Test{random.Next(1,100)}", Description = $"Desc{random.Next(1,100)}" },
+                },
+            };
         }
         #endregion
     }

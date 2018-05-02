@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace ServerApp.TerminalServices.Serve.Layouts
 {
 	/// <summary>
-	/// Obrazovka z pohladu klienta pri zobrazeni jedla pripadne ak nema objednane jedlo ale ma dalsie objednavky
+	/// Obrazovka obsluhy pred zahajenim vydaja
 	/// </summary>
 	public class SetServingLayout : LayoutTimeBase
 	{
@@ -66,7 +66,7 @@ namespace ServerApp.TerminalServices.Serve.Layouts
 			{
 				yield return new ModifyLayoutItem(Buttons.PrevBtn, "enabled", true.ToString());
 			}
-			if (page >= pageCount-1)
+			if (page >= pageCount - 1)
 			{
 				yield return new ModifyLayoutItem(Buttons.NextBtn, "enabled", false.ToString());
 			}

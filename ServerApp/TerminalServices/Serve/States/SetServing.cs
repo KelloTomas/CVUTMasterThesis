@@ -39,7 +39,7 @@ namespace ServerApp.TerminalServices.Serve.States
 						_app.ClientTextLayout.Name,
 				_app.ClientTextLayout.SetDateTimeTo()
 				.Concat
-					(_app.ClientTextLayout.SetTexts(_app.ServiceName))
+					(_app.ClientTextLayout.SetTexts(_app.App.AppName))
 				.Concat
 					(_app.ClientTextLayout.SetContent("Nerikladajte kartu"))
 				.ToArray())
@@ -53,7 +53,7 @@ namespace ServerApp.TerminalServices.Serve.States
 						_app.SetServingLayout.Name,
 				_app.ClientTextLayout.SetDateTimeTo()
 				.Concat
-					(_app.SetServingLayout.SetTitle(_app.ServiceName))
+					(_app.SetServingLayout.SetTitle(_app.App.AppName))
 				.Concat
 					(_app.SetServingLayout.SetMeal(_menu.Any()?_menu.ElementAt(_selected):null))
 				.Concat
@@ -67,14 +67,17 @@ namespace ServerApp.TerminalServices.Serve.States
 		{
 			switch (button.ButtonName)
 			{
+				//zahajenie vydaja
 				case SetServingLayout.Buttons.StartBtn:
 					return new Serving(_app);
+
+				//prechod medzi obrazovkami
 				case SetServingLayout.Buttons.PrevBtn:
 					if (_selected != 0)
 						_selected--;
 					break;
 				case SetServingLayout.Buttons.NextBtn:
-					if (_selected < _menu.Count-1)
+					if (_selected < _menu.Count - 1)
 						_selected++;
 					break;
 				default:

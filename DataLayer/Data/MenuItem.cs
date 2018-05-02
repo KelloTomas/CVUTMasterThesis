@@ -8,6 +8,8 @@
 
 		public override string ToString()
 		{
+            if (string.IsNullOrWhiteSpace(Description))
+                return Name;
 			return $"{Name}: {Description}";
 		}
 	}

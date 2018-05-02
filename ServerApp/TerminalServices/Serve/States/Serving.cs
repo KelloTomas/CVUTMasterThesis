@@ -18,7 +18,7 @@ namespace ServerApp.TerminalServices.Serve.States
 
 		#region private fields...
 		ServeTerminalService _app;
-		string _msgConst = "Prilozte kartu";
+		string _msgConst = "Priložte kartu";
 		string _msg;
 		Client _client;
 		#endregion
@@ -45,7 +45,7 @@ namespace ServerApp.TerminalServices.Serve.States
 						_app.ClientTextLayout.Name,
 				_app.ClientTextLayout.SetDateTimeTo()
 				.Concat
-					(_app.ClientTextLayout.SetTexts("Prebieha vydaj"))
+					(_app.ClientTextLayout.SetTexts("Prebieha výdaj"))
 				.Concat
 					(_app.ClientTextLayout.SetContent(_msg))
 				.ToArray())
@@ -59,7 +59,7 @@ namespace ServerApp.TerminalServices.Serve.States
 						_app.ServingLayout.Name,
 				_app.ServingLayout.SetDateTimeTo()
 				.Concat
-					(_app.ServingLayout.SetMenu(null, _client, _msg == _msgConst?_app.ServiceName:_msg))
+					(_app.ServingLayout.SetMenu(null, _client, _msg == _msgConst?_app.App.AppName:_msg))
 				.ToArray())
 				}.ToArray()
 			));
@@ -70,6 +70,7 @@ namespace ServerApp.TerminalServices.Serve.States
 
 		public override IStateBase ProcessCardReadAction(CardReadAction card, ref bool forceCallStateMethod)
 		{
+			// spracovanie prilozenej karty
 			_client = _app.databaseLayer.GetClient(card.CardNumber);
 			if (_client != null)
 			{
@@ -79,17 +80,18 @@ namespace ServerApp.TerminalServices.Serve.States
 					return new Served(_app, m, _client);
 				}
 				else
-					_msg = "Nemate ziadne objednavky";
+					_msg = "Nemáte žiadne objednávky";
 			}
 			else
 			{
-				_msg = "Neznama karta";
+				_msg = "Neznáma karta";
 			}
 			forceCallStateMethod = true;
 			return this;
 		}
 		public override IStateBase ProcessButtonClickAction(ButtonClickAction button, ref bool forceCallStateMethod)
 		{
+			// prechody na zaklade stlaceneho tlacidla
 			switch (button.ButtonName)
 			{
 				case ServingLayout.Buttons.StopBtn:

@@ -15,8 +15,8 @@ namespace ServerApp.TerminalServices.Serve.States
 	public class Served : StateBase
 	{
 
-        #region private fields...
-        ServeTerminalService _app;
+		#region private fields...
+		ServeTerminalService _app;
 		private readonly Menu _menu;
 		private readonly Client _client;
 		#endregion
@@ -30,10 +30,10 @@ namespace ServerApp.TerminalServices.Serve.States
 		}
 		#endregion
 		public override void Enter()
-        {
-            base.Enter();
+		{
+			base.Enter();
 			ProcessTimerElapsed();
-        }
+		}
 
 
 		public override IStateBase ProcessTimerElapsed()

@@ -12,7 +12,7 @@ namespace AdminApp
 	/// <summary>
 	/// Interaction logic for MenuPage.xaml
 	/// </summary>
-	public partial class ClientsPage : Page
+	public partial class ClientsPage
 	{
 		private readonly DatabaseLayer _db;
 		private readonly Window _owner;

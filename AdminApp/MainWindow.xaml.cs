@@ -23,25 +23,15 @@ namespace AdminApp
 	public partial class MainWindow : Window
 	{
 		private DatabaseLayer _db;
-		private bool _isPageShown = false;
 		public MainWindow()
 		{
 			InitializeComponent();
-			frame.Navigated += Frame_Navigated;
 			_db = new DatabaseLayer();
-		}
-		void Frame_Navigated(object sender, NavigationEventArgs e)
-		{
-			if (_isPageShown)
-				CanteenPic.Visibility = Visibility.Collapsed;
-			else
-				CanteenPic.Visibility = Visibility.Visible;
-			frame.NavigationService.RemoveBackEntry();
+			SetSelected("Close");
 		}
 
 		private void SetSelected(string name)
 		{
-			_isPageShown = true;
 			App.IsEnabled = true;
 			Client.IsEnabled = true;
 			Menu.IsEnabled = true;
@@ -53,90 +43,48 @@ namespace AdminApp
 			switch (name)
 			{
 				case "App":
+					frame.Content = new SubAppsPage(this, _db);
 					App.IsEnabled = false;
 					break;
 				case "Client":
+					frame.Content = (new ClientsPage(this, _db));
 					Client.IsEnabled = false;
 					break;
 				case "Menu":
+					frame.Content = (new MenuPage(this, _db));
 					Menu.IsEnabled = false;
 					break;
 				case "Order":
+					frame.Content = (new OrdersPage(this, _db));
 					Order.IsEnabled = false;
 					break;
 				case "Soups":
+					frame.Content = (new MenuItemPage(this, _db, new Soup()));
 					Soups.IsEnabled = false;
 					break;
 				case "Meals":
+					frame.Content = (new MenuItemPage(this, _db, new Meal()));
 					Meals.IsEnabled = false;
 					break;
 				case "Deserts":
+					frame.Content = (new MenuItemPage(this, _db, new Desert()));
 					Deserts.IsEnabled = false;
 					break;
 				case "TerminalService":
+					frame.Content = (new TerminalServicePage(this, _db));
 					TerminalService.IsEnabled = false;
 					break;
-				default:
-					_isPageShown = false;
-					break;
-
-			}
-		}
-
-		private void ApplicationButtonClick(object sender, RoutedEventArgs e)
-		{
-			SetSelected(((Button)e.Source).Name);
-			frame.Navigate(new SubAppsPage(this, _db));
-		}
-
-
-		private void ClientsButtonClick(object sender, RoutedEventArgs e)
-		{
-			SetSelected(((Button)e.Source).Name);
-			frame.Navigate(new ClientsPage(this, _db));
-		}
-
-		private void ListMenuButtonClick(object sender, RoutedEventArgs e)
-		{
-			SetSelected(((Button)e.Source).Name);
-			frame.Navigate(new MenuPage(this, _db));
-		}
-
-		private void OrdersButtonClick(object sender, RoutedEventArgs e)
-		{
-			SetSelected(((Button)e.Source).Name);
-			frame.Navigate(new OrdersPage(this, _db));
-		}
-
-		private void MenuItemButtonClick(object sender, RoutedEventArgs e)
-		{
-			SetSelected(((Button)e.Source).Name);
-			switch (((Button)e.Source).Name)
-			{
-				case "Soups":
-					frame.Navigate(new MenuItemPage(this, _db, new Soup()));
-					break;
-				case "Meals":
-					frame.Navigate(new MenuItemPage(this, _db, new Meal()));
-					break;
-				case "Deserts":
-					frame.Navigate(new MenuItemPage(this, _db, new Desert()));
+				case "Close":
+					frame.Content = new StartPage();
 					break;
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
 		}
 
-		private void Close_Click(object sender, RoutedEventArgs e)
-		{
-			frame.Content = null;
-			SetSelected(null);
-		}
-
-		private void TerminalService_Click(object sender, RoutedEventArgs e)
+		private void MenuButtonClick(object sender, RoutedEventArgs e)
 		{
 			SetSelected(((Button)e.Source).Name);
-			frame.Navigate(new TerminalServicePage(this, _db));
 		}
 	}
 }

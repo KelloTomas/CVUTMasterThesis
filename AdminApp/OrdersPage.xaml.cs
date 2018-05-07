@@ -10,7 +10,7 @@ namespace AdminApp
     /// <summary>
     /// Interaction logic for MenuPage.xaml
     /// </summary>
-    public partial class OrdersPage : Page
+    public partial class OrdersPage
     {
         private readonly DatabaseLayer _db;
         private Client _forClient;

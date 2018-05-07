@@ -20,7 +20,7 @@ namespace AdminApp
 	/// <summary>
 	/// Interaction logic for SubAppsPage.xaml
 	/// </summary>
-	public partial class SubAppsPage : Page
+	public partial class SubAppsPage
 	{
 		private readonly DatabaseLayer db;
         private readonly Window _owner;

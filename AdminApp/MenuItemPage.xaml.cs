@@ -9,7 +9,7 @@ namespace AdminApp
 	/// <summary>
 	/// Interaction logic for MenuPage.xaml
 	/// </summary>
-	public partial class MenuItemPage : System.Windows.Controls.Page
+	public partial class MenuItemPage
 	{
 		private readonly DatabaseLayer _db;
 		private readonly Window _owner;

@@ -29,7 +29,7 @@ namespace ServerApp.TerminalServices.Order.States
 		#endregion
 
 		#region constructors...
-		public OrderState(OrderTerminalService subApp) : base(3000)
+		public OrderState(OrderTerminalService subApp) : base(subApp, 3000)
 		{
 			_app = subApp;
 		}
@@ -69,7 +69,7 @@ namespace ServerApp.TerminalServices.Order.States
 						.Concat
 							(ordersLayout.SetDate(_dateToOrder, _menu.Where(m => m.ForDate > _dateToOrder).Any()))
 						.Concat
-							(ordersLayout.SetMeals(_menuOnScreen, _pageNum, _selected.HasValue ? _selected.GetValueOrDefault() % _app.OrdersLayout.MEALS_PER_PAGE : _selected))
+							(ordersLayout.SetMeals(_menuOnScreen, _pageNum, _selected))
 						.ToArray())
 					};
 					break;

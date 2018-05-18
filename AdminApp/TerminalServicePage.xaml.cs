@@ -42,7 +42,7 @@ namespace AdminApp
                 case SubApp.FileZilla:
                     if (string.IsNullOrWhiteSpace(FieldData.Text))
                     {
-                        FieldData.Text = "C://";
+                        FieldData.Text = "D:\\instalacky\\portable programy";
                         break;
                     }
                     terminalService.Start(selected, FieldData.Text);

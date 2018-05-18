@@ -16,7 +16,7 @@ namespace ServerApp.TerminalServices.Serve.States
 		#endregion
 
 		#region constructors...
-		public History(ServeTerminalService subApp) : base(6000)
+		public History(ServeTerminalService subApp) : base(subApp, 6000)
 		{
 			_app = subApp;
 		}

@@ -22,7 +22,7 @@ namespace ServerApp.TerminalServices.Serve.States
 		#endregion
 
 		#region constructors...
-		public Served(ServeTerminalService subApp, Menu menu, Client client) : base(6000)
+		public Served(ServeTerminalService subApp, Menu menu, Client client) : base(subApp, 6000)
 		{
 			_app = subApp;
 			_menu = menu;

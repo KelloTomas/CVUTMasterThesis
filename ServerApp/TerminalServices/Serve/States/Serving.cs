@@ -24,7 +24,7 @@ namespace ServerApp.TerminalServices.Serve.States
 		#endregion
 
 		#region constructors...
-		public Serving(ServeTerminalService subApp) : base(3000)
+		public Serving(ServeTerminalService subApp) : base(subApp, 3000)
 		{
 			_app = subApp;
 			_msg = _msgConst;

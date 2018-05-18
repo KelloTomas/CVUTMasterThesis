@@ -2,9 +2,9 @@ CREATE DATABASE  IF NOT EXISTS `cvutdb` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `cvutdb`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: cvutdb
+-- Host: 194.182.82.153    Database: cvutdb
 -- ------------------------------------------------------
--- Server version	5.7.21-log
+-- Server version	5.7.22-0ubuntu0.16.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -150,7 +150,7 @@ CREATE TABLE `devices` (
 
 LOCK TABLES `devices` WRITE;
 /*!40000 ALTER TABLE `devices` DISABLE KEYS */;
-INSERT INTO `devices` VALUES (0,0,'127.0.0.1',15000),(1,1,'127.0.0.1',15001),(2,2,'127.0.0.1',15003),(3,2,'127.0.0.1',15004);
+INSERT INTO `devices` VALUES (0,0,'10.143.16.222',15000),(1,1,'10.143.16.221',15000),(2,2,'127.0.0.1',15003),(3,2,'127.0.0.1',15004);
 /*!40000 ALTER TABLE `devices` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,7 +207,7 @@ CREATE TABLE `menu` (
   CONSTRAINT `IdMeal` FOREIGN KEY (`IdMeal`) REFERENCES `meals` (`IdMeal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `IdServingPlace` FOREIGN KEY (`IdServingPlace`) REFERENCES `servingplaces` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `IdSoup` FOREIGN KEY (`IdSoup`) REFERENCES `soups` (`IdSoup`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -216,7 +216,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES ('2018-04-22',1,1,1,1,2,1,'\0'),('2018-04-22',2,3,2,2,1,1,'\0'),('2018-04-23',3,1,1,1,5,1,'\0'),('2018-04-23',4,2,2,1,3,1,'\0'),('2018-04-23',5,1,1,1,4,1,'\0'),('2018-04-23',6,1,2,1,5,1,'\0'),('2018-04-23',7,2,1,1,6,1,'\0'),('2018-04-23',8,1,1,1,1,1,'\0'),('2018-04-23',9,1,2,1,2,1,'\0'),('2018-04-23',10,1,1,2,3,1,'\0'),('2018-04-23',11,2,1,1,4,1,'\0'),('2018-04-23',12,1,1,2,6,1,'\0'),('2018-04-24',13,2,1,1,7,1,'\0'),('2018-04-24',14,1,1,2,6,1,'\0'),('2018-04-23',15,1,1,2,5,1,'\0'),('2018-04-23',16,1,1,1,855,1,'\0'),('2018-04-30',17,NULL,1,NULL,11,1,'\0'),('2018-04-30',18,NULL,3,NULL,2,1,'\0'),('2018-04-30',19,1,NULL,2,3,1,'\0'),('2018-04-30',20,1,1,1,4,1,'\0'),('2018-04-30',21,1,NULL,3,5,1,'\0'),('2018-04-30',22,NULL,NULL,3,8,1,'\0'),('2018-05-01',24,NULL,1,1,8,1,'\0'),('2018-05-01',25,1,1,NULL,4,1,'\0'),('2018-05-01',26,NULL,3,NULL,3,1,'\0'),('2018-05-02',27,1,1,NULL,5,2,'\0'),('2018-05-02',28,2,NULL,3,7,1,'\0'),('2018-05-02',29,1,1,1,0,2,'\0'),('2018-05-02',30,1,1,1,0,1,'\0'),('2018-05-03',31,1,1,1,0,1,'\0');
+INSERT INTO `menu` VALUES ('2018-04-22',1,1,1,1,2,1,'\0'),('2018-04-22',2,3,2,2,1,1,'\0'),('2018-04-23',3,1,1,1,5,1,'\0'),('2018-04-23',4,2,2,1,3,1,'\0'),('2018-04-23',5,1,1,1,4,1,'\0'),('2018-04-23',6,1,2,1,5,1,'\0'),('2018-04-23',7,2,1,1,6,1,'\0'),('2018-04-23',8,1,1,1,1,1,'\0'),('2018-04-23',9,1,2,1,2,1,'\0'),('2018-04-23',10,1,1,2,3,1,'\0'),('2018-04-23',11,2,1,1,4,1,'\0'),('2018-04-23',12,1,1,2,6,1,'\0'),('2018-04-24',13,2,1,1,7,1,'\0'),('2018-04-24',14,1,1,2,6,1,'\0'),('2018-04-23',15,1,1,2,5,1,'\0'),('2018-04-23',16,1,1,1,855,1,'\0'),('2018-04-30',17,NULL,1,NULL,11,1,'\0'),('2018-04-30',18,NULL,3,NULL,2,1,'\0'),('2018-04-30',19,1,NULL,2,3,1,'\0'),('2018-04-30',20,1,1,1,4,1,'\0'),('2018-04-30',21,1,NULL,3,5,1,'\0'),('2018-04-30',22,NULL,NULL,3,8,1,'\0'),('2018-05-01',24,NULL,1,1,8,1,'\0'),('2018-05-01',25,1,1,NULL,4,1,'\0'),('2018-05-01',26,NULL,3,NULL,3,1,'\0'),('2018-05-02',27,1,1,NULL,5,2,'\0'),('2018-05-02',28,2,NULL,3,7,1,'\0'),('2018-05-02',29,1,1,1,0,2,'\0'),('2018-05-02',30,1,1,1,0,1,'\0'),('2018-05-03',31,1,1,1,0,1,'\0'),('2018-05-18',32,1,1,1,8,1,'\0'),('2018-05-18',33,6,3,4,0,1,'\0');
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -238,7 +238,7 @@ CREATE TABLE `orders` (
   KEY `FK_ORDERS_MENU_idx` (`ForDate`,`IdMenu`),
   CONSTRAINT `FK_ORDERS_CLIENTS` FOREIGN KEY (`IdClient`) REFERENCES `clients` (`IdClient`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_ORDERS_MENU` FOREIGN KEY (`ForDate`, `IdMenu`) REFERENCES `menu` (`ForDate`, `IdMenu`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -247,7 +247,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,'2018-04-22',1,2,NULL),(4,'2018-04-22',2,4,NULL),(5,'2018-04-23',4,3,'2018-04-23 05:12:02'),(10,'2018-04-23',10,2,'2018-04-23 22:49:28'),(14,'2018-04-23',4,7,NULL),(15,'2018-04-23',5,7,NULL),(16,'2018-04-23',4,7,NULL),(17,'2018-05-02',27,7,NULL),(18,'2018-05-02',27,1,'2018-05-02 13:11:44'),(19,'2018-05-02',28,1,'2018-05-02 13:13:32'),(20,'2018-05-02',30,1,NULL),(21,'2018-05-02',30,1,NULL),(22,'2018-05-02',30,1,NULL),(23,'2018-05-02',30,1,NULL);
+INSERT INTO `orders` VALUES (1,'2018-04-22',1,2,NULL),(4,'2018-04-22',2,4,NULL),(5,'2018-04-23',4,3,'2018-04-23 05:12:02'),(10,'2018-04-23',10,2,'2018-04-23 22:49:28'),(14,'2018-04-23',4,7,NULL),(15,'2018-04-23',5,7,NULL),(16,'2018-04-23',4,7,NULL),(17,'2018-05-02',27,7,NULL),(18,'2018-05-02',27,1,'2018-05-02 13:11:44'),(19,'2018-05-02',28,1,'2018-05-02 13:13:32'),(20,'2018-05-02',30,1,NULL),(21,'2018-05-02',30,1,NULL),(22,'2018-05-02',30,1,NULL),(23,'2018-05-02',30,1,NULL),(24,'2018-05-18',33,1,NULL);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -288,7 +288,7 @@ CREATE TABLE `soups` (
   `Description` varchar(50) DEFAULT NULL,
   `Deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`IdSoup`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -297,7 +297,7 @@ CREATE TABLE `soups` (
 
 LOCK TABLES `soups` WRITE;
 /*!40000 ALTER TABLE `soups` DISABLE KEYS */;
-INSERT INTO `soups` VALUES (1,'Paradajkova','Cervena s cestovinou','\0'),(2,'Vývar','Kuraci s rezancami','\0'),(3,'Kapusnica','Stredne kyslá','\0'),(4,'Brokolicová','Zelena','\0');
+INSERT INTO `soups` VALUES (1,'Paradajkova','Cervena s cestovinou','\0'),(2,'Vývar','Kuraci s rezancami','\0'),(3,'Kapusnica','Stredne kyslá','\0'),(4,'Brokolicová','Zelena','\0'),(5,'Hovädzia','Vyvar','\0'),(6,'Hrachová','opis...','\0'),(7,'Mliečna','opis...','\0'),(8,'Zeleninová','opis...','\0'),(9,'Karfiolová','opis...','\0'),(10,'Tekvicová','opis...','\0'),(11,'Boršč','opis...','\0'),(12,'Kapustová','opis...','\0'),(13,'Kuracia','opis...','\0'),(14,'Kapusnica','opis...','\0'),(15,'Pismenková','opis...','\0'),(16,'Rybacia','opis...','\0'),(17,'Šošovicová','opis...','\0'),(18,'S párkou','opis...','\0'),(19,'Vajcová','opis...','\0'),(20,'Marakujová','opis...','\0'),(21,'Mangová','opis...','\0'),(22,'Kokosová','opis...','\0'),(23,'Pomarančová','opis...','\0'),(24,'Citrónová','opis...','\0'),(25,'Zelerová','opis...','\0'),(26,'Zemiaková','opis...','\0'),(27,'Mrkvová','opis...','\0'),(28,'Šparglová','opis...','\0'),(29,'Cibulová','opis...','\0'),(30,'Kalerábová','opis...','\0'),(31,'Fazuľová','opis...','\0'),(32,'Hubová','opis...','\0'),(33,'Čínska','opis...','\0'),(34,'Mexická','opis...','\0'),(35,'Syrová','opis...','\0');
 /*!40000 ALTER TABLE `soups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -406,4 +406,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-05-02 15:19:09
+-- Dump completed on 2018-05-18 19:42:04

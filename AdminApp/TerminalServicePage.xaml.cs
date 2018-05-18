@@ -9,7 +9,7 @@ namespace AdminApp
     /// <summary>
     /// Interaction logic for MenuPage.xaml
     /// </summary>
-    public partial class TerminalServicePage : System.Windows.Controls.Page
+    public partial class TerminalServicePage
     {
         private readonly DatabaseLayer _db;
         private readonly Window _owner;

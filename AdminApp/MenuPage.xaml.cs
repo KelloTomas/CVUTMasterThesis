@@ -11,7 +11,7 @@ namespace AdminApp
 	/// <summary>
 	/// Interaction logic for MenuPage.xaml
 	/// </summary>
-	public partial class MenuPage : System.Windows.Controls.Page
+	public partial class MenuPage
     {
 		private readonly DatabaseLayer _db;
 		private DateTime _forDate;

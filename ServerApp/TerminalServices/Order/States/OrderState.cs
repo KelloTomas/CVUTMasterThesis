@@ -29,7 +29,7 @@ namespace ServerApp.TerminalServices.Order.States
 		#endregion
 
 		#region constructors...
-		public OrderState(OrderTerminalService subApp) : base(3000)
+		public OrderState(OrderTerminalService subApp) : base(subApp, 3000)
 		{
 			_app = subApp;
 		}

@@ -36,7 +36,7 @@ namespace ServerApp.TerminalServices
 
 		private void TimerElapsed(object sender, ElapsedEventArgs e)
 		{
-			Console.WriteLine($"TimeElapsed: {GetType()}");
+			Console.WriteLine($"{GetType()} - TimeElapsed");
 			CheckNewState(ActualState.ProcessTimerElapsed());
 		}
 		public MyApplication App { get; private set; }
@@ -91,6 +91,7 @@ namespace ServerApp.TerminalServices
 		{
 			if (newState != ActualState)
 			{
+				Console.WriteLine($"{GetType()} - State: {newState.GetType().Name} entered");
 				_t.Stop();
 				ActualState?.Exit();
 				newState.Enter();

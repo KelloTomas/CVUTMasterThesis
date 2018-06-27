@@ -17,7 +17,7 @@ namespace ServerApp.TerminalServices.Serve.States
 		#endregion
 
 		#region constructors...
-		public SetServing(ServeTerminalService subApp) : base(3000)
+		public SetServing(ServeTerminalService subApp) : base(subApp, 3000)
 		{
 			_app = subApp;
 			_menu = _app.databaseLayer.GetMenu().ToList();

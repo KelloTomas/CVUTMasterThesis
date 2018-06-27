@@ -21,7 +21,7 @@ namespace ServerApp.TerminalServices.Inform.States
 		#endregion
 
 		#region constructors...
-		public InformState(InformTerminalService subApp) : base(10000)
+		public InformState(InformTerminalService subApp) : base(subApp, 10000)
 		{
 			_app = subApp;
 			_layout = _app.ScanCardLayout;

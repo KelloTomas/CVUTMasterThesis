@@ -13,7 +13,7 @@ namespace ServerApp.TerminalServices.Shared.States
 		#endregion
 
 		#region constructors...
-		public DefaultState(int timeout) : base(timeout)
+		public DefaultState(TerminalService subApp, int timeout) : base(subApp, timeout)
 		{
 		}
 		#endregion

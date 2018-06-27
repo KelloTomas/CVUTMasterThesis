@@ -56,6 +56,14 @@ namespace ServerApp.TerminalServices.Order.States
 			_menuOnScreen = _menu.Where(m => m.ForDate == _dateToOrder).ToList();
 		}
 
+		private bool IsPrevPageEnabled()
+		{
+			return _pageNum > 0;
+		}
+		private bool IsNextPageEnabled()
+		{
+			return (_pageNum + 1) * _app.OrdersLayout.MEALS_PER_PAGE <= _menuOnScreen.Count;
+		}
 		public override IStateBase ProcessTimerElapsed()
 		{
 			List<IAction> action;
@@ -69,7 +77,7 @@ namespace ServerApp.TerminalServices.Order.States
 						.Concat
 							(ordersLayout.SetDate(_dateToOrder, _menu.Where(m => m.ForDate > _dateToOrder).Any()))
 						.Concat
-							(ordersLayout.SetMeals(_menuOnScreen, _pageNum, _selected.HasValue ? _selected.GetValueOrDefault() % _app.OrdersLayout.MEALS_PER_PAGE : _selected))
+							(ordersLayout.SetMeals(_menuOnScreen, _pageNum, _selected, IsPrevPageEnabled(), IsNextPageEnabled()))
 						.ToArray())
 					};
 					break;
@@ -115,10 +123,12 @@ namespace ServerApp.TerminalServices.Order.States
 						SetDateToOrder(_dateToOrder.AddDays(1));
 						break;
 					case "up":
-						_pageNum--;
+						if (IsPrevPageEnabled())
+							_pageNum--;
 						break;
 					case "down":
-						_pageNum++;
+						if (IsNextPageEnabled())
+							_pageNum++;
 						break;
 					default:
 						return base.ProcessButtonClickAction(button, ref forceCallStateMethod);

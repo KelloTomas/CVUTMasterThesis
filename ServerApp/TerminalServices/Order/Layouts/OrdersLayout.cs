@@ -25,13 +25,13 @@ namespace ServerApp.TerminalServices.Order.Layouts
 			yield return new ModifyLayoutItem("nextDay", "enabled", isOrderForNextDay.ToString());
 			yield return new ModifyLayoutItem("prevDay", "enabled", (date > DateTime.Now.Date).ToString());
 		}
-		public IEnumerable<ModifyLayoutItem> SetMeals(List<Menu> menu, int pageNum, int? selected)
+		public IEnumerable<ModifyLayoutItem> SetMeals(List<Menu> menu, int pageNum, int? selected, bool isPrevPageEnabled, bool isNextPageEnabled)
 		{
-			if (pageNum == 0)
-				yield return new ModifyLayoutItem($"up", "enabled", "false");
-			else
+			if (isPrevPageEnabled)
 				yield return new ModifyLayoutItem($"up", "enabled", "true");
-			if ((pageNum + 1) * MEALS_PER_PAGE <= menu.Count)
+			else
+				yield return new ModifyLayoutItem($"up", "enabled", "false");
+			if (isNextPageEnabled)
 				yield return new ModifyLayoutItem($"down", "enabled", "true");
 			else
 				yield return new ModifyLayoutItem($"down", "enabled", "false");

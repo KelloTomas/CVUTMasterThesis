@@ -25,9 +25,9 @@ namespace ServerApp.TerminalServices.Inform.Layouts
 				{
 					yield return new ModifyLayoutItem($"Date_{i}", "text", client.Orders[i].ForDate.ToString("dd.MM.yyyy"));
 					yield return new ModifyLayoutItem($"IdMenu_{i}", "text", client.Orders[i].IdMenu.ToString());
-					yield return new ModifyLayoutItem($"Soup_{i}", "text", client.Orders[i].Items[0].Name);
-					yield return new ModifyLayoutItem($"Meal_{i}", "text", client.Orders[i].Items[1].Name);
-					yield return new ModifyLayoutItem($"Desert_{i}", "text", client.Orders[i].Items[2].Name);
+					yield return new ModifyLayoutItem($"Soup_{i}", "text", client.Orders[i].Items[0]?.Name);
+					yield return new ModifyLayoutItem($"Meal_{i}", "text", client.Orders[i].Items[1]?.Name);
+					yield return new ModifyLayoutItem($"Desert_{i}", "text", client.Orders[i].Items[2]?.Name);
 				}
 				else
 				{
